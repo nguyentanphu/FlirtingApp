@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FlirtingApp.Api.Data;
+using FlirtingApp.Api.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 
 namespace FlirtingApp.Api
 {
@@ -30,7 +32,23 @@ namespace FlirtingApp.Api
 			services.AddDbContext<ApiContext>(options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnectionString")));
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+			// add identity
+			var identityBuilder = services.AddIdentityCore<AppUser>(o =>
+			{
+				// configure identity options
+				o.Password.RequireDigit = false;
+				o.Password.RequireLowercase = false;
+				o.Password.RequireUppercase = false;
+				o.Password.RequireNonAlphanumeric = false;
+				o.Password.RequiredLength = 6;
+			}).AddEntityFrameworkStores<ApiContext>();
+
 			services.AddCors();
+
+			services.AddSwaggerGen(c =>
+			{
+				c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+			});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +65,13 @@ namespace FlirtingApp.Api
 			}
 
 			app.UseHttpsRedirection();
+
+			app.UseSwagger();
+			app.UseSwaggerUI(c =>
+			{
+				c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+			});
+
 			app.UseCors(config =>
 			{
 				config.AllowAnyOrigin();
