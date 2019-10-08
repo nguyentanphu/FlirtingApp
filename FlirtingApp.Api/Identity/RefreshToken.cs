@@ -7,7 +7,7 @@ namespace FlirtingApp.Api.Identity
 {
 	public class RefreshToken
 	{
-		private RefreshToken()
+		internal RefreshToken()
 		{
 
 		}
@@ -19,7 +19,7 @@ namespace FlirtingApp.Api.Identity
 		)
 		{
 			Token = token;
-			AppUserId = userId;
+			UserId = userId;
 			RemoteIpAddress = remoteIpAddress;
 			Expires = expires;
 		}
@@ -27,7 +27,8 @@ namespace FlirtingApp.Api.Identity
 		public Guid Id { get; set; }
 		public string Token { get; private set; }
 		public DateTime Expires { get; private set; }
-		public Guid AppUserId { get; private set; }
+		public Guid UserId { get; private set; }
+		public User User { get; set; }
 		public bool Active => DateTime.UtcNow <= Expires;
 		public string RemoteIpAddress { get; private set; }
 	}

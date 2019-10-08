@@ -12,7 +12,7 @@ namespace FlirtingApp.Api.ConfigOptions
 		public string Audience { get; set; }
 		public DateTime IssuedAt => DateTime.UtcNow;
 		public DateTime NotBefore => IssuedAt;
-		public TimeSpan ValidFor { get; set; } = TimeSpan.FromMinutes(120);
+		public TimeSpan ValidFor { get; set; } = TimeSpan.FromMinutes(1);
 		public DateTime Expiration => IssuedAt.Add(ValidFor);
 		public SigningCredentials SigningCredentials { get; set; }
 	}

@@ -13,11 +13,11 @@ namespace FlirtingApp.Api.Repository
 	public class AppUserRepository
 	{
 		private readonly ApiContext _apiContext;
-		private readonly UserManager<AppUser> _userManager;
+		private readonly UserManager<User> _userManager;
 		private readonly TokenFactory _tokenFactory;
 
 		public AppUserRepository(
-			UserManager<AppUser> userManager, 
+			UserManager<User> userManager, 
 			ApiContext apiContext, 
 			TokenFactory tokenFactory)
 		{
@@ -26,10 +26,10 @@ namespace FlirtingApp.Api.Repository
 			_tokenFactory = tokenFactory;
 		}
 
-		public async Task<AppUser> Create(string firstName, string lastName, string email, string userName,
+		public async Task<User> Create(string firstName, string lastName, string email, string userName,
 			string password)
 		{
-			var newUser = new AppUser
+			var newUser = new User
 			{
 				Email = email,
 				UserName = userName,

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FlirtingApp.Api.ConfigOptions
 {
-	public class AuthSettings
+	public class AuthOptions
 	{
 		public string JwtSecret { get; set; }
 	}

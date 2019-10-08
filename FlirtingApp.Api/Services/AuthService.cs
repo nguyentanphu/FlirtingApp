@@ -1,22 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using FlirtingApp.Api.ConfigOptions;
 using FlirtingApp.Api.Data;
 using FlirtingApp.Api.Dtos;
 using FlirtingApp.Api.Identity;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FlirtingApp.Api.Services
 {
 	public class AuthService
 	{
 		private readonly ApiContext _apiContext;
-		private readonly UserManager<AppUser> _userManager;
+		private readonly UserManager<User> _userManager;
 		private readonly TokenFactory _tokenFactory;
 		private readonly JwtFactory _jwtFactory;
 
-		public AuthService(ApiContext apiContext, UserManager<AppUser> userManager, TokenFactory tokenFactory, JwtFactory jwtFactory)
+		public AuthService(
+			ApiContext apiContext, 
+			UserManager<User> userManager, 
+			TokenFactory tokenFactory, 
+			JwtFactory jwtFactory)
 		{
 			_apiContext = apiContext;
 			_userManager = userManager;
@@ -62,6 +71,38 @@ namespace FlirtingApp.Api.Services
 			{
 				RefreshToken = refreshToken,
 				AccessToken = accessToken.Token,
+				Success = true
+			};
+		}
+
+		public async Task<LoginReponse> ExchangeRefreshToken(
+			string accessToken, 
+			string refreshToken, 
+			string jwtSecret, 
+			string remoteIpAdress
+		)
+		{
+			var claimPrincipal = _jwtFactory.GetClaimPrinciple(accessToken, new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSecret)));
+			var userIdClaim = claimPrincipal.FindFirst(c => c.Type == "id");
+			var currentUser = await _userManager.Users.Include(u => u.RefreshTokens)
+				.FirstAsync(u => u.Id == new Guid(userIdClaim.Value));
+			if (!currentUser.HasValidRefreshToken(refreshToken))
+			{
+				return new LoginReponse
+				{
+					Success = false
+				};
+			}
+
+			var newAccessToken = _jwtFactory.GenerateEncodedTokens(currentUser.Id, currentUser.UserName);
+			var newRefreshToken = _tokenFactory.GenerateToken();
+			currentUser.RemoveAllRefreshToken(refreshToken);
+			currentUser.AddRefreshToken(newRefreshToken, currentUser.Id, remoteIpAdress);
+			await _apiContext.SaveChangesAsync();
+			return new LoginReponse
+			{
+				RefreshToken = newRefreshToken,
+				AccessToken = newAccessToken.Token,
 				Success = true
 			};
 		}
