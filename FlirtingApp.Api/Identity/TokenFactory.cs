@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FlirtingApp.Api.Identity
 {
-	internal sealed class TokenFactory
+	public sealed class TokenFactory
 	{
 		public string GenerateToken(int size = 32)
 		{

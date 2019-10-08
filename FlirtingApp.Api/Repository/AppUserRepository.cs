@@ -14,11 +14,16 @@ namespace FlirtingApp.Api.Repository
 	{
 		private readonly ApiContext _apiContext;
 		private readonly UserManager<AppUser> _userManager;
+		private readonly TokenFactory _tokenFactory;
 
-		public AppUserRepository(UserManager<AppUser> userManager, ApiContext apiContext)
+		public AppUserRepository(
+			UserManager<AppUser> userManager, 
+			ApiContext apiContext, 
+			TokenFactory tokenFactory)
 		{
 			_userManager = userManager;
 			_apiContext = apiContext;
+			_tokenFactory = tokenFactory;
 		}
 
 		public async Task<AppUser> Create(string firstName, string lastName, string email, string userName,
@@ -41,7 +46,7 @@ namespace FlirtingApp.Api.Repository
 			return newUser;
 		}
 
-		public async Task<bool> Login(string userName, string password)
+		public async Task<bool> Login(string userName, string password, string remoteIpAdress)
 		{
 			if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
 			{
@@ -59,6 +64,10 @@ namespace FlirtingApp.Api.Repository
 			{
 				return false;
 			}
+
+			var refreshToken = _tokenFactory.GenerateToken();
+			currentUser.AddRefreshToken(refreshToken, currentUser.Id, remoteIpAdress);
+			await _apiContext.SaveChangesAsync();
 
 			return false;
 		}
