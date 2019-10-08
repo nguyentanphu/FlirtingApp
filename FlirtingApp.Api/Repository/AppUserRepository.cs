@@ -46,30 +46,6 @@ namespace FlirtingApp.Api.Repository
 			return newUser;
 		}
 
-		public async Task<bool> Login(string userName, string password, string remoteIpAdress)
-		{
-			if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
-			{
-				return false;
-			}
-
-			var currentUser = await _userManager.FindByNameAsync(userName);
-			if (currentUser == null)
-			{
-				return false;
-			}
-
-			var passwordMatched = await _userManager.CheckPasswordAsync(currentUser, password);
-			if (!passwordMatched)
-			{
-				return false;
-			}
-
-			var refreshToken = _tokenFactory.GenerateToken();
-			currentUser.AddRefreshToken(refreshToken, currentUser.Id, remoteIpAdress);
-			await _apiContext.SaveChangesAsync();
-
-			return false;
-		}
+		
 	}
 }
