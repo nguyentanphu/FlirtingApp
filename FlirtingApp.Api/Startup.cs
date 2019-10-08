@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using FlirtingApp.Api.Data;
 using FlirtingApp.Api.Identity;
 using FlirtingApp.Api.Models;
 using FlirtingApp.Api.Repository;
+using FlirtingApp.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -44,6 +46,8 @@ namespace FlirtingApp.Api
 				new SymmetricSecurityKey(Encoding.ASCII.GetBytes(authSettings[nameof(AuthSettings.JwtSecret)]));
 			services.Configure<JwtOptions>(options =>
 			{
+				options.Issuer = jwtOptions[nameof(JwtOptions.Issuer)];
+				options.Audience = jwtOptions[nameof(JwtOptions.Audience)];
 				options.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
 			});
 
@@ -89,7 +93,11 @@ namespace FlirtingApp.Api
 				options.TokenValidationParameters = tokenValidationParameters;
 			});
 
+			services.AddScoped<JwtSecurityTokenHandler>();
 			services.AddScoped<AppUserRepository>();
+			services.AddScoped<AuthService>();
+			services.AddScoped<TokenFactory>();
+			services.AddScoped<JwtFactory>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -119,6 +127,7 @@ namespace FlirtingApp.Api
 				config.AllowAnyHeader();
 				config.AllowAnyMethod();
 			});
+			app.UseAuthentication();
 			app.UseMvc();
 		}
 	}

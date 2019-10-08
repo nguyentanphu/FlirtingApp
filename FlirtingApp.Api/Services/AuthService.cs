@@ -56,12 +56,12 @@ namespace FlirtingApp.Api.Services
 			currentUser.AddRefreshToken(refreshToken, currentUser.Id, remoteIpAdress);
 			await _apiContext.SaveChangesAsync();
 
-			_jwtFactory.GenerateEncodedTokens(currentUser.Id, currentUser.UserName);
+			var accessToken = _jwtFactory.GenerateEncodedTokens(currentUser.Id, currentUser.UserName);
 
 			return new LoginReponse
 			{
 				RefreshToken = refreshToken,
-				AccessToken = refreshToken,
+				AccessToken = accessToken.Token,
 				Success = true
 			};
 		}

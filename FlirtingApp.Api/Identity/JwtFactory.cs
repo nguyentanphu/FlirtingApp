@@ -17,8 +17,9 @@ namespace FlirtingApp.Api.Identity
 		private readonly JwtOptions _jwtOptions;
 		private readonly JwtSecurityTokenHandler _jwtHandler;
 
-		public JwtFactory(IOptions<JwtOptions> jwtOptions)
+		public JwtFactory(IOptions<JwtOptions> jwtOptions, JwtSecurityTokenHandler jwtHandler)
 		{
+			_jwtHandler = jwtHandler;
 			_jwtOptions = jwtOptions.Value;
 		}
 
@@ -28,7 +29,7 @@ namespace FlirtingApp.Api.Identity
 			var claims = new[]
 			{
 				new Claim(JwtRegisteredClaimNames.Sub, userName),
-				new Claim(JwtRegisteredClaimNames.Jti, new Guid().ToString()),
+				new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
 				new Claim(JwtRegisteredClaimNames.Iat,
 					((DateTimeOffset) _jwtOptions.IssuedAt).ToUnixTimeSeconds().ToString()),
 				identity.FindFirst("rol"),
