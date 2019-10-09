@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FlirtingApp.Api.Migrations
 {
-    public partial class initSqlMigration : Migration
+    public partial class initSqlServerDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

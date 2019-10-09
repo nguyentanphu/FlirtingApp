@@ -30,7 +30,7 @@ namespace FlirtingApp.Api
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddDbContext<ApiContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString")));
+			services.AddDbContext<ApiDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString")));
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
 			var authSettings = Configuration.GetSection(nameof(AuthOptions));
@@ -54,7 +54,7 @@ namespace FlirtingApp.Api
 				o.Password.RequireUppercase = false;
 				o.Password.RequireNonAlphanumeric = false;
 				o.Password.RequiredLength = 6;
-			}).AddEntityFrameworkStores<ApiContext>();
+			}).AddEntityFrameworkStores<ApiDbContext>();
 
 			services.AddCors();
 
@@ -114,7 +114,10 @@ namespace FlirtingApp.Api
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+		public void Configure(
+			IApplicationBuilder app,
+			IHostingEnvironment env,
+			ApiDbContext dbDbContext)
 		{
 			if (env.IsDevelopment())
 			{
@@ -140,6 +143,9 @@ namespace FlirtingApp.Api
 				config.AllowAnyHeader();
 				config.AllowAnyMethod();
 			});
+
+			dbDbContext.Database.Migrate();
+
 			app.UseAuthentication();
 			app.UseMvc();
 		}

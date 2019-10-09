@@ -13,17 +13,17 @@ namespace FlirtingApp.Api.Controllers
 	[Authorize]
 	public class ValuesController : ControllerBase
 	{
-		private readonly ApiContext _dbContext;
+		private readonly ApiDbContext _dbDbContext;
 
-		public ValuesController(ApiContext dbContext)
+		public ValuesController(ApiDbContext dbDbContext)
 		{
-			_dbContext = dbContext;
+			_dbDbContext = dbDbContext;
 		}
 		// GET api/values
 		[HttpGet]
 		public ActionResult<IEnumerable<string>> Get()
 		{
-			return Ok(_dbContext.Values.ToList());
+			return Ok(_dbDbContext.Values.ToList());
 		}
 
 		// GET api/values/5

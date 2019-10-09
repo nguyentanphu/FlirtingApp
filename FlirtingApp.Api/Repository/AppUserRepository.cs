@@ -12,17 +12,17 @@ namespace FlirtingApp.Api.Repository
 {
 	public class AppUserRepository
 	{
-		private readonly ApiContext _apiContext;
+		private readonly ApiDbContext _apiDbContext;
 		private readonly UserManager<User> _userManager;
 		private readonly TokenFactory _tokenFactory;
 
 		public AppUserRepository(
 			UserManager<User> userManager, 
-			ApiContext apiContext, 
+			ApiDbContext apiDbContext, 
 			TokenFactory tokenFactory)
 		{
 			_userManager = userManager;
-			_apiContext = apiContext;
+			_apiDbContext = apiDbContext;
 			_tokenFactory = tokenFactory;
 		}
 

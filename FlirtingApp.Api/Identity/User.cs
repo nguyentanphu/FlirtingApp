@@ -8,15 +8,11 @@ namespace FlirtingApp.Api.Identity
 {
 	public class User: IdentityUser<Guid>
 	{
-		public User()
-		{
-			
-		}
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 
-		private readonly List<RefreshToken> _refreshTokens = new List<RefreshToken>();
-		public IReadOnlyCollection<RefreshToken> RefreshTokens => _refreshTokens.AsReadOnly();
+		private readonly HashSet<RefreshToken> _refreshTokens = new HashSet<RefreshToken>();
+		public IEnumerable<RefreshToken> RefreshTokens => _refreshTokens.ToList();
 
 		public void AddRefreshToken(string token, Guid userId, string remoteIpAddress, double daysToExpire = 5)
 		{

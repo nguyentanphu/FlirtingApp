@@ -16,18 +16,18 @@ namespace FlirtingApp.Api.Services
 {
 	public class AuthService
 	{
-		private readonly ApiContext _apiContext;
+		private readonly ApiDbContext _apiDbContext;
 		private readonly UserManager<User> _userManager;
 		private readonly TokenFactory _tokenFactory;
 		private readonly JwtFactory _jwtFactory;
 
 		public AuthService(
-			ApiContext apiContext, 
+			ApiDbContext apiDbContext, 
 			UserManager<User> userManager, 
 			TokenFactory tokenFactory, 
 			JwtFactory jwtFactory)
 		{
-			_apiContext = apiContext;
+			_apiDbContext = apiDbContext;
 			_userManager = userManager;
 			_tokenFactory = tokenFactory;
 			_jwtFactory = jwtFactory;
@@ -63,7 +63,7 @@ namespace FlirtingApp.Api.Services
 
 			var refreshToken = _tokenFactory.GenerateToken();
 			currentUser.AddRefreshToken(refreshToken, currentUser.Id, remoteIpAdress);
-			await _apiContext.SaveChangesAsync();
+			await _apiDbContext.SaveChangesAsync();
 
 			var accessToken = _jwtFactory.GenerateEncodedTokens(currentUser.Id, currentUser.UserName);
 
@@ -84,7 +84,7 @@ namespace FlirtingApp.Api.Services
 		{
 			var claimPrincipal = _jwtFactory.GetClaimPrinciple(accessToken, new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSecret)));
 			var userIdClaim = claimPrincipal.FindFirst(c => c.Type == "id");
-			var currentUser = await _userManager.Users.Include(u => u.RefreshTokens)
+			var currentUser = await _apiDbContext.Users.Include(u => u.RefreshTokens)
 				.FirstAsync(u => u.Id == new Guid(userIdClaim.Value));
 			if (!currentUser.HasValidRefreshToken(refreshToken))
 			{
@@ -98,7 +98,7 @@ namespace FlirtingApp.Api.Services
 			var newRefreshToken = _tokenFactory.GenerateToken();
 			currentUser.RemoveAllRefreshToken(refreshToken);
 			currentUser.AddRefreshToken(newRefreshToken, currentUser.Id, remoteIpAdress);
-			await _apiContext.SaveChangesAsync();
+			await _apiDbContext.SaveChangesAsync();
 			return new LoginReponse
 			{
 				RefreshToken = newRefreshToken,
