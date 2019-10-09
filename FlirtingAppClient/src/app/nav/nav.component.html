@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Super app</a>
+
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item active">
+      <a class="nav-link" href="#">Matches<span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">List</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Message</a>
+    </li>
+  </ul>
+
+  <form #loginForm="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="login()">
+    <input name="username" class="form-control mr-sm-2" required type="text" placeholder="User name" [(ngModel)]="model.username">
+    <input name="password" class="form-control mr-sm-2" required type="password" placeholder="Password" [(ngModel)]="model.password">
+    <button class="btn btn-success my-2 my-sm-0" [disabled]="!loginForm.valid" type="submit">Login</button>
+  </form>
+
+</nav>

@@ -41,7 +41,7 @@ namespace FlirtingApp.Api
 			{
 				options.Issuer = jwtOptions[nameof(JwtOptions.Issuer)];
 				options.Audience = jwtOptions[nameof(JwtOptions.Audience)];
-				options.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+				options.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha512Signature);
 			});
 			services.Configure<AuthOptions>(Configuration.GetSection(nameof(AuthOptions)));
 

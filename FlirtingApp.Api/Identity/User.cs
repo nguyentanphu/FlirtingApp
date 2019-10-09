@@ -19,7 +19,7 @@ namespace FlirtingApp.Api.Identity
 			_refreshTokens.Add(new RefreshToken(token, userId, remoteIpAddress, DateTime.UtcNow.AddDays(daysToExpire)));
 		}
 
-		public void RemoveAllRefreshToken(string refreshToken)
+		public void RemoveRefreshToken(string refreshToken)
 		{
 			_refreshTokens.Remove(RefreshTokens.First(t => t.Token == refreshToken));
 

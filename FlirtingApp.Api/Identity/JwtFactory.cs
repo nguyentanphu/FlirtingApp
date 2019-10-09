@@ -31,15 +31,13 @@ namespace FlirtingApp.Api.Identity
 			{
 				new Claim(JwtRegisteredClaimNames.Sub, userName),
 				new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-				new Claim(JwtRegisteredClaimNames.Iat,
-					((DateTimeOffset) _jwtOptions.IssuedAt).ToUnixTimeSeconds().ToString()),
 				identity.FindFirst("rol"),
 				identity.FindFirst("id")
 			};
 
 			var jwt = new JwtSecurityToken(
 				new JwtHeader(_jwtOptions.SigningCredentials), 
-				new JwtPayload(_jwtOptions.Issuer, _jwtOptions.Audience, claims, _jwtOptions.NotBefore, _jwtOptions.Expiration)
+				new JwtPayload(_jwtOptions.Issuer, _jwtOptions.Audience, claims, _jwtOptions.NotBefore, _jwtOptions.Expiration, _jwtOptions.IssuedAt)
 			);
 
 			return new AccessToken(_jwtHandler.WriteToken(jwt), (int)_jwtOptions.ValidFor.TotalSeconds);

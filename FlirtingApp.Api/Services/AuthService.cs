@@ -96,7 +96,7 @@ namespace FlirtingApp.Api.Services
 
 			var newAccessToken = _jwtFactory.GenerateEncodedTokens(currentUser.Id, currentUser.UserName);
 			var newRefreshToken = _tokenFactory.GenerateToken();
-			currentUser.RemoveAllRefreshToken(refreshToken);
+			currentUser.RemoveRefreshToken(refreshToken);
 			currentUser.AddRefreshToken(newRefreshToken, currentUser.Id, remoteIpAdress);
 			await _apiDbContext.SaveChangesAsync();
 			return new LoginReponse
