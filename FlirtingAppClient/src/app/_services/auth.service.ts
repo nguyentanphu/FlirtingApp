@@ -14,8 +14,8 @@ export class AuthService {
     return this.httpClient.post(this.baseUrl, model)
     .pipe(
       map((response: any) => {
-        localStorage.setItem('accessToken', response.accessToken);
-        localStorage.setItem('refreshToken', response.refreshToken);
+        localStorage.setItem('accessToken', JSON.stringify(response.accessToken));
+        localStorage.setItem('refreshToken', JSON.stringify(response.refreshToken));
       })
     );
   }

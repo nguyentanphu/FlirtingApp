@@ -11,9 +11,22 @@
     <li class="nav-item">
       <a class="nav-link" href="#">Message</a>
     </li>
+    <li *ngIf="loggedIn()" class="nav-item">
+      <a class="nav-link" href="#" (click)="logout()">Logout</a>
+    </li>
   </ul>
 
-  <form #loginForm="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="login()">
+  <div *ngIf="loggedIn()" class="dropdown">
+    <a class="dropdown-toggle text-light" id="dropdownMenuButton">
+      Welcome user
+    </a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="#"><i class="fa fa-user">Edit Profile</i></a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="#"><i class="fa fa-logout">Logout</i></a>
+    </div>
+  </div>
+  <form *ngIf="!loggedIn()" #loginForm="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="login()">
     <input name="username" class="form-control mr-sm-2" required type="text" placeholder="User name" [(ngModel)]="model.username">
     <input name="password" class="form-control mr-sm-2" required type="password" placeholder="Password" [(ngModel)]="model.password">
     <button class="btn btn-success my-2 my-sm-0" [disabled]="!loginForm.valid" type="submit">Login</button>

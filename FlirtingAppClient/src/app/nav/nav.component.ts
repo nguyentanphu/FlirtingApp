@@ -21,4 +21,15 @@ export class NavComponent implements OnInit {
     });
   }
 
+  loggedIn() {
+    const accessToken = JSON.parse(localStorage.getItem('accessToken'));
+    const refreshToken = JSON.parse(localStorage.getItem('refreshToken'));
+    return !!accessToken && !!refreshToken;
+  }
+
+  logout() {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+  }
+
 }
