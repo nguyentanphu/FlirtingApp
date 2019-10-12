@@ -11,19 +11,23 @@ namespace FlirtingApp.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
-	    private readonly AppUserRepository _appUserRepository;
+	    private readonly UserRepository _userRepository;
 
-	    public UserController(AppUserRepository appUserRepository)
+	    public UsersController(UserRepository userRepository)
 	    {
-		    _appUserRepository = appUserRepository;
+		    _userRepository = userRepository;
 	    }
 
-	    [HttpPost]
+	    [HttpPost("create")]
 	    public async Task<IActionResult> Create(RegisterUserRequest newUser)
 	    {
-		    var createdUser = await _appUserRepository.Create(
+		    if (await _userRepository.IsExist(newUser.UserName))
+		    {
+			    return BadRequest("User name is already exist!");
+		    }
+		    var createdUser = await _userRepository.Create(
 			    newUser.FirstName,
 			    newUser.LastName,
 			    newUser.Email,

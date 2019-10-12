@@ -35,13 +35,6 @@ namespace FlirtingApp.Api.Services
 
 		public async Task<LoginReponse> Login(string userName, string password, string remoteIpAdress)
 		{
-			if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
-			{
-				return new LoginReponse
-				{
-					Success = false
-				};
-			}
 
 			var currentUser = await _userManager.FindByNameAsync(userName);
 			if (currentUser == null)

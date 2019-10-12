@@ -7,18 +7,22 @@ import { map } from 'rxjs/operators';
 })
 export class AuthService {
 
-  baseUrl = 'https://localhost:44367/api/auth/login';
+  private baseUrl = 'https://localhost:44367/api/auth/';
   constructor(private httpClient: HttpClient) { }
 
   login(model) {
-    return this.httpClient.post(this.baseUrl, model)
+    return this.httpClient.post(this.baseUrl + 'login', model)
     .pipe(
       map((response: any) => {
-        localStorage.setItem('accessToken', JSON.stringify(response.accessToken));
-        localStorage.setItem('refreshToken', JSON.stringify(response.refreshToken));
+        localStorage.setItem('tokens', JSON.stringify({
+          accessToken: response.accessToken,
+          refreshToken: response.refreshToken
+        }));
       })
     );
   }
+
+  
 
 }
 

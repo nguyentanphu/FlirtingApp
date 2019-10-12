@@ -1,14 +1,18 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Text;
 using FlirtingApp.Api.ConfigOptions;
+using FlirtingApp.Api.Configurations;
 using FlirtingApp.Api.Data;
 using FlirtingApp.Api.Identity;
 using FlirtingApp.Api.Repository;
 using FlirtingApp.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -107,7 +111,7 @@ namespace FlirtingApp.Api
 			});
 
 			services.AddScoped<JwtSecurityTokenHandler>();
-			services.AddScoped<AppUserRepository>();
+			services.AddScoped<UserRepository>();
 			services.AddScoped<AuthService>();
 			services.AddScoped<TokenFactory>();
 			services.AddScoped<JwtFactory>();
@@ -125,8 +129,20 @@ namespace FlirtingApp.Api
 			}
 			else
 			{
-				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-				app.UseHsts();
+				app.UseExceptionHandler(builder =>
+				{
+					builder.Run(async context =>
+					{
+						context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+						var error = context.Features.Get<IExceptionHandlerFeature>();
+
+						if (error != null)
+						{
+							context.Response.AddApplicationError(error.Error.Message);
+							await context.Response.WriteAsync(error.Error.Message);
+						}
+					});
+				});
 			}
 
 			app.UseHttpsRedirection();

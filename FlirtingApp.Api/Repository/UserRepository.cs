@@ -4,19 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using FlirtingApp.Api.Data;
 using FlirtingApp.Api.Identity;
-using FlirtingApp.Api.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlirtingApp.Api.Repository
 {
-	public class AppUserRepository
+	public class UserRepository
 	{
 		private readonly ApiDbContext _apiDbContext;
 		private readonly UserManager<User> _userManager;
 		private readonly TokenFactory _tokenFactory;
 
-		public AppUserRepository(
+		public UserRepository(
 			UserManager<User> userManager, 
 			ApiDbContext apiDbContext, 
 			TokenFactory tokenFactory)
@@ -44,6 +43,11 @@ namespace FlirtingApp.Api.Repository
 			}
 
 			return newUser;
+		}
+
+		public async Task<bool> IsExist(string userName)
+		{
+			return await _apiDbContext.Users.AnyAsync(u => u.UserName == userName);
 		}
 
 		
