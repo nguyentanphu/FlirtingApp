@@ -18,7 +18,7 @@
 
   <div *ngIf="loggedIn()" class="dropdown">
     <a class="dropdown-toggle text-light" id="dropdownMenuButton">
-      Welcome user
+      Welcome {{ loggedInUserName }}
     </a>
     <div class="dropdown-menu">
       <a class="dropdown-item" href="#"><i class="fa fa-user">Edit Profile</i></a>

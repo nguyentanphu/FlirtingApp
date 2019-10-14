@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UserService } from '../_services/user.service';
+import { AlertifyService } from '../_services/alertify.service';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +16,7 @@ export class RegisterComponent implements OnInit {
     password: ''
   };
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private alertify: AlertifyService) { }
 
   ngOnInit() {
   }
@@ -26,8 +27,9 @@ export class RegisterComponent implements OnInit {
     }
     this.userService.register(this.model).subscribe(result => {
       this.registerDone.emit();
+      this.alertify.success('Registered successfully.');
     }, error => {
-      console.log(error);
+      this.alertify.error(error);
     });
   }
 
