@@ -2,14 +2,14 @@
   <a class="navbar-brand" href="#">Super app</a>
 
   <ul *ngIf="loggedIn()" class="navbar-nav mr-auto">
-    <li class="nav-item active">
-      <a class="nav-link" href="#">Matches<span class="sr-only">(current)</span></a>
+    <li class="nav-item" routerLinkActive="active">
+      <a class="nav-link" [routerLink]="['/members']" >Matches</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">List</a>
+    <li class="nav-item" routerLinkActive="active">
+      <a class="nav-link" [routerLink]="['/lists']" >List</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Message</a>
+    <li class="nav-item" routerLinkActive="active">
+      <a class="nav-link" [routerLink]="['/messages']" >Message</a>
     </li>
   </ul>
 
