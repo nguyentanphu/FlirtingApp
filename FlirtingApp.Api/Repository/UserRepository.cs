@@ -36,6 +36,7 @@ namespace FlirtingApp.Api.Repository
 				LastName = lastName
 			};
 
+			user.
 			var result = await _userManager.CreateAsync(newUser, password);
 			if (!result.Succeeded)
 			{

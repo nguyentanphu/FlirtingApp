@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
+using FlirtingApp.Api.Models;
 
 namespace FlirtingApp.Api.Identity
 {
@@ -11,8 +12,23 @@ namespace FlirtingApp.Api.Identity
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 
+		
+
+		public DateTime DateOfBirth { get; set; }
+		public string KnownAs { get; set; }
+		public DateTime Created { get; set; }
+		public DateTime LastActive { get; set; }
+		public string Introduction { get; set; }
+		public string LookingFor { get; set; }
+		public string Interests { get; set; }
+		public string City { get; set; }
+		public string Country { get; set; }
+
 		private readonly HashSet<RefreshToken> _refreshTokens = new HashSet<RefreshToken>();
 		public IEnumerable<RefreshToken> RefreshTokens => _refreshTokens.ToList();
+
+		public readonly HashSet<Photo> _photos = new HashSet<Photo>();
+		public IEnumerable<Photo> Photos => _photos.ToList();
 
 		public void AddRefreshToken(string token, Guid userId, string remoteIpAddress, double daysToExpire = 5)
 		{

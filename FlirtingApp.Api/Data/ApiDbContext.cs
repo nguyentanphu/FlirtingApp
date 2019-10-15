@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FlirtingApp.Api.Identity;
+using FlirtingApp.Api.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -16,11 +17,14 @@ namespace FlirtingApp.Api.Data
 			
 		}
 
+		public DbSet<Photo> Photos { get; set; }
+
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
 			base.OnModelCreating(builder);
 			builder.Entity<User>(ConfigureUser);
 			builder.Entity<RefreshToken>(ConfigureRefreshToken);
+
 		}
 
 		public void ConfigureUser(EntityTypeBuilder<User> builder)
@@ -28,12 +32,21 @@ namespace FlirtingApp.Api.Data
 			builder.Metadata
 				.FindNavigation(nameof(User.RefreshTokens))
 				.SetPropertyAccessMode(PropertyAccessMode.Field);
+			builder.Metadata
+				.FindNavigation(nameof(User.Photos))
+				.SetPropertyAccessMode(PropertyAccessMode.Field);
 		}
 
 		public void ConfigureRefreshToken(EntityTypeBuilder<RefreshToken> builder)
 		{
 			builder.HasOne(t => t.User)
 				.WithMany(u => u.RefreshTokens)
+				.HasForeignKey(t => t.UserId);
+		}
+		public void ConfigurePhoto(EntityTypeBuilder<Photo> builder)
+		{
+			builder.HasOne(t => t.User)
+				.WithMany(u => u.Photos)
 				.HasForeignKey(t => t.UserId);
 		}
 	}
