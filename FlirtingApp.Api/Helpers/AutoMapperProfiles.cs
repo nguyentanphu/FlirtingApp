@@ -16,10 +16,12 @@ namespace FlirtingApp.Api.Helpers
 		{
 			CreateMap<User, UserForListDto>()
 				.ForMember(u => u.PhotoUrl,
-					options => options.MapFrom((origin, destination) => origin.Photos.FirstOrDefault()?.Url))
+					options => options.MapFrom((o, d) => o.Photos.FirstOrDefault()?.Url))
 				.ForMember(u => u.Age, options =>
 					options.MapFrom((o, d) => o.DateOfBirth.CalculateAge()));
 			CreateMap<User, UserDetail>()
+				.ForMember(u => u.PhotoUrl,
+					options => options.MapFrom((o, d) => o.Photos.FirstOrDefault()?.Url))
 				.ForMember(u => u.Age, options =>
 					options.MapFrom((o, d) => o.DateOfBirth.CalculateAge()));
 			CreateMap<Photo, PhotoDto>();
