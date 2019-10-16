@@ -27,7 +27,7 @@ namespace FlirtingApp.Api.Identity
 		private readonly HashSet<RefreshToken> _refreshTokens = new HashSet<RefreshToken>();
 		public IEnumerable<RefreshToken> RefreshTokens => _refreshTokens.ToList();
 
-		public readonly HashSet<Photo> _photos = new HashSet<Photo>();
+		public HashSet<Photo> _photos = new HashSet<Photo>();
 		public IEnumerable<Photo> Photos => _photos.ToList();
 
 		public void AddRefreshToken(string token, Guid userId, string remoteIpAddress, double daysToExpire = 5)
