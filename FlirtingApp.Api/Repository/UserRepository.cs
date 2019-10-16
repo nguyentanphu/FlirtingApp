@@ -49,6 +49,15 @@ namespace FlirtingApp.Api.Repository
 		{
 			return await _apiDbContext.Users.AnyAsync(u => u.UserName == userName);
 		}
-		
+
+		public async Task<IEnumerable<User>> GetUsers()
+		{
+			return await _apiDbContext.Users.Include(u => u.Photos).ToArrayAsync();
+		}
+
+		public async Task<User> GetUser(Guid id)
+		{
+			return await _apiDbContext.Users.FirstAsync(u => u.Id == id);
+		}
 	}
 }

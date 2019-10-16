@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using System.Reflection;
 using System.Text;
+using AutoMapper;
 using FlirtingApp.Api.ConfigOptions;
 using FlirtingApp.Api.Configurations;
 using FlirtingApp.Api.Data;
@@ -86,7 +88,7 @@ namespace FlirtingApp.Api
 				});
 			});
 
-
+			services.AddAutoMapper(this.GetType().Assembly);
 
 			services.AddAuthentication(options =>
 			{

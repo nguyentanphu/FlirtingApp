@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using FlirtingApp.Api.Dtos;
 using FlirtingApp.Api.Repository;
 using FlirtingApp.Api.RequestModels;
 using Microsoft.AspNetCore.Http;
@@ -14,10 +16,11 @@ namespace FlirtingApp.Api.Controllers
     public class UsersController : ControllerBase
     {
 	    private readonly UserRepository _userRepository;
-
-	    public UsersController(UserRepository userRepository)
+	    private readonly IMapper _mapper;
+	    public UsersController(UserRepository userRepository, IMapper mapper)
 	    {
 		    _userRepository = userRepository;
+		    _mapper = mapper;
 	    }
 
 	    [HttpPost("create")]
@@ -36,6 +39,13 @@ namespace FlirtingApp.Api.Controllers
 			);
 
 		    return Ok(createdUser);
+	    }
+
+	    [HttpGet]
+	    public async Task<IActionResult> GetUsers()
+	    {
+		    var users = await _userRepository.GetUsers();
+		    return Ok(_mapper.Map<IEnumerable<UserForListDto>>(users));
 	    }
     }
 }
