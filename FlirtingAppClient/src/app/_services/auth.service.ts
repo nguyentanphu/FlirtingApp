@@ -40,3 +40,7 @@ export class AuthService {
   }
 }
 
+export function accessTokenGetter() {
+  const tokens = JSON.parse(localStorage.getItem('tokens'));
+  return tokens ? tokens.accessToken : null;
+}

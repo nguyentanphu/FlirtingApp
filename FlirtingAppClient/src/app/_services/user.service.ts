@@ -3,12 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('tokens')).accessToken
-  })
-};
-
 @Injectable({
   providedIn: 'root'
 })
@@ -21,10 +15,10 @@ export class UserService {
   }
 
   getUsers() {
-    return this.httpClient.get<User>(this.baseUrl + 'users', httpOptions);
+    return this.httpClient.get<User[]>(this.baseUrl + 'users');
   }
 
   getUser(id: string) {
-    return this.httpClient.get<User>(`${this.baseUrl}users/${id}`, httpOptions);
+    return this.httpClient.get<User>(`${this.baseUrl}users/${id}`);
   }
 }

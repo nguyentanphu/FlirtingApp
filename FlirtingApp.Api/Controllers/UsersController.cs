@@ -6,11 +6,13 @@ using AutoMapper;
 using FlirtingApp.Api.Dtos;
 using FlirtingApp.Api.Repository;
 using FlirtingApp.Api.RequestModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlirtingApp.Api.Controllers
 {
+	[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -23,6 +25,7 @@ namespace FlirtingApp.Api.Controllers
 		    _mapper = mapper;
 	    }
 
+		[AllowAnonymous]
 	    [HttpPost("create")]
 	    public async Task<IActionResult> Create(RegisterUserRequest newUser)
 	    {
