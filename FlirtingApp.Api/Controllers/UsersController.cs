@@ -51,7 +51,7 @@ namespace FlirtingApp.Api.Controllers
 		    return Ok(_mapper.Map<IEnumerable<UserForListDto>>(users));
 	    }
 
-	    [HttpGet("id")]
+	    [HttpGet("{id}")]
 	    public async Task<IActionResult> GetUser(Guid id)
 	    {
 		    var user = await _userRepository.GetUser(id);
