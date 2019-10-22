@@ -32,9 +32,20 @@
     <div class="col-sm-8">
       <div>
         <tabset>
-          <tab heading="Basic title">Basic content</tab>
-          <tab heading="Basic Title 1">Basic content 1</tab>
-          <tab heading="Basic Title 2">Basic content 2</tab>
+          <tab heading="Introduction">
+            <h4>Description</h4>
+            <p>{{user.introduction}}</p>
+            <h4>Looking for</h4>
+            <p>{{user.lookingFor}}</p>
+          </tab>
+          <tab heading="Interests">
+            <h4>Interests</h4>
+            <p>{{user.interests}}</p>
+          </tab>
+          <tab heading="Photos">
+            <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+          </tab>
+          <tab heading="Messages">Messages go here</tab>
         </tabset>
       </div>
     </div>

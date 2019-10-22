@@ -1,5 +1,5 @@
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -7,6 +7,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
+import { NgxGalleryModule } from 'ngx-gallery';
 
 import { appRoutes } from './routes';
 import { AppComponent } from './app.component';
@@ -21,6 +22,7 @@ import { MemberListComponent } from './members/member-list/member-list.component
 import { MemberCardComponent } from './members/member-card/member-card.component';
 import { environment } from 'src/environments/environment';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { CustomHammerConfig } from './_services/CustomHammerConfig';
 
 
 @NgModule({
@@ -49,10 +51,12 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
             whitelistedDomains: [environment.appDomain],
             blacklistedRoutes: [`${environment.appDomain}/users/create`, `${environment.appDomain}/auth/login`]
          }
-      })
+      }),
+      NgxGalleryModule
    ],
    providers: [
-      ErrorInterceptorProvider
+      ErrorInterceptorProvider,
+      { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
    ],
    bootstrap: [
       AppComponent

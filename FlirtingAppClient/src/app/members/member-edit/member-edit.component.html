@@ -1,3 +1,64 @@
-<p>
-  {{user.knownAs}}
-</p>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-sm-4">Your profile</div>
+    <div class="col-sm-8">
+      <div class="alert alert-info">
+        <p><strong>Information:</strong> Unsaved changes may be lost!</p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="card">
+        <img [src]="user.photoUrl" [alt]="user.knownAs" class="card-img-top img-thumbnail">
+        <div class="card-body">
+          <div>
+            <strong>Location: </strong>
+            <p>{{user.city}}, {{user.country}}</p>
+          </div>
+          <div>
+            <strong>Age:</strong>
+            <p>{{user.age}}</p>
+          </div>
+          <div>
+            <strong>Last active:</strong>
+            <p>{{user.lastActive}}</p>
+          </div>
+          <div>
+            <strong>Member since:</strong>
+            <p>{{user.created}}</p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-success btn-block">Message</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <div>
+        <tabset>
+          <tab heading="Introduction">
+            <form>
+              <h4>Description</h4>
+              <textarea name="introduction" rows="6" class="form-control" [(ngModel)]="user.introduction"></textarea>
+              <h4>Looking for</h4>
+              <textarea name="lookingFor" rows="6" class="form-control" [(ngModel)]="user.lookingFor"></textarea>
+              <h4>Interests</h4>
+              <textarea name="interests" rows="6" class="form-control" [(ngModel)]="user.interests"></textarea>
+              <h4>Location details</h4>
+              <div class="form-inline">
+                <label for="city">City</label>
+                <input type="text" class="form-control" id="city" name="city" [(ngModel)]="user.city">
+                <label for="country">Country</label>
+                <input type="text" class="form-control" id="country" name="country" [(ngModel)]="user.country">
+              </div>
+            </form>
+          </tab>
+          <tab heading="Photos">
+            Photos goes here
+          </tab>
+        </tabset>
+      </div>
+    </div>
+  </div>
+</div>
