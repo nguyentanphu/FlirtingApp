@@ -21,4 +21,7 @@ export class UserService {
   getUser(id: string) {
     return this.httpClient.get<User>(`${this.baseUrl}users/${id}`);
   }
+  updateUser(id: string, user: User) {
+    return this.httpClient.put(`${this.baseUrl}users/${id}`, user);
+  }
 }

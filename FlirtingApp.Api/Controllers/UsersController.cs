@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FlirtingApp.Api.Dtos;
+using FlirtingApp.Api.Identity;
 using FlirtingApp.Api.Repository;
 using FlirtingApp.Api.RequestModels;
 using Microsoft.AspNetCore.Authorization;
@@ -56,6 +57,20 @@ namespace FlirtingApp.Api.Controllers
 	    {
 		    var user = await _userRepository.GetUser(id);
 		    return Ok(_mapper.Map<UserDetail>(user));
+	    }
+
+		[HttpPut("{id}")]
+	    public async Task<IActionResult> UpdateUser(Guid id, UserForUpdateDto userForUpdateDto)
+	    {
+		    if (id != Guid.Parse(User.FindFirst("id").Value))
+		    {
+			    return Unauthorized();
+		    }
+
+		    var user = await _userRepository.GetUser(id);
+		    _mapper.Map(userForUpdateDto, user);
+		    await _userRepository.SaveAll();
+		    return NoContent();
 	    }
 	}
 }
