@@ -50,6 +50,7 @@ namespace FlirtingApp.Api
 				options.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha512Signature);
 			});
 			services.Configure<AuthOptions>(Configuration.GetSection(nameof(AuthOptions)));
+			services.Configure<CloudinaryCredential>(Configuration.GetSection(nameof(CloudinaryCredential)));
 
 			// add identity
 			var identityBuilder = services.AddDefaultIdentity<User>(o =>

@@ -72,5 +72,18 @@ namespace FlirtingApp.Api.Controllers
 		    await _userRepository.SaveAll();
 		    return NoContent();
 	    }
+
+	    [HttpGet("{userId}/photos/{photoId}", Name = "GetUserPhoto")]
+	    public async Task<IActionResult> GetUserPhoto(Guid userId, Guid photoId)
+	    {
+		    var user = await _userRepository.GetUser(userId);
+		    var photo = user.GetPhoto(photoId);
+		    if (photo == null)
+		    {
+			    return NotFound("Photo not found!");
+		    }
+
+		    return Ok(_mapper.Map<PhotoDto>(photo));
+	    }
 	}
 }

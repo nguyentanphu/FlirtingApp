@@ -26,6 +26,7 @@ namespace FlirtingApp.Api.Helpers
 					options.MapFrom((o, d) => o.DateOfBirth.CalculateAge()));
 			CreateMap<Photo, PhotoDto>();
 			CreateMap<UserForUpdateDto, User>();
+			CreateMap<PhotoForCreationDto, Photo>();
 		}
 	}
 }

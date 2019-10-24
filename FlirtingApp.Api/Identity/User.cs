@@ -46,5 +46,20 @@ namespace FlirtingApp.Api.Identity
 		{
 			return _refreshTokens.Any(t => t.Token == refreshToken && t.Active);
 		}
+
+		public Photo GetPhoto(Guid photoId)
+		{
+			return _photos.FirstOrDefault(p => p.Id == photoId);
+		}
+
+		public void AddPhoto(Photo photo)
+		{
+			if (!Photos.Any())
+			{
+				photo.IsMain = true;
+			}
+
+			_photos.Add(photo);
+		}
 	}
 }
