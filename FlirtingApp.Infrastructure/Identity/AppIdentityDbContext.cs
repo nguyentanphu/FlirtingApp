@@ -16,6 +16,7 @@ namespace FlirtingApp.Infrastructure.Identity
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
+			base.OnModelCreating(builder);
 			builder.ApplyConfigurationsFromAssembly(typeof(AppIdentityDbContext).Assembly);
 		}
 	}

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace FlirtingApp.Persistent.Common
+namespace FlirtingApp.Domain.Common
 {
 	public class AuditableEntity
 	{

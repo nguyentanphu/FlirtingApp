@@ -16,4 +16,9 @@
   <ItemGroup>
     <Folder Include="Migrations\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FlirtingApp.Application\FlirtingApp.Application.csproj" />
+    <ProjectReference Include="..\FlirtingApp.Infrastructure\FlirtingApp.Infrastructure.csproj" />
+    <ProjectReference Include="..\FlirtingApp.Persistent\FlirtingApp.Persistent.csproj" />
+  </ItemGroup>
 </Project>

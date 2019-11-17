@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FlirtingApp.Persistent.Common;
+using FlirtingApp.Domain.Common;
 
-namespace FlirtingApp.Persistent.Entities
+namespace FlirtingApp.Domain.Entities
 {
 	public class User: AuditableEntity
 	{

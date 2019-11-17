@@ -1,4 +1,4 @@
-﻿using FlirtingApp.Persistent.Entities;
+﻿using FlirtingApp.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlirtingApp.Persistent

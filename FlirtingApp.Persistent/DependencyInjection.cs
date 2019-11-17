@@ -9,7 +9,7 @@ namespace FlirtingApp.Persistent
 {
 	public static class DependencyInjection
 	{
-		public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+		public static IServiceCollection AddPersistent(this IServiceCollection services, IConfiguration configuration)
 		{
 			services.AddDbContext<AppDbContext>(options =>
 				options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionString"), sqlServerOptions => sqlServerOptions.MigrationsAssembly(typeof(AppDbContext).AssemblyQualifiedName)));

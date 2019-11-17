@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FlirtingApp.Persistent.Entities
+namespace FlirtingApp.Domain.Entities
 {
 	public class Photo
 	{
