@@ -9,5 +9,6 @@ namespace FlirtingApp.Application.Common.Interfaces
 	{
 		Task<Guid> CreateUserAsync(string userName, string password);
 		Task<bool> HasValidRefreshToken(string refreshToken, Guid appUserId, string remoteIpAddress);
+		Task MigrateIdentityDb();
 	}
 }

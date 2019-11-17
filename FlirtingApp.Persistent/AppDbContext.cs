@@ -41,5 +41,10 @@ namespace FlirtingApp.Persistent
 
 			return base.SaveChangesAsync(cancellationToken);
 		}
+
+		public async Task MigrateAsync(CancellationToken cancellationToken = default)
+		{
+			await Database.MigrateAsync(cancellationToken);
+		}
 	}
 }

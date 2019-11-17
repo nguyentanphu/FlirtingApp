@@ -43,5 +43,10 @@ namespace FlirtingApp.Infrastructure.Identity
 				.FirstAsync(a => a.Id == appUserId);
 			return matchedUser.HasValidRefreshToken(refreshToken, remoteIpAddress);
 		}
+
+		public async Task MigrateIdentityDb()
+		{
+			await _identityDbContext.Database.MigrateAsync();
+		}
 	}
 }

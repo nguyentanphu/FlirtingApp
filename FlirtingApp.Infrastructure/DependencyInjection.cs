@@ -20,6 +20,7 @@ namespace FlirtingApp.Infrastructure
 			services.AddDbContext<AppIdentityDbContext>(options =>
 				options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionString"), sqlServerOptions => sqlServerOptions.MigrationsAssembly(typeof(AppIdentityDbContext).AssemblyQualifiedName)));
 
+			services.AddScoped<IAppIdentityDbContext>(provider => provider.GetService<AppIdentityDbContext>());
 			services.AddScoped<IAppUserManager, AppAppUserManager>();
 
 			var authSettings = configuration.GetSection(nameof(AuthOptions));

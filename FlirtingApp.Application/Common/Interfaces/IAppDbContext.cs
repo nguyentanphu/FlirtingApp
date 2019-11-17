@@ -13,5 +13,6 @@ namespace FlirtingApp.Application.Common.Interfaces
 		DbSet<User> Users { get; set; }
 		DbSet<Photo> Photos { get; set; }
 		Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken());
+		Task MigrateAsync(CancellationToken cancellationToken = default);
 	}
 }

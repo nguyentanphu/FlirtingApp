@@ -19,10 +19,26 @@ namespace FlirtingApp.Application.System.Commands.SeedData
 
 	public class SeedDataCommandHandler : IRequestHandler<SeedDataCommand>
 	{
+		private readonly IAppIdentityDbContext _identityDbContext;
 		private readonly IAppDbContext _dbContext;
 		private readonly IAppUserManager _appUserManager;
+
+		public SeedDataCommandHandler(
+			IAppIdentityDbContext identityDbContext, 
+			IAppDbContext dbContext, 
+			IAppUserManager appUserManager
+			)
+		{
+			_identityDbContext = identityDbContext;
+			_dbContext = dbContext;
+			_appUserManager = appUserManager;
+		}
+
 		public async Task<Unit> Handle(SeedDataCommand request, CancellationToken cancellationToken)
 		{
+			await _identityDbContext.MigrateAsync(cancellationToken);
+			await _dbContext.MigrateAsync(cancellationToken);
+
 			if (await _dbContext.Users.AnyAsync(cancellationToken))
 			{
 				return Unit.Value;

@@ -1,9 +1,11 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using AutoMapper;
+using FlirtingApp.Application;
 using FlirtingApp.Infrastructure;
 using FlirtingApp.Persistent;
 using FlirtingApp.Web.Configurations;
+using FlirtingApp.Web.HostedServices;
 using FlirtingApp.Web.Identity;
 using FlirtingApp.Web.Repository;
 using FlirtingApp.Web.Services;
@@ -32,6 +34,9 @@ namespace FlirtingApp.Web
 		{
 			services.AddInfrastructure(Configuration);
 			services.AddPersistent(Configuration);
+			services.AddApplication();
+
+			services.AddHostedService<MigrationHostedService>();
 
 			services.AddControllers();
 
