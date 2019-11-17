@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FlirtingApp.Persistent.Migrations
 {
-    public partial class InitDataDatabase : Migration
+    public partial class InitDataDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,13 +12,9 @@ namespace FlirtingApp.Persistent.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
-                    Created = table.Column<DateTime>(nullable: false),
-                    LastModifiedBy = table.Column<string>(nullable: true),
-                    LastModified = table.Column<DateTime>(nullable: true),
                     IdentityId = table.Column<Guid>(nullable: false),
                     FirstName = table.Column<string>(maxLength: 100, nullable: true),
-                    LastName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(maxLength: 100, nullable: true),
                     DateOfBirth = table.Column<DateTime>(nullable: false),
                     KnownAs = table.Column<string>(maxLength: 100, nullable: true),
                     LastActive = table.Column<DateTime>(maxLength: 100, nullable: false),
@@ -38,6 +34,10 @@ namespace FlirtingApp.Persistent.Migrations
                 columns: table => new
                 {
                     PhotoId = table.Column<Guid>(nullable: false),
+                    CreatedBy = table.Column<Guid>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    LastModifiedBy = table.Column<Guid>(nullable: true),
+                    LastModified = table.Column<DateTime>(nullable: true),
                     Url = table.Column<string>(maxLength: 150, nullable: true),
                     Description = table.Column<string>(maxLength: 1000, nullable: true),
                     DateAdded = table.Column<DateTime>(nullable: false),

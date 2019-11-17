@@ -25,6 +25,12 @@ namespace FlirtingApp.Persistent.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
 
@@ -34,6 +40,12 @@ namespace FlirtingApp.Persistent.Migrations
 
                     b.Property<bool>("IsMain")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(150)")
@@ -63,12 +75,6 @@ namespace FlirtingApp.Persistent.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
@@ -95,14 +101,9 @@ namespace FlirtingApp.Persistent.Migrations
                         .HasColumnType("datetime2")
                         .HasMaxLength(100);
 
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<string>("LookingFor")
                         .HasColumnType("nvarchar(1000)")

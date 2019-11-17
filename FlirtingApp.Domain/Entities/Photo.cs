@@ -1,8 +1,9 @@
 ﻿using System;
+using FlirtingApp.Domain.Common;
 
 namespace FlirtingApp.Domain.Entities
 {
-	public class Photo
+	public class Photo: AuditableEntity
 	{
 		public Guid PhotoId { get; set; }
 		public string Url { get; set; }
