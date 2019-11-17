@@ -15,13 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{FFF261A0-2708-4689-883C-7D1EFE87F5CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlirtingApp.Application", "FlirtingApp.Application\FlirtingApp.Application.csproj", "{9722D59A-65B4-4073-9602-D246766E7EA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlirtingApp.Application", "FlirtingApp.Application\FlirtingApp.Application.csproj", "{9722D59A-65B4-4073-9602-D246766E7EA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlirtingApp.Domain", "FlirtingApp.Domain\FlirtingApp.Domain.csproj", "{FA88BD6D-293A-444F-9CBB-F33F7084F014}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlirtingApp.Domain", "FlirtingApp.Domain\FlirtingApp.Domain.csproj", "{FA88BD6D-293A-444F-9CBB-F33F7084F014}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlirtingApp.ThirdParty", "FlirtingApp.Infrastructure\FlirtingApp.ThirdParty.csproj", "{275ACE98-FD26-4E15-8FC6-B487E0A003AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlirtingApp.Infrastructure", "FlirtingApp.Infrastructure\FlirtingApp.Infrastructure.csproj", "{275ACE98-FD26-4E15-8FC6-B487E0A003AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlirtingApp.Persistent", "FlirtingApp.Persistent\FlirtingApp.Persistent.csproj", "{1D1B214F-0ED0-4A2E-A799-FD8B3540A6C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlirtingApp.Persistent", "FlirtingApp.Persistent\FlirtingApp.Persistent.csproj", "{1D1B214F-0ED0-4A2E-A799-FD8B3540A6C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

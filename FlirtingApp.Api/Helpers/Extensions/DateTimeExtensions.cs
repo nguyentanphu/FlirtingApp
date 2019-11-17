@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace FlirtingApp.Api.Helpers.Extensions
+namespace FlirtingApp.Web.Helpers.Extensions
 {
 	public static class DateTimeExtensions
 	{

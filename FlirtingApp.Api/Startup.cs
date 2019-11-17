@@ -1,21 +1,19 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
-using System.Reflection;
 using System.Text;
 using AutoMapper;
-using FlirtingApp.Api.ConfigOptions;
-using FlirtingApp.Api.Configurations;
-using FlirtingApp.Api.Data;
-using FlirtingApp.Api.Identity;
-using FlirtingApp.Api.Repository;
-using FlirtingApp.Api.Services;
+using FlirtingApp.Web.ConfigOptions;
+using FlirtingApp.Web.Configurations;
+using FlirtingApp.Web.Data;
+using FlirtingApp.Web.Identity;
+using FlirtingApp.Web.Repository;
+using FlirtingApp.Web.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +21,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
-namespace FlirtingApp.Api
+namespace FlirtingApp.Web
 {
 	public class Startup
 	{

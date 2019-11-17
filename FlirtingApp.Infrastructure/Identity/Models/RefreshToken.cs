@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FlirtingApp.Web.Identity
+namespace FlirtingApp.Infrastructure.Identity.Models
 {
 	public class RefreshToken
 	{
@@ -10,22 +10,22 @@ namespace FlirtingApp.Web.Identity
 		}
 		public RefreshToken(
 			string token, 
-			Guid userId, 
+			Guid appUserId, 
 			string remoteIpAddress, 
 			DateTime expires
 		)
 		{
 			Token = token;
-			UserId = userId;
+			AppUserId = appUserId;
 			RemoteIpAddress = remoteIpAddress;
 			Expires = expires;
 		}
 
-		public Guid Id { get; set; }
+		public Guid RefreshTokenId { get; set; }
 		public string Token { get; set; }
 		public DateTime Expires { get; set; }
-		public Guid UserId { get; set; }
-		public User User { get; set; }
+		public Guid AppUserId { get; set; }
+		public AppUser AppUser { get; set; }
 		public bool Active => DateTime.UtcNow <= Expires;
 		public string RemoteIpAddress { get; set; }
 	}

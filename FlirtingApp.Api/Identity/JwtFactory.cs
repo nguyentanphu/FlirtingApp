@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
-using System.Threading.Tasks;
-using FlirtingApp.Api.ConfigOptions;
-using FlirtingApp.Api.Dtos;
+using FlirtingApp.Web.ConfigOptions;
+using FlirtingApp.Web.Dtos;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
-namespace FlirtingApp.Api.Identity
+namespace FlirtingApp.Web.Identity
 {
 	public class JwtFactory
 	{

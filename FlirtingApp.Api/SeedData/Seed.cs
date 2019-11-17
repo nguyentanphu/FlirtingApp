@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using FlirtingApp.Api.Data;
-using FlirtingApp.Api.Identity;
+using FlirtingApp.Web.Data;
+using FlirtingApp.Web.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
-namespace FlirtingApp.Api.SeedData
+namespace FlirtingApp.Web.SeedData
 {
 	public static class Seed
 	{

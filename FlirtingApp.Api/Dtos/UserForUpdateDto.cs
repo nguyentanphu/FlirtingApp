@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace FlirtingApp.Api.Dtos
+﻿namespace FlirtingApp.Web.Dtos
 {
 	public class UserForUpdateDto
 	{

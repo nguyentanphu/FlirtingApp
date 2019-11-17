@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FlirtingApp.Api.ConfigOptions;
-using FlirtingApp.Api.Identity;
-using FlirtingApp.Api.Repository;
-using FlirtingApp.Api.RequestModels;
-using FlirtingApp.Api.Services;
-using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
+using FlirtingApp.Web.ConfigOptions;
+using FlirtingApp.Web.Repository;
+using FlirtingApp.Web.RequestModels;
+using FlirtingApp.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 
-namespace FlirtingApp.Api.Controllers
+namespace FlirtingApp.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

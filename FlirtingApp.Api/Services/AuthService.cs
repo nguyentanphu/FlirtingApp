@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FlirtingApp.Api.ConfigOptions;
-using FlirtingApp.Api.Data;
-using FlirtingApp.Api.Dtos;
-using FlirtingApp.Api.Identity;
+using FlirtingApp.Web.Data;
+using FlirtingApp.Web.Dtos;
+using FlirtingApp.Web.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace FlirtingApp.Api.Services
+namespace FlirtingApp.Web.Services
 {
 	public class AuthService
 	{

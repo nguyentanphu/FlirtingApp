@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
-using FlirtingApp.Api.ConfigOptions;
-using FlirtingApp.Api.Dtos;
-using FlirtingApp.Api.Models;
-using FlirtingApp.Api.Repository;
+using FlirtingApp.Web.ConfigOptions;
+using FlirtingApp.Web.Dtos;
+using FlirtingApp.Web.Models;
+using FlirtingApp.Web.Repository;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
-namespace FlirtingApp.Api.Controllers
+namespace FlirtingApp.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FlirtingApp.Api.Identity;
+using FlirtingApp.Web.Identity;
 
-namespace FlirtingApp.Api.Models
+namespace FlirtingApp.Web.Models
 {
 	public class Photo
 	{

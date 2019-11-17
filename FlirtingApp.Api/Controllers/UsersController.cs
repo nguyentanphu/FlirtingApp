@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using FlirtingApp.Api.Dtos;
-using FlirtingApp.Api.Identity;
-using FlirtingApp.Api.Repository;
-using FlirtingApp.Api.RequestModels;
+using FlirtingApp.Web.Dtos;
+using FlirtingApp.Web.Repository;
+using FlirtingApp.Web.RequestModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FlirtingApp.Api.Controllers
+namespace FlirtingApp.Web.Controllers
 {
 	[Authorize]
     [Route("api/[controller]")]

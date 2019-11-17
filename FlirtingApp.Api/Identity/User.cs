@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Identity;
 using System.Linq;
-using FlirtingApp.Api.Models;
+using FlirtingApp.Web.Models;
+using Microsoft.AspNetCore.Identity;
 
-namespace FlirtingApp.Api.Identity
+namespace FlirtingApp.Web.Identity
 {
 	public class User: IdentityUser<Guid>
 	{

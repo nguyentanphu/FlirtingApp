@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using FlirtingApp.Api.Data;
-using FlirtingApp.Api.Identity;
+using FlirtingApp.Web.Data;
+using FlirtingApp.Web.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace FlirtingApp.Api.Repository
+namespace FlirtingApp.Web.Repository
 {
 	public class UserRepository
 	{
