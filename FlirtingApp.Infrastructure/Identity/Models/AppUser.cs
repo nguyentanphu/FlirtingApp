@@ -22,9 +22,9 @@ namespace FlirtingApp.Infrastructure.Identity.Models
 			_refreshTokens.Remove(RefreshTokens.First(t => t.Token == refreshToken));
 		}
 
-		public bool HasValidRefreshToken(string refreshToken)
+		public bool HasValidRefreshToken(string refreshToken, string remoteIpAddress)
 		{
-			return _refreshTokens.Any(t => t.Token == refreshToken && t.Active);
+			return _refreshTokens.Any(t => t.Token == refreshToken && t.RemoteIpAddress == remoteIpAddress && t.Active);
 		}
 	}
 }

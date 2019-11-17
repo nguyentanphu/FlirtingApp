@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using FlirtingApp.Application.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -14,6 +15,7 @@ namespace FlirtingApp.Persistent
 			services.AddDbContext<AppDbContext>(options =>
 				options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionString"), sqlServerOptions => sqlServerOptions.MigrationsAssembly(typeof(AppDbContext).AssemblyQualifiedName)));
 
+			services.AddScoped<IAppDbContext>(provider => provider.GetService<AppDbContext>());
 			return services;
 		}
 	}

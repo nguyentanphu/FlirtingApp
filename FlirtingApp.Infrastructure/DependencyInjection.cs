@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using FlirtingApp.Application.Common.Interfaces;
 using FlirtingApp.Infrastructure.ConfigOptions;
 using FlirtingApp.Infrastructure.Identity;
 using FlirtingApp.Infrastructure.Identity.Models;
@@ -18,6 +19,8 @@ namespace FlirtingApp.Infrastructure
 		{
 			services.AddDbContext<AppIdentityDbContext>(options =>
 				options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionString"), sqlServerOptions => sqlServerOptions.MigrationsAssembly(typeof(AppIdentityDbContext).AssemblyQualifiedName)));
+
+			services.AddScoped<IAppUserManager, AppAppUserManager>();
 
 			var authSettings = configuration.GetSection(nameof(AuthOptions));
 			var jwtOptions = configuration.GetSection(nameof(JwtOptions));

@@ -28,4 +28,8 @@
     <Folder Include="Identity\Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FlirtingApp.Application\FlirtingApp.Application.csproj" />
+  </ItemGroup>
+
 </Project>
