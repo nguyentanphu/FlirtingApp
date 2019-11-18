@@ -22,7 +22,7 @@ namespace FlirtingApp.Infrastructure
 				options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionString"), sqlServerOptions => sqlServerOptions.MigrationsAssembly(typeof(AppIdentityDbContext).Assembly.GetName().Name)));
 
 			services.AddScoped<IAppIdentityDbContext>(provider => provider.GetService<AppIdentityDbContext>());
-			services.AddScoped<IAppUserManager, AppAppUserManager>();
+			services.AddScoped<IAppUserManager, AppUserManager>();
 
 			services.AddScoped<IMachineDateTime, MachineDateTime>();
 

@@ -11,11 +11,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlirtingApp.Infrastructure.Identity
 {
-	class AppAppUserManager : IAppUserManager
+	class AppUserManager : IAppUserManager
 	{
 		private readonly UserManager<AppUser> _userManager;
 		private readonly AppIdentityDbContext _identityDbContext;
-		public AppAppUserManager(UserManager<AppUser> userManager, AppIdentityDbContext identityDbContext)
+		public AppUserManager(UserManager<AppUser> userManager, AppIdentityDbContext identityDbContext)
 		{
 			_userManager = userManager;
 			_identityDbContext = identityDbContext;
