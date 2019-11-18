@@ -15,17 +15,17 @@ namespace FlirtingApp.Infrastructure.Registras
 	{
 		public static IServiceCollection AddCustomJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
 		{
-			var authSettings = configuration.GetSection(nameof(AuthOptions));
+			var authSettings = configuration.GetSection(nameof(JwtAuthOptions));
 			var jwtOptions = configuration.GetSection(nameof(JwtOptions));
 			var signingKey =
-				new SymmetricSecurityKey(Encoding.ASCII.GetBytes(authSettings[nameof(AuthOptions.JwtSecret)]));
+				new SymmetricSecurityKey(Encoding.ASCII.GetBytes(authSettings[nameof(JwtAuthOptions.Secret)]));
 			services.Configure<JwtOptions>(options =>
 			{
 				options.Issuer = jwtOptions[nameof(JwtOptions.Issuer)];
 				options.Audience = jwtOptions[nameof(JwtOptions.Audience)];
 				options.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha512Signature);
 			});
-			services.Configure<AuthOptions>(authSettings);
+			services.Configure<JwtAuthOptions>(authSettings);
 			services.Configure<CloudinaryCredential>(configuration.GetSection(nameof(CloudinaryCredential)));
 
 			services.AddIdentityCore<AppUser>(o =>

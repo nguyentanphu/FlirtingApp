@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FlirtingApp.Application.Common.Interfaces;
+using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Infrastructure.Exceptions;
 using FlirtingApp.Infrastructure.Identity.Models;
 using Microsoft.AspNetCore.Identity;
@@ -11,11 +12,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlirtingApp.Infrastructure.Identity
 {
-	class AppAppUserManager : IAppUserManager
+	class AppUserManager : IAppUserManager
 	{
 		private readonly UserManager<AppUser> _userManager;
 		private readonly AppIdentityDbContext _identityDbContext;
-		public AppAppUserManager(UserManager<AppUser> userManager, AppIdentityDbContext identityDbContext)
+		public AppUserManager(UserManager<AppUser> userManager, AppIdentityDbContext identityDbContext)
 		{
 			_userManager = userManager;
 			_identityDbContext = identityDbContext;
@@ -36,7 +37,26 @@ namespace FlirtingApp.Infrastructure.Identity
 			return newUser.Id;
 		}
 
-		public async Task<bool> HasValidRefreshToken(string refreshToken, Guid appUserId, string remoteIpAddress)
+		public async Task<(bool Success, Guid UserId)> LoginUserAsync(string userName, string password, string refreshToken, string remoteIpAddress)
+		{
+			var matchedUser = await _userManager.FindByNameAsync(userName);
+			if (matchedUser == null)
+			{
+				return (false, default);
+			}
+
+			var valid = await _userManager.CheckPasswordAsync(matchedUser, password);
+			if (!valid)
+			{
+				return (false, default);
+			}
+
+			matchedUser.AddRefreshToken(refreshToken, remoteIpAddress);
+			await _identityDbContext.SaveChangesAsync();
+			return (true, matchedUser.Id);
+		}
+
+		public async Task<bool> HasValidRefreshTokenAsync(string refreshToken, Guid appUserId, string remoteIpAddress)
 		{
 			var matchedUser = await _identityDbContext.AppUsers
 				.Include(a => a.RefreshTokens)
@@ -44,9 +64,5 @@ namespace FlirtingApp.Infrastructure.Identity
 			return matchedUser.HasValidRefreshToken(refreshToken, remoteIpAddress);
 		}
 
-		public async Task MigrateIdentityDb()
-		{
-			await _identityDbContext.Database.MigrateAsync();
-		}
 	}
 }

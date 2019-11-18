@@ -4,9 +4,9 @@ namespace FlirtingApp.Domain.Common
 {
 	public class AuditableEntity
 	{
-		public Guid CreatedBy { get; set; }
+		public Guid? CreatedBy { get; set; }
 
-		public DateTime Created { get; set; }
+		public DateTime? Created { get; set; }
 
 		public Guid? LastModifiedBy { get; set; }
 

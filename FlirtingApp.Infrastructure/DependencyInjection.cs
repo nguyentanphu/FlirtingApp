@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FlirtingApp.Application.Common.Interfaces;
-using FlirtingApp.Infrastructure.ConfigOptions;
+﻿using FlirtingApp.Application.Common.Interfaces;
+using FlirtingApp.Application.Common.Interfaces.Databases;
+using FlirtingApp.Application.Common.Interfaces.System;
 using FlirtingApp.Infrastructure.Identity;
-using FlirtingApp.Infrastructure.Identity.Models;
 using FlirtingApp.Infrastructure.Registras;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using FlirtingApp.Infrastructure.System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 
 namespace FlirtingApp.Infrastructure
 {
@@ -19,10 +15,13 @@ namespace FlirtingApp.Infrastructure
 		public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
 		{
 			services.AddDbContext<AppIdentityDbContext>(options =>
-				options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionString"), sqlServerOptions => sqlServerOptions.MigrationsAssembly(typeof(AppIdentityDbContext).AssemblyQualifiedName)));
+				options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionString"), sqlServerOptions => sqlServerOptions.MigrationsAssembly(typeof(AppIdentityDbContext).Assembly.GetName().Name)));
 
 			services.AddScoped<IAppIdentityDbContext>(provider => provider.GetService<AppIdentityDbContext>());
-			services.AddScoped<IAppUserManager, AppAppUserManager>();
+			services.AddScoped<IAppUserManager, AppUserManager>();
+
+			services.AddScoped<IMachineDateTime, MachineDateTime>();
+			services.AddScoped<ITokenFactory, TokenFactory>();
 
 			services.AddCustomJwtAuthentication(configuration);
 			return services;

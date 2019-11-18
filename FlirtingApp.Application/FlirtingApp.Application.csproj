@@ -28,4 +28,14 @@
     <ProjectReference Include="..\FlirtingApp.Domain\FlirtingApp.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="System\Commands\SeedData\seedPhotoData.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Users\Queries\" />
+  </ItemGroup>
+
 </Project>

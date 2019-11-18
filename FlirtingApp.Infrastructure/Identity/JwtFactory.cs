@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
+using FlirtingApp.Application.Common.Interfaces.Identity;
 using FlirtingApp.Infrastructure.ConfigOptions;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -8,20 +10,16 @@ using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegiste
 
 namespace FlirtingApp.Infrastructure.Identity
 {
-	public interface IJwtFactory
-	{
-		string GenerateEncodedTokens(Guid id, string userName);
-		ClaimsPrincipal GetClaimPrinciple(string accessToken, SecurityKey signingKey);
-	}
-
 	public class JwtFactory : IJwtFactory
 	{
 		private readonly JwtOptions _jwtOptions;
+		private readonly JwtAuthOptions _jwtAuthOptions;
 		private readonly JwtSecurityTokenHandler _jwtHandler;
 
-		public JwtFactory(IOptions<JwtOptions> jwtOptions, JwtSecurityTokenHandler jwtHandler)
+		public JwtFactory(IOptions<JwtOptions> jwtOptions, IOptions<JwtAuthOptions> jwtAuthOptions, JwtSecurityTokenHandler jwtHandler)
 		{
 			_jwtHandler = jwtHandler;
+			_jwtAuthOptions = jwtAuthOptions.Value;
 			_jwtOptions = jwtOptions.Value;
 		}
 
@@ -43,14 +41,14 @@ namespace FlirtingApp.Infrastructure.Identity
 			return _jwtHandler.WriteToken(jwt);
 		}
 
-		public ClaimsPrincipal GetClaimPrinciple(string accessToken, SecurityKey signingKey)
+		public ClaimsPrincipal GetClaimPrinciple(string accessToken)
 		{
 			return _jwtHandler.ValidateToken(accessToken, new TokenValidationParameters
 			{
 				ValidateIssuer = false,
 				ValidateAudience = false,
 				ValidateIssuerSigningKey = true,
-				IssuerSigningKey = signingKey,
+				IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_jwtAuthOptions.Secret)),
 				ValidateLifetime = false,
 			}, out _);
 		}
