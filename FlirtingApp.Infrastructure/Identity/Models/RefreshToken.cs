@@ -10,13 +10,11 @@ namespace FlirtingApp.Infrastructure.Identity.Models
 		}
 		public RefreshToken(
 			string token, 
-			Guid appUserId, 
 			string remoteIpAddress, 
 			DateTime expires
 		)
 		{
 			Token = token;
-			AppUserId = appUserId;
 			RemoteIpAddress = remoteIpAddress;
 			Expires = expires;
 		}

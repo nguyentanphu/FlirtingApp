@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FlirtingApp.Application.Common.Interfaces;
+using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Infrastructure.Exceptions;
 using FlirtingApp.Infrastructure.Identity.Models;
 using Microsoft.AspNetCore.Identity;
@@ -36,12 +37,31 @@ namespace FlirtingApp.Infrastructure.Identity
 			return newUser.Id;
 		}
 
-		public async Task<bool> HasValidRefreshToken(string refreshToken, Guid appUserId, string remoteIpAddress)
+		public async Task<bool> LoginUserAsync(string userName, string password, string refreshToken, string remoteIpAddress)
+		{
+			var matchedUser = await _userManager.FindByNameAsync(userName);
+			if (matchedUser == null)
+			{
+				return false;
+			}
+
+			var valid = await _userManager.CheckPasswordAsync(matchedUser, password);
+			if (!valid)
+			{
+				return false;
+			}
+
+			matchedUser.AddRefreshToken(refreshToken, remoteIpAddress);
+			return true;
+		}
+
+		public async Task<bool> HasValidRefreshTokenAsync(string refreshToken, Guid appUserId, string remoteIpAddress)
 		{
 			var matchedUser = await _identityDbContext.AppUsers
 				.Include(a => a.RefreshTokens)
 				.FirstAsync(a => a.Id == appUserId);
 			return matchedUser.HasValidRefreshToken(refreshToken, remoteIpAddress);
 		}
+
 	}
 }

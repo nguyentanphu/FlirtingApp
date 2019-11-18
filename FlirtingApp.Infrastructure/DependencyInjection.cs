@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using FlirtingApp.Application.Common.Interfaces;
+using FlirtingApp.Application.Common.Interfaces.Databases;
+using FlirtingApp.Application.Common.Interfaces.System;
 using FlirtingApp.Infrastructure.ConfigOptions;
 using FlirtingApp.Infrastructure.Identity;
 using FlirtingApp.Infrastructure.Identity.Models;
@@ -25,6 +27,7 @@ namespace FlirtingApp.Infrastructure
 			services.AddScoped<IAppUserManager, AppUserManager>();
 
 			services.AddScoped<IMachineDateTime, MachineDateTime>();
+			services.AddScoped<ITokenFactory, TokenFactory>();
 
 			var authSettings = configuration.GetSection(nameof(AuthOptions));
 			var jwtOptions = configuration.GetSection(nameof(JwtOptions));

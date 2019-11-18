@@ -12,9 +12,9 @@ namespace FlirtingApp.Infrastructure.Identity.Models
 		public IEnumerable<RefreshToken> RefreshTokens => _refreshTokens.ToList();
 
 
-		public void AddRefreshToken(string token, Guid userId, string remoteIpAddress, double daysToExpire = 5)
+		public void AddRefreshToken(string token, string remoteIpAddress, double daysToExpire = 5)
 		{
-			_refreshTokens.Add(new RefreshToken(token, userId, remoteIpAddress, DateTime.UtcNow.AddDays(daysToExpire)));
+			_refreshTokens.Add(new RefreshToken(token, remoteIpAddress, DateTime.UtcNow.AddDays(daysToExpire)));
 		}
 
 		public void RemoveRefreshToken(string refreshToken)

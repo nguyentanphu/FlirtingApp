@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using FlirtingApp.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace FlirtingApp.Application.Common.Interfaces
+namespace FlirtingApp.Application.Common.Interfaces.Databases
 {
 	public interface IAppDbContext
 	{
