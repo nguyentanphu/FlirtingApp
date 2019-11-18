@@ -2,6 +2,7 @@
 using System.Net;
 using AutoMapper;
 using FlirtingApp.Application;
+using FlirtingApp.Application.Common.Interfaces;
 using FlirtingApp.Infrastructure;
 using FlirtingApp.Persistent;
 using FlirtingApp.Web.Configurations;
@@ -35,6 +36,7 @@ namespace FlirtingApp.Web
 			services.AddInfrastructure(Configuration);
 			services.AddPersistent(Configuration);
 			services.AddApplication();
+			services.AddScoped<ICurrentUser, CurrentUserService>();
 
 			services.AddHostedService<MigrationHostedService>();
 

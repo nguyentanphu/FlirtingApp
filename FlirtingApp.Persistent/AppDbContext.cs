@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using FlirtingApp.Application.Common.Interfaces;
 using FlirtingApp.Domain.Common;
@@ -9,6 +10,8 @@ namespace FlirtingApp.Persistent
 {
 	public class AppDbContext: DbContext, IAppDbContext
 	{
+		private readonly ICurrentUser _currentUser;
+		private readonly IMachineDateTime _dateTime;
 		public AppDbContext(DbContextOptions<AppDbContext> options): base(options)
 		{
 			
@@ -26,17 +29,18 @@ namespace FlirtingApp.Persistent
 		{
 			foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
 			{
-				//switch (entry.State)
-				//{
-				//	case EntityState.Added:
-				//		//entry.Entity.CreatedBy = _currentUserService.UserId;
-				//		entry.Entity.Created = _dateTime.Now;
-				//		break;
-				//	case EntityState.Modified:
-				//		entry.Entity.LastModifiedBy = _currentUserService.UserId;
-				//		entry.Entity.LastModified = _dateTime.Now;
-				//		break;
-				//}
+				var entity = entry.Entity;
+				switch (entry.State)
+				{
+					case EntityState.Added:
+						entity.CreatedBy ??= _currentUser.UserId;
+						entity.Created ??= _dateTime.UtcNow;
+						break;
+					case EntityState.Modified:
+						entity.LastModifiedBy ??= _currentUser.UserId;
+						entity.LastModified ??= _dateTime.Now;
+						break;
+				}
 			}
 
 			return base.SaveChangesAsync(cancellationToken);

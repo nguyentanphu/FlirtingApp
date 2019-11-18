@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -44,11 +45,16 @@ namespace FlirtingApp.Application.System.Commands.SeedData
 				return Unit.Value;
 			}
 
-			var usersJson = File.ReadAllText("System/Commands/SeedData/seedUserData.json");
-			var userList = JsonSerializer.Deserialize<List<User>>(usersJson);
+			var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			var jsonSerializeSettings = new JsonSerializerOptions
+			{
+				PropertyNameCaseInsensitive = true
+			};
+			var usersJson = File.ReadAllText(Path.Combine(dir, "System/Commands/SeedData/seedUserData.json"));
+			var userList = JsonSerializer.Deserialize<List<User>>(usersJson, jsonSerializeSettings);
 
-			var photosJson = File.ReadAllText("System/Commands/SeedData/seedPhotoData.json");
-			var photoList = JsonSerializer.Deserialize<List<Photo>>(photosJson);
+			var photosJson = File.ReadAllText(Path.Combine(dir, "System/Commands/SeedData/seedPhotoData.json"));
+			var photoList = JsonSerializer.Deserialize<List<Photo>>(photosJson, jsonSerializeSettings);
 
 			for (int i = 0; i < userList.Count; i++)
 			{
