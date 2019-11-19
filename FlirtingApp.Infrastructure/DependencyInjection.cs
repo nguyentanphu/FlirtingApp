@@ -1,5 +1,6 @@
 ﻿using FlirtingApp.Application.Common.Interfaces;
 using FlirtingApp.Application.Common.Interfaces.Databases;
+using FlirtingApp.Application.Common.Interfaces.Identity;
 using FlirtingApp.Application.Common.Interfaces.System;
 using FlirtingApp.Infrastructure.Identity;
 using FlirtingApp.Infrastructure.Registras;
@@ -19,9 +20,11 @@ namespace FlirtingApp.Infrastructure
 
 			services.AddScoped<IAppIdentityDbContext>(provider => provider.GetService<AppIdentityDbContext>());
 			services.AddScoped<IAppUserManager, AppUserManager>();
+			services.AddScoped<ITokenFactory, TokenFactory>();
+			services.AddScoped<IJwtFactory, JwtFactory>();
 
 			services.AddScoped<IMachineDateTime, MachineDateTime>();
-			services.AddScoped<ITokenFactory, TokenFactory>();
+			
 
 			services.AddAppJwtAuthentication(configuration);
 			return services;

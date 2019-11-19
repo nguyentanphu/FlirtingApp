@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using FlirtingApp.Infrastructure.ConfigOptions;
 using FlirtingApp.Infrastructure.Identity;
@@ -38,6 +39,7 @@ namespace FlirtingApp.Infrastructure.Registras
 				o.Password.RequiredLength = 6;
 			}).AddEntityFrameworkStores<AppIdentityDbContext>();
 
+			JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 			services.AddAuthentication(options =>
 			{
 				options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

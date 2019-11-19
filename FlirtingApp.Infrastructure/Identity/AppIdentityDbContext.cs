@@ -18,11 +18,12 @@ namespace FlirtingApp.Infrastructure.Identity
 		}
 
 		public DbSet<AppUser> AppUsers { get; set; }
+		public DbSet<RefreshToken> RefreshTokens { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
-			base.OnModelCreating(builder);
 			builder.ApplyConfigurationsFromAssembly(typeof(AppIdentityDbContext).Assembly);
+			base.OnModelCreating(builder);
 		}
 
 		public async Task MigrateAsync(CancellationToken cancellationToken = default)
