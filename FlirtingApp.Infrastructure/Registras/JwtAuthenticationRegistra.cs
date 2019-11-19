@@ -11,9 +11,9 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace FlirtingApp.Infrastructure.Registras
 {
-	public static class CustomJwtAuthentication
+	public static class JwtAuthenticationRegistra
 	{
-		public static IServiceCollection AddCustomJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
+		public static IServiceCollection AddAppJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
 		{
 			var authSettings = configuration.GetSection(nameof(JwtAuthOptions));
 			var jwtOptions = configuration.GetSection(nameof(JwtOptions));

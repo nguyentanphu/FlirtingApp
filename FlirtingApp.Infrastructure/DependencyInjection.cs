@@ -23,7 +23,7 @@ namespace FlirtingApp.Infrastructure
 			services.AddScoped<IMachineDateTime, MachineDateTime>();
 			services.AddScoped<ITokenFactory, TokenFactory>();
 
-			services.AddCustomJwtAuthentication(configuration);
+			services.AddAppJwtAuthentication(configuration);
 			return services;
 		}
 	}

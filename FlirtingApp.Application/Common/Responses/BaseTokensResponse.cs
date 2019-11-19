@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FlirtingApp.Application.Users.Commands.Login
+namespace FlirtingApp.Application.Common.Responses
 {
-	public class LoginCommandReponse
+	public class BaseTokensResponse
 	{
 		public string AccessToken { get; set; }
 		public string RefreshToken { get; set; }

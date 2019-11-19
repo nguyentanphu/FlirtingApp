@@ -4,21 +4,21 @@ using System.Threading.Tasks;
 using FlirtingApp.Application.Common.Interfaces;
 using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Application.Common.Interfaces.Identity;
+using FlirtingApp.Application.Common.Responses;
 using FlirtingApp.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using NotImplementedException = System.NotImplementedException;
 
 namespace FlirtingApp.Application.Users.Commands.Login
 {
-	public class LoginCommand: IRequest<LoginCommandReponse>
+	public class LoginCommand: IRequest<BaseTokensResponse>
 	{
 		public string UserName { get; set; }
 		public string Password { get; set; }
 		public string RemoteIpAddress { get; set; }
 	}
 
-	public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginCommandReponse>
+	public class LoginCommandHandler : IRequestHandler<LoginCommand, BaseTokensResponse>
 	{
 		private readonly IAppUserManager _userManager;
 		private readonly ITokenFactory _tokenFactory;
@@ -33,13 +33,11 @@ namespace FlirtingApp.Application.Users.Commands.Login
 			_dbContext = dbContext;
 		}
 
-		public async Task<LoginCommandReponse> Handle(LoginCommand request, CancellationToken cancellationToken)
+		public async Task<BaseTokensResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
 		{
-			var refreshToken = _tokenFactory.GenerateToken();
 			var loginResult = await _userManager.LoginUserAsync(
 				request.UserName, 
 				request.Password, 
-				refreshToken, 
 				request.RemoteIpAddress
 			);
 			if (!loginResult.Success)
@@ -47,13 +45,13 @@ namespace FlirtingApp.Application.Users.Commands.Login
 				throw new LoginException();
 			}
 
-			var user = await GetUserByIdentityUser(loginResult.UserId);
-			var accessToken = _jwtFactory.GenerateEncodedTokens(user.UserId, user.UserName);
+			var user = await GetUserByIdentityUser(loginResult.AppUserId);
+			var accessToken = _jwtFactory.GenerateEncodedTokens(user.UserId, loginResult.AppUserId, user.UserName);
 
-			return new LoginCommandReponse
+			return new BaseTokensResponse
 			{
 				AccessToken = accessToken,
-				RefreshToken = refreshToken
+				RefreshToken = loginResult.RefreshToken
 			};
 		}
 

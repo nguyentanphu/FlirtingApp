@@ -16,10 +16,12 @@ namespace FlirtingApp.Infrastructure.Identity
 	{
 		private readonly UserManager<AppUser> _userManager;
 		private readonly AppIdentityDbContext _identityDbContext;
-		public AppUserManager(UserManager<AppUser> userManager, AppIdentityDbContext identityDbContext)
+		private readonly ITokenFactory _tokenFactory;
+		public AppUserManager(UserManager<AppUser> userManager, AppIdentityDbContext identityDbContext, ITokenFactory tokenFactory)
 		{
 			_userManager = userManager;
 			_identityDbContext = identityDbContext;
+			_tokenFactory = tokenFactory;
 		}
 
 		public async Task<Guid> CreateUserAsync(string userName, string password)
@@ -37,23 +39,25 @@ namespace FlirtingApp.Infrastructure.Identity
 			return newUser.Id;
 		}
 
-		public async Task<(bool Success, Guid UserId)> LoginUserAsync(string userName, string password, string refreshToken, string remoteIpAddress)
+		public async Task<(bool Success, Guid AppUserId, string RefreshToken)> LoginUserAsync(string userName, string password, string remoteIpAddress)
 		{
 			var matchedUser = await _userManager.FindByNameAsync(userName);
 			if (matchedUser == null)
 			{
-				return (false, default);
+				return (false, default, default);
 			}
 
 			var valid = await _userManager.CheckPasswordAsync(matchedUser, password);
 			if (!valid)
 			{
-				return (false, default);
+				return (false, default, default);
 			}
 
+			var refreshToken = _tokenFactory.GenerateToken();
 			matchedUser.AddRefreshToken(refreshToken, remoteIpAddress);
 			await _identityDbContext.SaveChangesAsync();
-			return (true, matchedUser.Id);
+
+			return (true, matchedUser.Id, refreshToken);
 		}
 
 		public async Task<bool> HasValidRefreshTokenAsync(string refreshToken, Guid appUserId, string remoteIpAddress)
@@ -62,6 +66,25 @@ namespace FlirtingApp.Infrastructure.Identity
 				.Include(a => a.RefreshTokens)
 				.FirstAsync(a => a.Id == appUserId);
 			return matchedUser.HasValidRefreshToken(refreshToken, remoteIpAddress);
+		}
+
+		public async Task<string> ExchangeRefreshTokenAsync(Guid appUserId, string refreshToken, string remoteIpAddress)
+		{
+			var appUser = await _identityDbContext.AppUsers
+				.Include(a => a.RefreshTokens)
+				.FirstAsync(a => a.Id == appUserId);
+
+			if (!appUser.HasValidRefreshToken(refreshToken, remoteIpAddress))
+			{
+				throw new InvalidRefreshTokenException();
+			}
+
+			appUser.RemoveRefreshToken(refreshToken);
+			var newRefreshToken = _tokenFactory.GenerateToken();
+			appUser.AddRefreshToken(newRefreshToken, remoteIpAddress);
+			await _identityDbContext.SaveChangesAsync();
+
+			return newRefreshToken;
 		}
 
 	}

@@ -8,6 +8,7 @@ using FlirtingApp.Persistent;
 using FlirtingApp.Web.Configurations;
 using FlirtingApp.Web.HostedServices;
 using FlirtingApp.Web.Identity;
+using FlirtingApp.Web.Registras;
 using FlirtingApp.Web.Repository;
 using FlirtingApp.Web.Services;
 using Microsoft.AspNetCore.Builder;
@@ -44,31 +45,9 @@ namespace FlirtingApp.Web
 
 			services.AddCors();
 
-			services.AddSwaggerGen(c =>
-			{
-				c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-				c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-				{
-					In = ParameterLocation.Header,
-					Description = "Please insert JWT with Bearer into field",
-					Name = "Authorization",
-					Type = SecuritySchemeType.ApiKey
-				});
-				c.AddSecurityRequirement(new OpenApiSecurityRequirement
-				{
-					{ new OpenApiSecurityScheme
-						{
-							In = ParameterLocation.Header,
-							Description = "Please insert JWT with Bearer into field",
-							Name = "Authorization",
-							Type = SecuritySchemeType.ApiKey
+			services.AddSwaggerWithBearerToken();
 
-						}, new string[] { }
-					}
-				});
-			});
-
-			services.AddAutoMapper(this.GetType().Assembly);
+			//services.AddAutoMapper(this.GetType().Assembly);
 
 			services.AddScoped<JwtSecurityTokenHandler>();
 			services.AddScoped<UserRepository>();
@@ -104,11 +83,7 @@ namespace FlirtingApp.Web
 
 			app.UseHttpsRedirection();
 
-			app.UseSwagger();
-			app.UseSwaggerUI(c =>
-			{
-				c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-			});
+			app.UseSwaggerWithUI();
 
 			app.UseCors(config =>
 			{
