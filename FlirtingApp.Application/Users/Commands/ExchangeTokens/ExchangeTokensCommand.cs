@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,9 +35,9 @@ namespace FlirtingApp.Application.Users.Commands.ExchangeTokens
 		public async Task<ExchangeTokensCommandResult> Handle(ExchangeTokensCommand request, CancellationToken cancellationToken)
 		{
 			var claimPrincipal = _jwtFactory.GetClaimPrinciple(request.AccessToken);
-			var appUserId = Guid.Parse(claimPrincipal.FindFirst(c => c.Type == AppClaimTypes.AppUserId).Value);
-			var userId = Guid.Parse(claimPrincipal.FindFirst(c => c.Type == AppClaimTypes.UserId).Value);
-			var userName = claimPrincipal.FindFirst(c => c.Type == AppClaimTypes.Sub).Value;
+			var appUserId = Guid.Parse(claimPrincipal.FindFirst(AppClaimTypes.AppUserId).Value);
+			var userId = Guid.Parse(claimPrincipal.FindFirst(AppClaimTypes.UserId).Value);
+			var userName = claimPrincipal.FindFirst(ClaimTypes.NameIdentifier).Value;
 
 			var newRefreshToken = await _userManager.ExchangeRefreshTokenAsync(appUserId, request.RefreshToken, request.RemoteIpAddress);
 			var newAccessToken = _jwtFactory.GenerateEncodedTokens(userId, appUserId, userName);
