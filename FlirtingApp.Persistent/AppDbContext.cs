@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using FlirtingApp.Application.Common.Interfaces;
+using FlirtingApp.Application.Common.Interfaces.Databases;
+using FlirtingApp.Application.Common.Interfaces.System;
 using FlirtingApp.Domain.Common;
 using FlirtingApp.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +25,7 @@ namespace FlirtingApp.Persistent
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
 			builder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+			base.OnModelCreating(builder);
 		}
 
 		public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

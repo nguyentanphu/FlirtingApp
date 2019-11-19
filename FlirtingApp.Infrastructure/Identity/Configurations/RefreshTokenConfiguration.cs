@@ -17,6 +17,7 @@ namespace FlirtingApp.Infrastructure.Identity.Configurations
 			builder.HasOne(r => r.AppUser)
 				.WithMany(a => a.RefreshTokens)
 				.HasForeignKey(r => r.AppUserId);
+
 		}
 	}
 }

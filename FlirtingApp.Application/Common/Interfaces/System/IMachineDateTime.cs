@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace FlirtingApp.Application.Common.Interfaces
+namespace FlirtingApp.Application.Common.Interfaces.System
 {
 	public interface IMachineDateTime
 	{

@@ -1,10 +1,14 @@
 ﻿using System.Threading.Tasks;
+using FlirtingApp.Application.Common.Requests;
+using FlirtingApp.Application.Users.Commands.ExchangeTokens;
+using FlirtingApp.Application.Users.Commands.Login;
 using FlirtingApp.Web.ConfigOptions;
 using FlirtingApp.Web.Repository;
-using FlirtingApp.Web.RequestModels;
 using FlirtingApp.Web.Services;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using LoginRequest = FlirtingApp.Web.RequestModels.LoginRequest;
 
 namespace FlirtingApp.Web.Controllers
 {
@@ -12,42 +16,35 @@ namespace FlirtingApp.Web.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-	    private readonly AuthService _authService;
-	    private readonly AuthOptions _authOptions;
-	    private readonly UserRepository _userRepository;
+	    private readonly IMediator _mediator;
 
-	    public AuthController(
-		    AuthService authService, 
-		    IOptions<AuthOptions> authOptions,
-		    UserRepository userRepository
-		)
+	    public AuthController(IMediator mediator)
 	    {
-		    _authService = authService;
-		    _userRepository = userRepository;
-		    _authOptions = authOptions.Value;
+		    _mediator = mediator;
 	    }
 
 	    [HttpPost("login")]
 	    public async Task<IActionResult> Login(LoginRequest loginRequest)
 	    {
-		    var result = await _authService.Login(loginRequest.UserName, loginRequest.Password, HttpContext.Connection.RemoteIpAddress.ToString());
-		    if (!result.Success)
+		    var loginResponse = await _mediator.Send(new LoginCommand
 		    {
-			    return BadRequest("Something went wrong!");
-			}
+				UserName = loginRequest.UserName,
+				Password = loginRequest.Password,
+				RemoteIpAddress = HttpContext.Connection.RemoteIpAddress.ToString()
+		    });
+		    return Ok(loginResponse);
+	    }
 
-		    return Ok(result);
-		}
-
-	    [HttpPost("refreshtoken")]
-	    public async Task<IActionResult> RefreshToken(RefreshTokenRequest refreshTokenRequest)
+	    [HttpPost("exchangeTokens")]
+	    public async Task<IActionResult> ExchangeTokens(ExchangeTokensRequest exchangeTokensRequest)
 	    {
-		    return Ok(await _authService.ExchangeRefreshToken(
-			    refreshTokenRequest.AccessToken,
-				refreshTokenRequest.RefreshToken,
-				_authOptions.JwtSecret,
-				HttpContext.Connection.RemoteIpAddress.ToString()
-		    ));
+		    var exchangeTokensResult = await _mediator.Send(new ExchangeTokensCommand
+		    {
+				RefreshToken = exchangeTokensRequest.RefreshToken,
+				AccessToken = exchangeTokensRequest.AccessToken,
+				RemoteIpAddress = HttpContext.Connection.RemoteIpAddress.ToString()
+			});
+		    return Ok(exchangeTokensResult);
 	    }
     }
 }
