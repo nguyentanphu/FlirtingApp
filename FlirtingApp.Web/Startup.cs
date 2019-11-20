@@ -1,12 +1,9 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using System.Net;
-using AutoMapper;
 using FlirtingApp.Application;
 using FlirtingApp.Application.Common.Interfaces;
 using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Infrastructure;
 using FlirtingApp.Persistent;
-using FlirtingApp.Web.Configurations;
 using FlirtingApp.Web.HostedServices;
 using FlirtingApp.Web.Identity;
 using FlirtingApp.Web.Registras;
@@ -14,13 +11,10 @@ using FlirtingApp.Web.Repository;
 using FlirtingApp.Web.Services;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 
 namespace FlirtingApp.Web
 {
@@ -33,7 +27,6 @@ namespace FlirtingApp.Web
 
 		public IConfiguration Configuration { get; }
 
-		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddInfrastructure(Configuration);
@@ -59,7 +52,6 @@ namespace FlirtingApp.Web
 			services.AddScoped<JwtFactory>();
 		}
 
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			if (env.IsDevelopment())
@@ -75,6 +67,7 @@ namespace FlirtingApp.Web
 
 			app.UseSwaggerWithUI();
 
+			app.UseRouting();
 			app.UseCors(config =>
 			{
 				config.AllowAnyOrigin();
@@ -82,8 +75,9 @@ namespace FlirtingApp.Web
 				config.AllowAnyMethod();
 			});
 
-			app.UseRouting();
 			app.UseAuthentication();
+			app.UseAuthorization();
+
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();

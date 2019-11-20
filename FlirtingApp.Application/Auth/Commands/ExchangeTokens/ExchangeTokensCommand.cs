@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Security.Claims;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using FlirtingApp.Application.Common;
@@ -9,7 +7,7 @@ using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Application.Common.Interfaces.Identity;
 using MediatR;
 
-namespace FlirtingApp.Application.Users.Commands.ExchangeTokens
+namespace FlirtingApp.Application.Auth.Commands.ExchangeTokens
 {
 	public class ExchangeTokensCommand: BaseTokensModel, IRequest<ExchangeTokensCommandResult>
 	{

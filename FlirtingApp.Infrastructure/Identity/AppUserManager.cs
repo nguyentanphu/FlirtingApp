@@ -25,6 +25,10 @@ namespace FlirtingApp.Infrastructure.Identity
 			_tokenFactory = tokenFactory;
 		}
 
+		public async Task<bool> UserNameExistAsync(string userName)
+		{
+			return await _identityDbContext.AppUsers.AnyAsync(a => a.UserName == userName);
+		}
 		public async Task<Guid> CreateUserAsync(string userName, string password)
 		{
 			var newUser = new AppUser

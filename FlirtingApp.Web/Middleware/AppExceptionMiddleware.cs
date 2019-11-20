@@ -57,6 +57,9 @@ namespace FlirtingApp.Web.Middleware
 						e.Message
 					}
 				}
+			}, new JsonSerializerOptions
+			{
+				PropertyNamingPolicy = JsonNamingPolicy.CamelCase
 			});
 
 			httpContext.Response.WriteAsync(errorResult);

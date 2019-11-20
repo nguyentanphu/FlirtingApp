@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
+using FlirtingApp.Application.Auth.Commands.ExchangeTokens;
+using FlirtingApp.Application.Auth.Commands.Login;
 using FlirtingApp.Application.Common.Requests;
-using FlirtingApp.Application.Users.Commands.ExchangeTokens;
-using FlirtingApp.Application.Users.Commands.Login;
 using FlirtingApp.Web.ConfigOptions;
 using FlirtingApp.Web.Repository;
 using FlirtingApp.Web.Services;

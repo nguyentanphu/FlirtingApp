@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace FlirtingApp.Application.Users.Commands.ExchangeTokens
+namespace FlirtingApp.Application.Auth.Commands.ExchangeTokens
 {
 	class ExchangeTokensCommandValidator: AbstractValidator<ExchangeTokensCommand>
 	{

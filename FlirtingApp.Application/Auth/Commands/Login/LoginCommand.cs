@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using FlirtingApp.Application.Common;
-using FlirtingApp.Application.Common.Interfaces;
 using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Application.Common.Interfaces.Identity;
 using FlirtingApp.Application.Common.Requests;
@@ -10,7 +9,7 @@ using FlirtingApp.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace FlirtingApp.Application.Users.Commands.Login
+namespace FlirtingApp.Application.Auth.Commands.Login
 {
 	public class LoginCommand: LoginRequest, IRequest<LoginCommandResponse>
 	{
