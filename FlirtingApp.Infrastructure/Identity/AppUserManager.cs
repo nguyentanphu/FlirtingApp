@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FlirtingApp.Application.Common.Interfaces;
 using FlirtingApp.Application.Common.Interfaces.Databases;
+using FlirtingApp.Application.Exceptions;
 using FlirtingApp.Infrastructure.Exceptions;
 using FlirtingApp.Infrastructure.Identity.Models;
 using Microsoft.AspNetCore.Identity;

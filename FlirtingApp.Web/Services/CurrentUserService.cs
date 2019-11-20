@@ -13,6 +13,10 @@ namespace FlirtingApp.Web.Services
 	{
 		public CurrentUserService(IHttpContextAccessor httpContextAccessor)
 		{
+			if (httpContextAccessor.HttpContext?.User == null)
+			{
+				return;
+			}
 			var identityString = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 			if (Guid.TryParse(identityString, out var result))
 			{

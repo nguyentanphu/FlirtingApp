@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Text;
 using FlirtingApp.Application.Common;
 using FlirtingApp.Application.Common.Interfaces.Identity;
+using FlirtingApp.Application.Exceptions;
 using FlirtingApp.Infrastructure.ConfigOptions;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -45,14 +46,21 @@ namespace FlirtingApp.Infrastructure.Identity
 
 		public ClaimsPrincipal GetClaimPrinciple(string accessToken)
 		{
-			return _jwtHandler.ValidateToken(accessToken, new TokenValidationParameters
+			try
 			{
-				ValidateIssuer = false,
-				ValidateAudience = false,
-				ValidateIssuerSigningKey = true,
-				IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_jwtAuthOptions.Secret)),
-				ValidateLifetime = false,
-			}, out _);
+				return _jwtHandler.ValidateToken(accessToken, new TokenValidationParameters
+				{
+					ValidateIssuer = false,
+					ValidateAudience = false,
+					ValidateIssuerSigningKey = true,
+					IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_jwtAuthOptions.Secret)),
+					ValidateLifetime = false,
+				}, out _);
+			}
+			catch (Exception e)
+			{
+				throw new InvalidJwtException(innerException: e);
+			}
 		}
 
 	}

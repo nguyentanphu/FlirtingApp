@@ -3,6 +3,7 @@ using System.Net;
 using AutoMapper;
 using FlirtingApp.Application;
 using FlirtingApp.Application.Common.Interfaces;
+using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Infrastructure;
 using FlirtingApp.Persistent;
 using FlirtingApp.Web.Configurations;
@@ -11,6 +12,7 @@ using FlirtingApp.Web.Identity;
 using FlirtingApp.Web.Registras;
 using FlirtingApp.Web.Repository;
 using FlirtingApp.Web.Services;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -41,7 +43,8 @@ namespace FlirtingApp.Web
 
 			services.AddHostedService<MigrationHostedService>();
 
-			services.AddControllers();
+			services.AddControllers()
+				.AddFluentValidation(option => option.RegisterValidatorsFromAssembly(typeof(IAppDbContext).Assembly));
 
 			services.AddCors();
 
@@ -65,20 +68,7 @@ namespace FlirtingApp.Web
 			}
 			else
 			{
-				app.UseExceptionHandler(builder =>
-				{
-					builder.Run(async context =>
-					{
-						context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
-						var error = context.Features.Get<IExceptionHandlerFeature>();
-
-						if (error != null)
-						{
-							context.Response.AddApplicationError(error.Error.Message);
-							await context.Response.WriteAsync(error.Error.Message);
-						}
-					});
-				});
+				app.UseAppExceptionHandler();
 			}
 
 			app.UseHttpsRedirection();

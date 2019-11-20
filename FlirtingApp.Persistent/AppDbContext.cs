@@ -14,9 +14,13 @@ namespace FlirtingApp.Persistent
 	{
 		private readonly ICurrentUser _currentUser;
 		private readonly IMachineDateTime _dateTime;
-		public AppDbContext(DbContextOptions<AppDbContext> options): base(options)
+		public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
 		{
-			
+		}
+		public AppDbContext(DbContextOptions<AppDbContext> options, ICurrentUser currentUser, IMachineDateTime dateTime): base(options)
+		{
+			_currentUser = currentUser;
+			_dateTime = dateTime;
 		}
 
 		public DbSet<User> Users { get; set; }
