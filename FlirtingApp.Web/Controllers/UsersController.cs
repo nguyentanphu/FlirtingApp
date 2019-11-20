@@ -32,23 +32,37 @@ namespace FlirtingApp.Web.Controllers
 		    return NoContent();
 	    }
 
-	 //   [HttpGet]
-	 //   public async Task<IActionResult> GetUsers()
-	 //   {
+		[HttpPut("{id}")]
+		public async Task<IActionResult> UpdateUser(Guid id, UserForUpdateDto userForUpdateDto)
+		{
+			if (id != Guid.Parse(User.FindFirst("id").Value))
+			{
+				return Unauthorized();
+			}
+
+			var user = await _userRepository.GetUser(id);
+			_mapper.Map(userForUpdateDto, user);
+			await _userRepository.SaveAll();
+			return NoContent();
+		}
+
+		//   [HttpGet]
+		//   public async Task<IActionResult> GetUsers()
+		//   {
 		//    var users = await _userRepository.GetUsers();
 		//    return Ok(_mapper.Map<IEnumerable<UserForListDto>>(users));
-	 //   }
+		//   }
 
-	 //   [HttpGet("{id}")]
-	 //   public async Task<IActionResult> GetUser(Guid id)
-	 //   {
+		//   [HttpGet("{id}")]
+		//   public async Task<IActionResult> GetUser(Guid id)
+		//   {
 		//    var user = await _userRepository.GetUser(id);
 		//    return Ok(_mapper.Map<UserDetail>(user));
-	 //   }
+		//   }
 
 		//[HttpPut("{id}")]
-	 //   public async Task<IActionResult> UpdateUser(Guid id, UserForUpdateDto userForUpdateDto)
-	 //   {
+		//   public async Task<IActionResult> UpdateUser(Guid id, UserForUpdateDto userForUpdateDto)
+		//   {
 		//    if (id != Guid.Parse(User.FindFirst("id").Value))
 		//    {
 		//	    return Unauthorized();
@@ -58,11 +72,11 @@ namespace FlirtingApp.Web.Controllers
 		//    _mapper.Map(userForUpdateDto, user);
 		//    await _userRepository.SaveAll();
 		//    return NoContent();
-	 //   }
+		//   }
 
-	 //   [HttpGet("{userId}/photos/{photoId}", Name = "GetUserPhoto")]
-	 //   public async Task<IActionResult> GetUserPhoto(Guid userId, Guid photoId)
-	 //   {
+		//   [HttpGet("{userId}/photos/{photoId}", Name = "GetUserPhoto")]
+		//   public async Task<IActionResult> GetUserPhoto(Guid userId, Guid photoId)
+		//   {
 		//    var user = await _userRepository.GetUser(userId);
 		//    var photo = user.GetPhoto(photoId);
 		//    if (photo == null)
@@ -71,6 +85,6 @@ namespace FlirtingApp.Web.Controllers
 		//    }
 
 		//    return Ok(_mapper.Map<PhotoDto>(photo));
-	 //   }
+		//   }
 	}
 }

@@ -6,15 +6,9 @@ namespace FlirtingApp.Application.Exceptions
 {
 	public class ResourceNotFoundException: Exception
 	{
-		public ResourceNotFoundException(string message = "Resource not found", Exception innerException = null): base(message, innerException)
+		public ResourceNotFoundException(string name, Guid id, Exception innerException = null): base($"{name} with id {id} was not found", innerException)
 		{
 			
-		}
-
-		public static ResourceNotFoundException FromGuid(Guid id, Exception innerException = null)
-		{
-			var message = $"Resource with id {id} was not found";
-			return new ResourceNotFoundException(message, innerException);
 		}
 	}
 }

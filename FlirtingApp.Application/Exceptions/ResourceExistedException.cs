@@ -6,15 +6,9 @@ namespace FlirtingApp.Application.Exceptions
 {
 	public class ResourceExistedException : Exception
 	{
-		public ResourceExistedException(string message = "Resource existed", Exception innerException = null): base(message, innerException)
+		public ResourceExistedException(string name, string property, Exception innerException = null): base($"{name} with {property} is existed in the system", innerException)
 		{
 			
-		}
-
-		public static ResourceExistedException FromName(string name, Exception innerException = null)
-		{
-			var message = $"Resource {name} is existed in the system";
-			return new ResourceExistedException(message, innerException);
 		}
 	}
 }
