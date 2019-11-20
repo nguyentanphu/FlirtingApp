@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using FlirtingApp.Application.Common;
+using FlirtingApp.Application.Common.Requests;
 using FlirtingApp.Application.Users.Commands.CreateUser;
+using FlirtingApp.Application.Users.Commands.UpdateUser;
 using FlirtingApp.Web.Dtos;
 using FlirtingApp.Web.Repository;
 using FlirtingApp.Web.RequestModels;
@@ -32,33 +35,34 @@ namespace FlirtingApp.Web.Controllers
 		    return NoContent();
 	    }
 
-		[HttpPut("{id}")]
-		public async Task<IActionResult> UpdateUser(Guid id, UserForUpdateDto userForUpdateDto)
+		[HttpPut]
+		public async Task<IActionResult> UpdateUser(UpdateUserAdditionalInfoRequest request)
 		{
-			if (id != Guid.Parse(User.FindFirst("id").Value))
+			await _mediator.Send(new UpdateUserAdditionalInfoCommand
 			{
-				return Unauthorized();
-			}
-
-			var user = await _userRepository.GetUser(id);
-			_mapper.Map(userForUpdateDto, user);
-			await _userRepository.SaveAll();
+				UserId = Guid.Parse(HttpContext.User.FindFirst(AppClaimTypes.UserId).Value),
+				Introduction = request.Introduction,
+				Interests = request.Interests,
+				LookingFor = request.LookingFor,
+				City = request.City,
+				Country = request.Country
+			});
 			return NoContent();
 		}
 
-		//   [HttpGet]
-		//   public async Task<IActionResult> GetUsers()
-		//   {
-		//    var users = await _userRepository.GetUsers();
-		//    return Ok(_mapper.Map<IEnumerable<UserForListDto>>(users));
-		//   }
+		[HttpGet]
+		public async Task<IActionResult> GetUsers()
+		{
+			var users = await _userRepository.GetUsers();
+			return Ok(_mapper.Map<IEnumerable<UserForListDto>>(users));
+		}
 
-		//   [HttpGet("{id}")]
-		//   public async Task<IActionResult> GetUser(Guid id)
-		//   {
-		//    var user = await _userRepository.GetUser(id);
-		//    return Ok(_mapper.Map<UserDetail>(user));
-		//   }
+		[HttpGet("{id}")]
+		public async Task<IActionResult> GetUser(Guid id)
+		{
+			var user = await _userRepository.GetUser(id);
+			return Ok(_mapper.Map<UserDetail>(user));
+		}
 
 		//[HttpPut("{id}")]
 		//   public async Task<IActionResult> UpdateUser(Guid id, UserForUpdateDto userForUpdateDto)

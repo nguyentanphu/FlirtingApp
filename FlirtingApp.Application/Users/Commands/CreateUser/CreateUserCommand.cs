@@ -39,11 +39,11 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 		{
 			if (await _userManager.UserNameExistAsync(request.UserName))
 			{
-				throw ResourceExistedException.FromName("UserName");
+				throw new ResourceExistedException("AppUser", "UserName");
 			}
 			if (await _dbContext.Users.AnyAsync(u => u.Email == request.Email, cancellationToken))
 			{
-				throw ResourceExistedException.FromName("UserName");
+				throw new ResourceExistedException("User", "Email");
 			}
 
 			var appUserId = await _userManager.CreateUserAsync(request.UserName, request.Password);
