@@ -6,6 +6,7 @@ using FlirtingApp.Application.Common;
 using FlirtingApp.Application.Common.Requests;
 using FlirtingApp.Application.Users.Commands.CreateUser;
 using FlirtingApp.Application.Users.Commands.UpdateUser;
+using FlirtingApp.Application.Users.Queries.GetUsers;
 using FlirtingApp.Web.Dtos;
 using FlirtingApp.Web.Repository;
 using FlirtingApp.Web.RequestModels;
@@ -48,6 +49,12 @@ namespace FlirtingApp.Web.Controllers
 				Country = request.Country
 			});
 			return NoContent();
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> GetUsers()
+		{
+			return Ok(await _mediator.Send(new GetUsersQuery()));
 		}
 
 		//[HttpGet]

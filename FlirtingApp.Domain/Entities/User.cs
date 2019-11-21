@@ -24,8 +24,6 @@ namespace FlirtingApp.Domain.Entities
 		public string City { get; set; }
 		public string Country { get; set; }
 
-
-		// Set to public when seed photos
 		private HashSet<Photo> _photos = new HashSet<Photo>();
 		public IEnumerable<Photo> Photos => _photos.ToList();
 
@@ -33,6 +31,11 @@ namespace FlirtingApp.Domain.Entities
 		public Photo GetPhoto(Guid photoId)
 		{
 			return _photos.FirstOrDefault(p => p.PhotoId == photoId);
+		}
+
+		public string GetMainPhotoUrl()
+		{
+			return _photos.FirstOrDefault(p => p.IsMain)?.Url;
 		}
 
 		public void AddPhoto(Photo photo)

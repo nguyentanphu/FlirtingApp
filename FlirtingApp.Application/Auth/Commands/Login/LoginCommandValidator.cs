@@ -6,7 +6,7 @@ namespace FlirtingApp.Application.Auth.Commands.Login
 	{
 		public LoginCommandValidator()
 		{
-			RuleFor(l => l.UserName).MinimumLength(6).MaximumLength(20).NotEmpty();
+			RuleFor(l => l.UserName).MinimumLength(4).MaximumLength(20);
 			RuleFor(l => l.Password)
 				.MinimumLength(6)
 				// Non space chars only
