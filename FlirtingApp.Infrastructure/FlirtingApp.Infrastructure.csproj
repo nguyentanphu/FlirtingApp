@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+	<PackageReference Include="CloudinaryDotNet" Version="1.9.1" />
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0" />
 	<PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />

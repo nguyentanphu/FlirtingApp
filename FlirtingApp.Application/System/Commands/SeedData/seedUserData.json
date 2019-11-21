@@ -1,6 +1,7 @@
 ﻿[
 	{
 		"Username": "Mindy",
+		"Email": "nguyentanphu@hotmail.com", 
 		"Gender": "female",
 		"DateOfBirth": "1994-12-26",
 		"Password": "password",
@@ -15,6 +16,7 @@
 	},
 	{
 		"Username": "Jeanne",
+		"Email": "nguyentanphu@hotmail.com",
 		"Gender": "female",
 		"DateOfBirth": "1995-08-06",
 		"Password": "password",
@@ -29,6 +31,7 @@
 	},
 	{
 		"Username": "Lina",
+		"Email": "nguyentanphu@hotmail.com",
 		"Gender": "female",
 		"DateOfBirth": "1980-03-01",
 		"Password": "password",
@@ -43,6 +46,7 @@
 	},
 	{
 		"Username": "Minnie",
+		"Email": "nguyentanphu@hotmail.com",
 		"Gender": "female",
 		"DateOfBirth": "1992-05-16",
 		"Password": "password",
@@ -57,6 +61,7 @@
 	},
 	{
 		"Username": "Tracie",
+		"Email": "nguyentanphu@hotmail.com",
 		"Gender": "female",
 		"DateOfBirth": "1980-03-04",
 		"Password": "password",
@@ -71,6 +76,7 @@
 	},
 	{
 		"Username": "Price",
+		"Email": "nguyentanphu@hotmail.com",
 		"Gender": "male",
 		"DateOfBirth": "1993-08-05",
 		"Password": "password",
@@ -85,6 +91,7 @@
 	},
 	{
 		"Username": "Lee",
+		"Email": "nguyentanphu@hotmail.com",
 		"Gender": "male",
 		"DateOfBirth": "1974-06-18",
 		"Password": "password",
@@ -99,6 +106,7 @@
 	},
 	{
 		"Username": "Ingram",
+		"Email": "nguyentanphu@hotmail.com",
 		"Gender": "male",
 		"DateOfBirth": "1957-09-28",
 		"Password": "password",
@@ -113,6 +121,7 @@
 	},
 	{
 		"Username": "Hebert",
+		"Email": "nguyentanphu@hotmail.com",
 		"Gender": "male",
 		"DateOfBirth": "1999-02-07",
 		"Password": "password",
@@ -127,6 +136,7 @@
 	},
 	{
 		"Username": "Wise",
+		"Email": "nguyentanphu@hotmail.com",
 		"Gender": "male",
 		"DateOfBirth": "1983-09-23",
 		"Password": "password",

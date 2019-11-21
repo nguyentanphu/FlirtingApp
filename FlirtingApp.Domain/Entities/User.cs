@@ -5,7 +5,7 @@ using FlirtingApp.Domain.Common;
 
 namespace FlirtingApp.Domain.Entities
 {
-	public class User
+	public class User: AuditableEntity
 	{
 		public Guid UserId { get; set; }
 		public Guid IdentityId { get; set; }

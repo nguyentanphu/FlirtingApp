@@ -3,7 +3,7 @@ using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Application.Common.Interfaces.Identity;
 using FlirtingApp.Application.Common.Interfaces.System;
 using FlirtingApp.Infrastructure.Identity;
-using FlirtingApp.Infrastructure.Registras;
+using FlirtingApp.Infrastructure.Registrars;
 using FlirtingApp.Infrastructure.System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +27,8 @@ namespace FlirtingApp.Infrastructure
 			
 
 			services.AddAppJwtAuthentication(configuration);
+
+			services.AddStronglyTypeOptions(configuration);
 			return services;
 		}
 	}

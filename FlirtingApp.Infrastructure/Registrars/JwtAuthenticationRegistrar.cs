@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using FlirtingApp.Infrastructure.ConfigOptions;
 using FlirtingApp.Infrastructure.Identity;
@@ -10,9 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
-namespace FlirtingApp.Infrastructure.Registras
+namespace FlirtingApp.Infrastructure.Registrars
 {
-	public static class JwtAuthenticationRegistra
+	public static class JwtAuthenticationRegistrar
 	{
 		public static IServiceCollection AddAppJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
 		{
@@ -27,7 +25,6 @@ namespace FlirtingApp.Infrastructure.Registras
 				options.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha512Signature);
 			});
 			services.Configure<JwtAuthOptions>(authSettings);
-			services.Configure<CloudinaryCredential>(configuration.GetSection(nameof(CloudinaryCredential)));
 
 			services.AddIdentityCore<AppUser>(o =>
 			{

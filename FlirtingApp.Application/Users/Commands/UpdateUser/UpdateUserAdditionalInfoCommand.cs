@@ -28,7 +28,7 @@ namespace FlirtingApp.Application.Users.Commands.UpdateUser
 
 		public async Task<Unit> Handle(UpdateUserAdditionalInfoCommand request, CancellationToken cancellationToken)
 		{
-			var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == request.UserId, cancellationToken);
+			var user = await _context.Users.FindAsync(request.UserId);
 			if (user == null)
 			{
 				throw new ResourceExistedException(nameof(User), nameof(User.UserId));

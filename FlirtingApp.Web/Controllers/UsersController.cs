@@ -6,6 +6,7 @@ using FlirtingApp.Application.Common;
 using FlirtingApp.Application.Common.Requests;
 using FlirtingApp.Application.Users.Commands.CreateUser;
 using FlirtingApp.Application.Users.Commands.UpdateUser;
+using FlirtingApp.Application.Users.Queries.GetUserDetails;
 using FlirtingApp.Application.Users.Queries.GetUsers;
 using FlirtingApp.Web.Dtos;
 using FlirtingApp.Web.Repository;
@@ -55,6 +56,12 @@ namespace FlirtingApp.Web.Controllers
 		public async Task<IActionResult> GetUsers()
 		{
 			return Ok(await _mediator.Send(new GetUsersQuery()));
+		}
+
+		[HttpGet("{id}")]
+		public async Task<IActionResult> GetUser(Guid id)
+		{
+			return Ok(await _mediator.Send(new GetUserDetailQuery {UserId = id}));
 		}
 
 		//[HttpGet]
