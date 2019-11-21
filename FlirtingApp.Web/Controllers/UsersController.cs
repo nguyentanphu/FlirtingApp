@@ -50,19 +50,19 @@ namespace FlirtingApp.Web.Controllers
 			return NoContent();
 		}
 
-		[HttpGet]
-		public async Task<IActionResult> GetUsers()
-		{
-			var users = await _userRepository.GetUsers();
-			return Ok(_mapper.Map<IEnumerable<UserForListDto>>(users));
-		}
+		//[HttpGet]
+		//public async Task<IActionResult> GetUsers()
+		//{
+		//	var users = await _userRepository.GetUsers();
+		//	return Ok(_mapper.Map<IEnumerable<UserForListDto>>(users));
+		//}
 
-		[HttpGet("{id}")]
-		public async Task<IActionResult> GetUser(Guid id)
-		{
-			var user = await _userRepository.GetUser(id);
-			return Ok(_mapper.Map<UserDetail>(user));
-		}
+		//[HttpGet("{id}")]
+		//public async Task<IActionResult> GetUser(Guid id)
+		//{
+		//	var user = await _userRepository.GetUser(id);
+		//	return Ok(_mapper.Map<UserDetail>(user));
+		//}
 
 		//[HttpPut("{id}")]
 		//   public async Task<IActionResult> UpdateUser(Guid id, UserForUpdateDto userForUpdateDto)

@@ -1,15 +1,13 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using FlirtingApp.Application;
 using FlirtingApp.Application.Common.Interfaces;
-using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Infrastructure;
 using FlirtingApp.Persistent;
 using FlirtingApp.Web.HostedServices;
 using FlirtingApp.Web.Identity;
-using FlirtingApp.Web.Registras;
+using FlirtingApp.Web.Registrars;
 using FlirtingApp.Web.Repository;
 using FlirtingApp.Web.Services;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -32,12 +30,12 @@ namespace FlirtingApp.Web
 			services.AddInfrastructure(Configuration);
 			services.AddPersistent(Configuration);
 			services.AddApplication();
+			services.AddHttpContextAccessor();
 			services.AddScoped<ICurrentUser, CurrentUserService>();
 
 			services.AddHostedService<MigrationHostedService>();
 
-			services.AddControllers()
-				.AddFluentValidation(option => option.RegisterValidatorsFromAssembly(typeof(IAppDbContext).Assembly));
+			services.AddControllers();
 
 			services.AddCors();
 

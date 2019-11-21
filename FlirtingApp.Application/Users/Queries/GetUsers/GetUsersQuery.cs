@@ -20,7 +20,7 @@ namespace FlirtingApp.Application.Users.Queries.GetUsers
 
 		public async Task<GetUsersQueryResponse> Handle(GetUsersQuery request, CancellationToken cancellationToken)
 		{
-			var users = _context.Users
+			return new GetUsersQueryResponse();
 		}
 	}
 }
