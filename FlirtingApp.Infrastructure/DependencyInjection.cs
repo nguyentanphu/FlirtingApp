@@ -2,9 +2,11 @@
 using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Application.Common.Interfaces.Identity;
 using FlirtingApp.Application.Common.Interfaces.System;
+using FlirtingApp.Application.Common.Interfaces.ThirdPartyVendors;
 using FlirtingApp.Infrastructure.Identity;
 using FlirtingApp.Infrastructure.Registrars;
 using FlirtingApp.Infrastructure.System;
+using FlirtingApp.Infrastructure.ThirdPartyVendor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +26,7 @@ namespace FlirtingApp.Infrastructure
 			services.AddScoped<IJwtFactory, JwtFactory>();
 
 			services.AddScoped<IMachineDateTime, MachineDateTime>();
-			
+			services.AddScoped<ICloudinary, CloudinaryAdapter>();
 
 			services.AddAppJwtAuthentication(configuration);
 

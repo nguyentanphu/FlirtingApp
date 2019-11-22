@@ -9,7 +9,6 @@ using FlirtingApp.Application.Common.Interfaces.ThirdPartyVendors;
 using FlirtingApp.Application.Common.Interfaces.ThirdPartyVendors.Cloudinary;
 using FlirtingApp.Infrastructure.ConfigOptions;
 using Microsoft.Extensions.Options;
-using ImageUploadResult = FlirtingApp.Application.Common.Interfaces.ThirdPartyVendors.Cloudinary.ImageUploadResult;
 
 namespace FlirtingApp.Infrastructure.ThirdPartyVendor
 {
@@ -29,7 +28,7 @@ namespace FlirtingApp.Infrastructure.ThirdPartyVendor
 
 		}
 
-		public async Task<ImageUploadResult> Upload(ImageUploadOptions options, CancellationToken cancellationToken = default)
+		public async Task<CloudinaryUploadResult> Upload(CloudinaryUploadOptions options, CancellationToken cancellationToken = default)
 		{
 			var uploadParams = new ImageUploadParams
 			{
@@ -37,7 +36,7 @@ namespace FlirtingApp.Infrastructure.ThirdPartyVendor
 				Transformation = new Transformation().Width(500).Height(500).Crop("fill").Gravity("face")
 			};
 			var result = await _cloudinary.UploadAsync(uploadParams);
-			return new ImageUploadResult
+			return new CloudinaryUploadResult
 			{
 				Url = result.Uri.ToString(),
 				PublicId = result.PublicId

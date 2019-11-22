@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using AutoMapper;
 using FlirtingApp.Application.Common;
 using FlirtingApp.Application.Common.Requests;
+using FlirtingApp.Application.Photos.Queries.GetUserPhoto;
 using FlirtingApp.Application.Users.Commands.CreateUser;
 using FlirtingApp.Application.Users.Commands.UpdateUser;
 using FlirtingApp.Application.Users.Queries.GetUserDetails;
 using FlirtingApp.Application.Users.Queries.GetUsers;
-using FlirtingApp.Web.Dtos;
-using FlirtingApp.Web.Repository;
-using FlirtingApp.Web.RequestModels;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,11 +34,11 @@ namespace FlirtingApp.Web.Controllers
 	    }
 
 		[HttpPut]
-		public async Task<IActionResult> UpdateUser(UpdateUserAdditionalInfoRequest request)
+		public async Task<IActionResult> UpdateCurrentUser(UpdateUserAdditionalInfoRequest request)
 		{
 			await _mediator.Send(new UpdateUserAdditionalInfoCommand
 			{
-				UserId = Guid.Parse(HttpContext.User.FindFirst(AppClaimTypes.UserId).Value),
+				UserId = Guid.Parse(User.FindFirst(AppClaimTypes.UserId).Value),
 				Introduction = request.Introduction,
 				Interests = request.Interests,
 				LookingFor = request.LookingFor,
@@ -64,45 +60,14 @@ namespace FlirtingApp.Web.Controllers
 			return Ok(await _mediator.Send(new GetUserDetailQuery {UserId = id}));
 		}
 
-		//[HttpGet]
-		//public async Task<IActionResult> GetUsers()
-		//{
-		//	var users = await _userRepository.GetUsers();
-		//	return Ok(_mapper.Map<IEnumerable<UserForListDto>>(users));
-		//}
-
-		//[HttpGet("{id}")]
-		//public async Task<IActionResult> GetUser(Guid id)
-		//{
-		//	var user = await _userRepository.GetUser(id);
-		//	return Ok(_mapper.Map<UserDetail>(user));
-		//}
-
-		//[HttpPut("{id}")]
-		//   public async Task<IActionResult> UpdateUser(Guid id, UserForUpdateDto userForUpdateDto)
-		//   {
-		//    if (id != Guid.Parse(User.FindFirst("id").Value))
-		//    {
-		//	    return Unauthorized();
-		//    }
-
-		//    var user = await _userRepository.GetUser(id);
-		//    _mapper.Map(userForUpdateDto, user);
-		//    await _userRepository.SaveAll();
-		//    return NoContent();
-		//   }
-
-		//   [HttpGet("{userId}/photos/{photoId}", Name = "GetUserPhoto")]
-		//   public async Task<IActionResult> GetUserPhoto(Guid userId, Guid photoId)
-		//   {
-		//    var user = await _userRepository.GetUser(userId);
-		//    var photo = user.GetPhoto(photoId);
-		//    if (photo == null)
-		//    {
-		//	    return NotFound("Photo not found!");
-		//    }
-
-		//    return Ok(_mapper.Map<PhotoDto>(photo));
-		//   }
+		[HttpGet("{userId}/photos/{photoId}", Name = "GetUserPhoto")]
+		public async Task<IActionResult> GetUserPhoto(Guid userId, Guid photoId)
+		{
+			return Ok(await _mediator.Send(new GetUserPhotoQuery
+			{
+				UserId = userId,
+				PhotoId = photoId
+			}));
+		}
 	}
 }

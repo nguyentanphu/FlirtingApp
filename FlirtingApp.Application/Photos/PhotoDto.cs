@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using AutoMapper;
 using FlirtingApp.Application.Common.Interfaces;
 using FlirtingApp.Domain.Entities;
 
-namespace FlirtingApp.Application.Users.Queries.GetUserDetails
+namespace FlirtingApp.Application.Photos
 {
 	public class PhotoDto : IMapFrom<Photo>
 	{

@@ -11,5 +11,6 @@ namespace FlirtingApp.Domain.Entities
 		public bool IsMain { get; set; }
 		public Guid UserId { get; set; }
 		public User User { get; set; }
+		public string ExternalId { get; set; }
 	}
 }

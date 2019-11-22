@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using AutoMapper;
 using FlirtingApp.Application.Common.Interfaces;
+using FlirtingApp.Application.Photos;
 using FlirtingApp.Application.Utils;
 using FlirtingApp.Domain.Entities;
 

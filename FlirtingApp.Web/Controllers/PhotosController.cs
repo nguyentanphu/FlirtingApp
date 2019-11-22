@@ -3,10 +3,13 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using FlirtingApp.Application.Common;
+using FlirtingApp.Application.Photos.Commands.CreatePhoto;
 using FlirtingApp.Web.ConfigOptions;
 using FlirtingApp.Web.Dtos;
 using FlirtingApp.Web.Models;
 using FlirtingApp.Web.Repository;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -18,62 +21,26 @@ namespace FlirtingApp.Web.Controllers
 	[Authorize]
     public class PhotosController : ControllerBase
     {
-	    private readonly CloudinaryCredential _cloudinaryCredential;
-	    private readonly UserRepository _userRepository;
-	    private readonly IMapper _mapper;
-	    private readonly Cloudinary _cloudinary;
+	    private readonly IMediator _mediator;
 
-	    public PhotosController(
-		    IOptions<CloudinaryCredential> cloudinaryCredential,
-		    UserRepository userRepository,
-		    IMapper mapper
-		    )
+	    public PhotosController(IMediator mediator)
 	    {
-		    _cloudinaryCredential = cloudinaryCredential.Value;
-		    _userRepository = userRepository;
-		    _mapper = mapper;
-
-		    var account = new Account(
-			    _cloudinaryCredential.CloudName,
-				_cloudinaryCredential.ApiKey,
-				_cloudinaryCredential.ApiSecret
-		    );
-
-			_cloudinary = new Cloudinary(account);
+		    _mediator = mediator;
 	    }
 
 	    [HttpPost]
-	    public async Task<IActionResult> AddPhotoForLoggedInUser([FromForm]PhotoForCreationDto photoForCreation)
+	    public async Task<IActionResult> AddPhotoForLoggedInUser([FromForm] CreatePhotoRequest request)
 	    {
-		    if (photoForCreation.File == null || photoForCreation.File.Length == 0)
+		    var userId = Guid.Parse(User.FindFirst(AppClaimTypes.UserId).Value);
+		    var photoId = await _mediator.Send(new CreatePhotoCommand
 		    {
-			    return BadRequest("No file to upload");
-		    }
-		    var userId = Guid.Parse(User.FindFirst("id").Value);
-		    var currentUser = await _userRepository.GetUser(userId);
+			    UserId = userId,
+			    File = request.File,
+			    Description = request.Description
+		    });
 
-		    var currentFile = photoForCreation.File;
-		    ImageUploadResult uploadResult;
-		    using (var stream = currentFile.OpenReadStream())
-		    {
-			    var uploadParams = new ImageUploadParams
-			    {
-				    File = new FileDescription(currentFile.Name, stream),
-					Transformation = new Transformation().Width(500).Height(500).Crop("fill").Gravity("face")
-			    };
+		    return CreatedAtRoute("GetUserPhoto", new { userId, photoId }, null);
+		}
 
-			    uploadResult = _cloudinary.Upload(uploadParams);
-		    }
-
-		    photoForCreation.PublicId = uploadResult.PublicId;
-		    photoForCreation.Url = uploadResult.Uri.ToString();
-
-		    var photo = _mapper.Map<Photo>(photoForCreation);
-
-		    currentUser.AddPhoto(photo);
-		    await _userRepository.SaveAll();
-
-		    return CreatedAtRoute("GetUserPhoto", new { userId, photoId = photo.Id }, null);
-	    }
     }
 }
