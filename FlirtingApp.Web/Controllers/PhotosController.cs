@@ -1,18 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AutoMapper;
-using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
 using FlirtingApp.Application.Common;
 using FlirtingApp.Application.Photos.Commands.CreatePhoto;
-using FlirtingApp.Web.ConfigOptions;
-using FlirtingApp.Web.Dtos;
-using FlirtingApp.Web.Models;
-using FlirtingApp.Web.Repository;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace FlirtingApp.Web.Controllers
 {

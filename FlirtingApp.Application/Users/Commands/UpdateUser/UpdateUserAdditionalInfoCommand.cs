@@ -4,7 +4,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using FlirtingApp.Application.Common.Interfaces.Databases;
-using FlirtingApp.Application.Common.Requests;
 using FlirtingApp.Application.Exceptions;
 using FlirtingApp.Domain.Entities;
 using MediatR;

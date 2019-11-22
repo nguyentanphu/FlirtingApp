@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using FlirtingApp.Application.Common;
-using FlirtingApp.Application.Common.Requests;
 using FlirtingApp.Application.Photos.Queries.GetUserPhoto;
 using FlirtingApp.Application.Users.Commands.CreateUser;
 using FlirtingApp.Application.Users.Commands.UpdateUser;

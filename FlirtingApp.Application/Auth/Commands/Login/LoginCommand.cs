@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using FlirtingApp.Application.Common;
 using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Application.Common.Interfaces.Identity;
-using FlirtingApp.Application.Common.Requests;
 using FlirtingApp.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FlirtingApp.Application.Common.Requests
+﻿namespace FlirtingApp.Application.Users.Commands.UpdateUser
 {
 	public class UpdateUserAdditionalInfoRequest
 	{

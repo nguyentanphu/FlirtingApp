@@ -1,14 +1,8 @@
 ﻿using System.Threading.Tasks;
 using FlirtingApp.Application.Auth.Commands.ExchangeTokens;
 using FlirtingApp.Application.Auth.Commands.Login;
-using FlirtingApp.Application.Common.Requests;
-using FlirtingApp.Web.ConfigOptions;
-using FlirtingApp.Web.Repository;
-using FlirtingApp.Web.Services;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using LoginRequest = FlirtingApp.Web.RequestModels.LoginRequest;
 
 namespace FlirtingApp.Web.Controllers
 {

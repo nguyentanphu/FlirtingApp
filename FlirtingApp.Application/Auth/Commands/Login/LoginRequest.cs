@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace FlirtingApp.Web.RequestModels
+﻿namespace FlirtingApp.Application.Auth.Commands.Login
 {
 	public class LoginRequest
 	{

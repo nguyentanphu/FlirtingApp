@@ -4,9 +4,7 @@ using FlirtingApp.Application.Common.Interfaces;
 using FlirtingApp.Infrastructure;
 using FlirtingApp.Persistent;
 using FlirtingApp.Web.HostedServices;
-using FlirtingApp.Web.Identity;
 using FlirtingApp.Web.Registrars;
-using FlirtingApp.Web.Repository;
 using FlirtingApp.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,6 +31,7 @@ namespace FlirtingApp.Web
 			services.AddHttpContextAccessor();
 			services.AddScoped<ICurrentUser, CurrentUserService>();
 
+			// For run migration on app start and seed users and photos data
 			services.AddHostedService<MigrationHostedService>();
 
 			services.AddControllers();
@@ -40,14 +39,6 @@ namespace FlirtingApp.Web
 			services.AddCors();
 
 			services.AddSwaggerWithBearerToken();
-
-			//services.AddAutoMapper(this.GetType().Assembly);
-
-			services.AddScoped<JwtSecurityTokenHandler>();
-			services.AddScoped<UserRepository>();
-			services.AddScoped<AuthService>();
-			services.AddScoped<TokenFactory>();
-			services.AddScoped<JwtFactory>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
