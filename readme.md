@@ -21,3 +21,4 @@
 ## In progress
 
 - Update tests for Application layer.
+- Dockerizing the app.
