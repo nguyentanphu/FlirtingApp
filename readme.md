@@ -17,3 +17,7 @@
 - Custom exceptions for each layers.
 - Unify exceptions errors message with ExceptionMiddleware
 - 2 DbContext: 1 for Application entities, 1 for IdentityDbContext.
+
+## In progress
+
+- Update tests for Application layer.
