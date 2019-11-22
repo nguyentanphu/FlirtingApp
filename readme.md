@@ -3,7 +3,7 @@
 <img src="https://serving.photos.photobox.com/3047955071e2f47a1e3c1140fb2f279d5472e04913a6d9fa7b7ed858bcf5ed415020f202.jpg"
      alt="Clean architecture" />
 
-## Feature
+## Features
 
 - ASP.NET Core 3, ASP.NET Core 3 Identity, angular 8
 - Jwt Authentication with refresh token.
