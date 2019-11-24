@@ -21,4 +21,5 @@
 ## In progress
 
 - Update tests for Application layer.
+- Update using mongodb for queries
 - Dockerizing the app.
