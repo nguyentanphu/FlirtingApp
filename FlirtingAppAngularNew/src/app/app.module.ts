@@ -8,28 +8,36 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 import { NavLoginComponent } from './nav/nav-login/nav-login.component';
-import { NotificationComponent } from './notification/notification.component';
+import { HomeComponent } from './home/home.component';
+import { RouterModule } from '@angular/router';
+import { appRoutes } from './routes';
+import { interceptorProviders } from './_services/interceptors/interceptor-providers';
 
 @NgModule({
    declarations: [
       AppComponent,
       NavComponent,
       NavLoginComponent,
-      NotificationComponent
+      HomeComponent
    ],
    imports: [
       BrowserModule,
       BrowserAnimationsModule,
       ReactiveFormsModule,
+      RouterModule.forRoot(appRoutes),
+
       FlexLayoutModule,
+
       MatModules.MatToolbarModule,
       MatModules.MatIconModule,
       MatModules.MatFormFieldModule,
       MatModules.MatInputModule,
       MatModules.MatButtonModule,
-      MatModules.MatSnackBarModule,
+      MatModules.MatSnackBarModule
    ],
-   providers: [],
+   providers: [
+     ...interceptorProviders
+   ],
    bootstrap: [
       AppComponent
    ]

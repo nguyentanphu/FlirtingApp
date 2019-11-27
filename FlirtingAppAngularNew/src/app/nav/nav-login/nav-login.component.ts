@@ -19,11 +19,13 @@ export class NavLoginComponent implements OnInit {
   }
 
   loginSubmit() {
-      if (this.loginFormGroup.valid) {
-          this.notiService.sendSuccess('abc');
-      } else {
-          this.notiService.sendError('error');
-      }
-  }
+    if (!this.loginFormGroup.valid) {
+      this.notiService.sendError(
+        `Username must be from 4 to 20 characters.
+        Password must be least 6 characters and do not contain spaces`);
+    } else {
 
+    }
+  }
 }
+
