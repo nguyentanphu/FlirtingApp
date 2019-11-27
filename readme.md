@@ -21,5 +21,6 @@
 ## In progress
 
 - Update tests for Application layer.
+- Real-time private chat and group chat.
 - Update using mongodb for queries
 - Dockerizing the app.
