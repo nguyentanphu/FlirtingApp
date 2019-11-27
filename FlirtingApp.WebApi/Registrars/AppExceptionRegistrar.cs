@@ -1,7 +1,7 @@
-﻿using FlirtingApp.Web.Middleware;
+﻿using FlirtingApp.WebApi.Middleware;
 using Microsoft.AspNetCore.Builder;
 
-namespace FlirtingApp.Web.Registrars
+namespace FlirtingApp.WebApi.Registrars
 {
 	public static class AppExceptionRegistrar
 	{

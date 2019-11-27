@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using FlirtingApp.Application.Exceptions;
 using Microsoft.AspNetCore.Http;
 
-namespace FlirtingApp.Web.Middleware
+namespace FlirtingApp.WebApi.Middleware
 {
 	public class AppExceptionMiddleware
 	{

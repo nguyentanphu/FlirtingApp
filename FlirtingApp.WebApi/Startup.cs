@@ -1,18 +1,17 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using FlirtingApp.Application;
+﻿using FlirtingApp.Application;
 using FlirtingApp.Application.Common.Interfaces;
 using FlirtingApp.Infrastructure;
 using FlirtingApp.Persistent;
-using FlirtingApp.Web.HostedServices;
-using FlirtingApp.Web.Registrars;
-using FlirtingApp.Web.Services;
+using FlirtingApp.WebApi.HostedServices;
+using FlirtingApp.WebApi.Registrars;
+using FlirtingApp.WebApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace FlirtingApp.Web
+namespace FlirtingApp.WebApi
 {
 	public class Startup
 	{

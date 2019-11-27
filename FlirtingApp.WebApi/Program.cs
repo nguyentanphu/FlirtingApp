@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace FlirtingApp.Web
+namespace FlirtingApp.WebApi
 {
 	public class Program
 	{

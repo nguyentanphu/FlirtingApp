@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
-namespace FlirtingApp.Web.Registrars
+namespace FlirtingApp.WebApi.Registrars
 {
 	public static class SwaggerRegistrar
 	{

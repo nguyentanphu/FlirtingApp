@@ -13,10 +13,13 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError(error => {
-        // let errorMessage = 'Unexpected error. Contact your admin!';
 
         if (error.status === 401) {
           this.router.navigate(['']);
+        } else if (error.status === 400) {
+          this.notiService.sendError('Bad request! Validation error');
+        } else {
+          this.notiService.sendError('Unexpected error. Contact your admin!');
         }
 
         return throwError(error);

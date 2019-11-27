@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NotificationService } from 'src/app/_services/notification-service';
+import { AuthService } from 'src/app/_services/auth-service';
 
 @Component({
   selector: 'app-nav-login',
@@ -13,19 +14,25 @@ export class NavLoginComponent implements OnInit {
     password: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.pattern(new RegExp('^\\S*$'))])]
   });
 
-  constructor(private formBuilder: FormBuilder, private notiService: NotificationService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private notiService: NotificationService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
   }
 
   loginSubmit() {
     if (!this.loginFormGroup.valid) {
-      this.notiService.sendError(
+      return this.notiService.sendError(
         `Username must be from 4 to 20 characters.
         Password must be least 6 characters and do not contain spaces`);
-    } else {
-
     }
+
+    this.authService.login(this.loginFormGroup.value).subscribe(tokens => {
+      this.notiService.sendSuccess('Login succeeded');
+    });
   }
 }
 

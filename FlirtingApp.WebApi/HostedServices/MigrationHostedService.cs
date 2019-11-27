@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FlirtingApp.Application.System.Commands.SeedData;
@@ -8,7 +6,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace FlirtingApp.Web.HostedServices
+namespace FlirtingApp.WebApi.HostedServices
 {
 	public class MigrationHostedService: IHostedService
 	{

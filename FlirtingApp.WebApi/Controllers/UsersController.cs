@@ -10,7 +10,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FlirtingApp.Web.Controllers
+namespace FlirtingApp.WebApi.Controllers
 {
 	[Authorize]
     [Route("api/[controller]")]

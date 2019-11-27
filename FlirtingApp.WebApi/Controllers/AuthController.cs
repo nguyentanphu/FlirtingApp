@@ -4,7 +4,7 @@ using FlirtingApp.Application.Auth.Commands.Login;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FlirtingApp.Web.Controllers
+namespace FlirtingApp.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
