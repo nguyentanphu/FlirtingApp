@@ -1,0 +1,16 @@
+<form 
+    fxLayout="row" 
+    fxLayoutGap="1rem" 
+    fxLayoutAlign="space-between center" 
+    [formGroup]="loginFormGroup"
+    (ngSubmit)="loginSubmit()"
+    >
+  <mat-form-field floatLabel="never">
+    <input matInput placeholder="User name" formControlName="userName">
+  </mat-form-field>
+  <mat-form-field floatLabel="never">
+    <input matInput placeholder="Password" formControlName="password">
+  </mat-form-field>
+
+  <button mat-raised-button>Login</button>
+</form>
