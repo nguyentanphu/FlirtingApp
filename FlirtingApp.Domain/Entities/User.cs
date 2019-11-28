@@ -15,6 +15,8 @@ namespace FlirtingApp.Domain.Entities
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 
+		public Gender Gender { get; set; }
+
 		public DateTime DateOfBirth { get; set; }
 		public string KnownAs { get; set; }
 		public DateTime LastActive { get; set; }

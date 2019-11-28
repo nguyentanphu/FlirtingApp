@@ -17,6 +17,7 @@ import { environment } from 'src/environments/environment';
 import { ErrorSnackbarComponent } from './notifications/error-snackbar/error-snackbar.component';
 import { AppMenuComponent } from './nav/app-menu/app-menu.component';
 import { NavLogoutComponent } from './nav/nav-logout/nav-logout.component';
+import { RegistrationComponent } from './home/registration/registration.component';
 
 @NgModule({
    declarations: [
@@ -27,7 +28,8 @@ import { NavLogoutComponent } from './nav/nav-logout/nav-logout.component';
       AppMenuComponent,
       ErrorSnackbarComponent,
       
-      HomeComponent
+      HomeComponent,
+      RegistrationComponent
    ],
    imports: [
       BrowserModule,

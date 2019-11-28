@@ -15,6 +15,7 @@ namespace FlirtingApp.Persistent.Configurations
 			builder.Property(u => u.Email).HasMaxLength(100).IsRequired();
 			builder.Property(u => u.FirstName).HasMaxLength(100);
 			builder.Property(u => u.LastName).HasMaxLength(100);
+			builder.Property(u => u.Gender).HasColumnType("byte");
 			builder.Property(u => u.LastActive).HasMaxLength(100);
 			builder.Property(u => u.KnownAs).HasMaxLength(100);
 			builder.Property(u => u.City).HasMaxLength(100);
