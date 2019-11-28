@@ -1,18 +1,76 @@
-<form >
-  <h2 class="text-center text-primary">Sign Up</h2>
-  <hr>
+<mat-card class="signup-card">
+  <mat-card-header>
+    <mat-card-title>Sign up now!</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="signUpFormGroup" fxLayout="column">
+      <mat-form-field>
+        <input matInput type="text" placeholder="First name" formControlName="firstName">
+        <mat-error *ngIf="signUpFormGroup.get('firstName').hasError('required')">
+          First name is <strong>required</strong>.
+        </mat-error>
+        <mat-error *ngIf="signUpFormGroup.get('firstName').hasError('minlength')">
+          First name must be at least 3 characters.
+        </mat-error>
+      </mat-form-field>
 
-  <div class="form-group">
-    <input name="userName" type="text" class="form-control" placeholder="Username" [(ngModel)]="model.userName">
-  </div>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Last name" formControlName="lastName">
+        <mat-error *ngIf="signUpFormGroup.get('lastName').hasError('required')">
+          Last name is <strong>required</strong>.
+        </mat-error>
+        <mat-error *ngIf="signUpFormGroup.get('lastName').hasError('minlength')">
+          Last name must be at least 3 characters.
+        </mat-error>
+      </mat-form-field>
 
-  <div class="form-group">
-    <input name="password" type="password" class="form-control" placeholder="Password" [(ngModel)]="model.password">
-  </div>
+      <mat-form-field>
+        <input matInput type="text" placeholder="User name" formControlName="userName">
+        <mat-error *ngIf="signUpFormGroup.get('userName').hasError('required')">
+          User name is <strong>required</strong>.
+        </mat-error>
+        <mat-error *ngIf="signUpFormGroup.get('userName').hasError('minlength')">
+          User name must be at least 6 characters.
+        </mat-error>
+        <mat-error *ngIf="signUpFormGroup.get('userName').hasError('maxlength')">
+          User name must be at most 20 characters.
+        </mat-error>
+      </mat-form-field>
 
-  <div class="form-group text-center">
-    <button class="btn btn-success" type="submit">Register</button>
-    <button class="btn btn-default" type="button" (click)="cancelRegister()">Cancel</button>
-  </div>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Email" formControlName="email">
+        <mat-error *ngIf="signUpFormGroup.get('email').hasError('required')">
+          Email is <strong>required</strong>.
+        </mat-error>
+        <mat-error *ngIf="signUpFormGroup.get('email').hasError('email')">
+          Email is not in valid format.
+        </mat-error>
+      </mat-form-field>
 
-</form>
+      <mat-form-field>
+        <input matInput type="password" placeholder="Password" formControlName="password">
+        <mat-error *ngIf="signUpFormGroup.get('password').hasError('required')">
+          Password is <strong>required</strong>.
+        </mat-error>
+        <mat-error *ngIf="signUpFormGroup.get('password').hasError('minlength')">
+          Password must be at least 6 characters.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput [matDatepicker]="dateOfBirthPicker" placeholder="Date of birth" formControlName="dateOfBirth">
+        <mat-datepicker-toggle matSuffix [for]="dateOfBirthPicker"></mat-datepicker-toggle>
+        <mat-datepicker #dateOfBirthPicker></mat-datepicker>
+        <mat-error *ngIf="signUpFormGroup.get('dateOfBirth').hasError('required')">
+          Date of birth is <strong>required</strong>.
+        </mat-error>
+      </mat-form-field>
+
+      <div class="form-group text-center">
+        <button class="btn btn-success" type="submit">Register</button>
+        <button class="btn btn-default" type="button">Cancel</button>
+      </div>
+
+    </form>
+  </mat-card-content>
+</mat-card>

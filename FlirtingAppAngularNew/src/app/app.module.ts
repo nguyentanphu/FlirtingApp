@@ -13,48 +13,50 @@ import { HomeComponent } from './home/home.component';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
 import { interceptorProviders } from './_services/interceptors/interceptor-providers';
-import { environment } from 'src/environments/environment';
 import { ErrorSnackbarComponent } from './notifications/error-snackbar/error-snackbar.component';
 import { AppMenuComponent } from './nav/app-menu/app-menu.component';
 import { NavLogoutComponent } from './nav/nav-logout/nav-logout.component';
 import { RegistrationComponent } from './home/registration/registration.component';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material';
 
 @NgModule({
-   declarations: [
-      AppComponent,
-      NavComponent,
-      NavLoginComponent,
-      NavLogoutComponent,
-      AppMenuComponent,
-      ErrorSnackbarComponent,
-      
-      HomeComponent,
-      RegistrationComponent
-   ],
-   imports: [
-      BrowserModule,
-      BrowserAnimationsModule,
-      ReactiveFormsModule,
-      HttpClientModule,
-      RouterModule.forRoot(appRoutes),
-      FlexLayoutModule,
+  declarations: [
+    AppComponent,
+    NavComponent,
+    NavLoginComponent,
+    NavLogoutComponent,
+    AppMenuComponent,
+    ErrorSnackbarComponent,
 
-      MatModules.MatToolbarModule,
-      MatModules.MatIconModule,
-      MatModules.MatFormFieldModule,
-      MatModules.MatInputModule,
-      MatModules.MatButtonModule,
-      MatModules.MatSnackBarModule,
-      MatModules.MatMenuModule
-   ],
-   providers: [
-     ...interceptorProviders,
-   ],
-   bootstrap: [
-      AppComponent
-   ],
-   entryComponents: [
-    ErrorSnackbarComponent
-   ]
+    HomeComponent,
+    RegistrationComponent
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    RouterModule.forRoot(appRoutes),
+    FlexLayoutModule,
+
+    MatModules.MatToolbarModule,
+    MatModules.MatIconModule,
+    MatModules.MatFormFieldModule,
+    MatModules.MatInputModule,
+    MatModules.MatButtonModule,
+    MatModules.MatSelectModule,
+    MatModules.MatSnackBarModule,
+    MatModules.MatMenuModule,
+    MatModules.MatDividerModule,
+    MatModules.MatCardModule,
+    MatModules.MatDatepickerModule,
+    MatNativeDateModule
+  ],
+  providers: [
+    ...interceptorProviders,
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
+  ],
+  bootstrap: [AppComponent],
+  entryComponents: [ErrorSnackbarComponent]
 })
-export class AppModule { }
+export class AppModule {}
