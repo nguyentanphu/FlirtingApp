@@ -1,0 +1,14 @@
+<span>Welcome {{loggedInUserName}}</span>
+<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="dotdotdot menu">
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>
+    <mat-icon>face</mat-icon>
+    <span>Edit Profile</span>
+  </button>
+  <button mat-menu-item (click)="logout()">
+    <mat-icon>time_to_leave</mat-icon>
+    <span>Logout</span>
+  </button>
+</mat-menu>

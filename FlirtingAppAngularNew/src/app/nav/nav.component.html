@@ -1,8 +1,10 @@
 <mat-toolbar color="primary" class="app-nav-bar">
-  <div class="app-logo">
-    <mat-icon [inline]="true">pregnant_woman</mat-icon> <span>Flirting app</span>
+  <div>
+    <span class="app-logo"><mat-icon [inline]="true">pregnant_woman</mat-icon> <span>Flirting app</span></span>
+    <app-menu *ngIf="loggedIn"></app-menu>
   </div>
   <div>
-    <app-nav-login></app-nav-login>
+    <app-nav-login *ngIf="!loggedIn"></app-nav-login>
+    <app-nav-logout *ngIf="loggedIn"></app-nav-logout>
   </div>
 </mat-toolbar>

@@ -15,13 +15,18 @@ import { appRoutes } from './routes';
 import { interceptorProviders } from './_services/interceptors/interceptor-providers';
 import { environment } from 'src/environments/environment';
 import { ErrorSnackbarComponent } from './notifications/error-snackbar/error-snackbar.component';
+import { AppMenuComponent } from './nav/app-menu/app-menu.component';
+import { NavLogoutComponent } from './nav/nav-logout/nav-logout.component';
 
 @NgModule({
    declarations: [
       AppComponent,
       NavComponent,
-      ErrorSnackbarComponent,
       NavLoginComponent,
+      NavLogoutComponent,
+      AppMenuComponent,
+      ErrorSnackbarComponent,
+      
       HomeComponent
    ],
    imports: [
@@ -37,7 +42,8 @@ import { ErrorSnackbarComponent } from './notifications/error-snackbar/error-sna
       MatModules.MatFormFieldModule,
       MatModules.MatInputModule,
       MatModules.MatButtonModule,
-      MatModules.MatSnackBarModule
+      MatModules.MatSnackBarModule,
+      MatModules.MatMenuModule
    ],
    providers: [
      ...interceptorProviders,
