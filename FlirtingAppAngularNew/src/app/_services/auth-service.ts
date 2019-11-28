@@ -6,6 +6,7 @@ import { ILoginModel } from '../_models/users/login-model';
 import { APIURL } from '../_models/api-url';
 import { Observable } from 'rxjs';
 import { TokensModel } from '../_models/auth/tokens-model';
+import { ITokenModel } from '../_models/users/token-model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,14 +24,26 @@ export class AuthService {
 
   login(model: ILoginModel): Observable<TokensModel> {
     return this.httpClient.post<TokensModel>(APIURL.auth.login, model)
-    .pipe(
-      map((response) => {
-        localStorage.setItem('accessToken', response.accessToken);
-        localStorage.setItem('refreshToken', response.refreshToken);
-        this.decodedAccessToken = this.jwtHelper.decodeToken(response.accessToken);
-        return response;
-      })
-    );
+      .pipe(
+        map((response) => {
+          localStorage.setItem('accessToken', response.accessToken);
+          localStorage.setItem('refreshToken', response.refreshToken);
+          this.decodedAccessToken = this.jwtHelper.decodeToken(response.accessToken);
+          return response;
+        })
+      );
+  }
+
+  exchangeTokens(oldTokens: ITokenModel) {
+    return this.httpClient.post<ITokenModel>(APIURL.auth.exchangeTokens, oldTokens)
+      .pipe(
+        map((response) => {
+          localStorage.setItem('accessToken', response.accessToken);
+          localStorage.setItem('refreshToken', response.refreshToken);
+          this.decodedAccessToken = this.jwtHelper.decodeToken(response.accessToken);
+          return response;
+        })
+      );
   }
 
   loggedIn() {
@@ -42,6 +55,3 @@ export class AuthService {
   }
 }
 
-export function accessTokenGetter() {
-  return localStorage.getItem('accessToken');
-}

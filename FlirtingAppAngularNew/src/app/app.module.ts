@@ -13,8 +13,6 @@ import { HomeComponent } from './home/home.component';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
 import { interceptorProviders } from './_services/interceptors/interceptor-providers';
-import { JwtModule } from '@auth0/angular-jwt';
-import { accessTokenGetter } from './_services/auth-service';
 import { environment } from 'src/environments/environment';
 import { ErrorSnackbarComponent } from './notifications/error-snackbar/error-snackbar.component';
 
@@ -32,14 +30,6 @@ import { ErrorSnackbarComponent } from './notifications/error-snackbar/error-sna
       ReactiveFormsModule,
       HttpClientModule,
       RouterModule.forRoot(appRoutes),
-      JwtModule.forRoot({
-         config: {
-            tokenGetter: accessTokenGetter,
-            whitelistedDomains: [environment.appDomain],
-            blacklistedRoutes: [`${environment.appDomain}/auth/login`]
-         }
-      }),
-
       FlexLayoutModule,
 
       MatModules.MatToolbarModule,

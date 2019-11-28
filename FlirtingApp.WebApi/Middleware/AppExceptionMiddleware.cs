@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
+using FlirtingApp.Application;
 using FlirtingApp.Application.Exceptions;
 using Microsoft.AspNetCore.Http;
 
@@ -43,13 +44,13 @@ namespace FlirtingApp.WebApi.Middleware
 				case AppValidationException validationException:
 					statusCode = HttpStatusCode.BadRequest;
 					errorResult = GenerateErrorsJsonFromValidationErrors(validationException.Failures, jsonSettings);
-
 					break;
-				case InvalidRefreshTokenException refreshToken:
-				case InvalidJwtException invalidJwt:
+				case InvalidRefreshTokenException _:
+				case InvalidJwtException _:
+				case LoginException _:
 					statusCode = HttpStatusCode.BadRequest;
 					break;
-				case ResourceNotFoundException resourceNotFound:
+				case ResourceNotFoundException _:
 					statusCode = HttpStatusCode.NotFound;
 					break;
 			}

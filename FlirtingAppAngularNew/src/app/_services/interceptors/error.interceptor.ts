@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { NotificationService } from '../notification-service';
 import { Router } from '@angular/router';
+import { isEmpty } from 'lodash';
+
+import { NotificationService } from '../notification-service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -13,17 +15,38 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError(error => {
+        switch (error.status) {
 
-        if (error.status === 401) {
-          this.router.navigate(['']);
-        } else if (error.status === 400) {
-          this.notiService.sendError('Bad request! Validation error');
-        } else {
-          this.notiService.sendError('Unexpected error. Contact your admin!');
+          case 401:
+            this.router.navigate(['']);
+            break;
+
+          case 400:
+            const errors = error.error.errors;
+            if (isEmpty(errors)) {
+              return this.sendMessageAndThrowError(error, 'Bad request! Validation error');
+            }
+            let message = '';
+            // tslint:disable-next-line: forin
+            for (const key in errors) {
+              if (key === 'errorMessage') {
+                message += errors[key];
+              } else {
+                message += `${key}: ${errors[key]}`;
+              }
+            }
+            return this.sendMessageAndThrowError(error, message);
+
+          default:
+            return this.sendMessageAndThrowError(error, 'Unexpected error. Contact your admin!');
         }
-
-        return throwError(error);
       })
     );
   }
+
+  sendMessageAndThrowError(error, message) {
+    this.notiService.sendError(message);
+    return throwError(error);
+  }
 }
+
