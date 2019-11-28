@@ -16,11 +16,13 @@ import { interceptorProviders } from './_services/interceptors/interceptor-provi
 import { JwtModule } from '@auth0/angular-jwt';
 import { accessTokenGetter } from './_services/auth-service';
 import { environment } from 'src/environments/environment';
+import { ErrorSnackbarComponent } from './notifications/error-snackbar/error-snackbar.component';
 
 @NgModule({
    declarations: [
       AppComponent,
       NavComponent,
+      ErrorSnackbarComponent,
       NavLoginComponent,
       HomeComponent
    ],
@@ -52,6 +54,9 @@ import { environment } from 'src/environments/environment';
    ],
    bootstrap: [
       AppComponent
+   ],
+   entryComponents: [
+    ErrorSnackbarComponent
    ]
 })
 export class AppModule { }
