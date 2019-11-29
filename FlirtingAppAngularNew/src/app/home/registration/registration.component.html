@@ -3,7 +3,7 @@
     <mat-card-title>Sign up now!</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <form [formGroup]="signUpFormGroup" fxLayout="column">
+    <form [formGroup]="signUpFormGroup" fxLayout="column" (ngSubmit)="signUpSubmit()">
       <mat-form-field>
         <input matInput type="text" placeholder="First name" formControlName="firstName">
         <mat-error *ngIf="signUpFormGroup.get('firstName').hasError('required')">
@@ -72,6 +72,9 @@
         <mat-datepicker #dateOfBirthPicker></mat-datepicker>
         <mat-error *ngIf="signUpFormGroup.get('dateOfBirth').hasError('required')">
           Date of birth is <strong>required</strong>.
+        </mat-error>
+        <mat-error *ngIf="signUpFormGroup.get('dateOfBirth').hasError('maxdate')">
+          Birth day must be less than the year 2000!
         </mat-error>
       </mat-form-field>
 

@@ -48,6 +48,7 @@ namespace FlirtingApp.WebApi.Middleware
 				case InvalidRefreshTokenException _:
 				case InvalidJwtException _:
 				case LoginException _:
+				case ResourceExistedException _:
 					statusCode = HttpStatusCode.BadRequest;
 					break;
 				case ResourceNotFoundException _:
