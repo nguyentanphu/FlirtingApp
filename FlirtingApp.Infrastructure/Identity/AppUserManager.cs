@@ -65,6 +65,15 @@ namespace FlirtingApp.Infrastructure.Identity
 			return (true, matchedUser.Id, refreshToken);
 		}
 
+		public async Task LogoutUserAsync(Guid appUserId, string remoteIpAddress)
+		{
+			var matchedUser = await _identityDbContext.AppUsers
+				.Include(a => a.RefreshTokens)
+				.FirstAsync(a => a.Id == appUserId);
+			matchedUser.RemoveRefreshToken(remoteIpAddress);
+
+			await _identityDbContext.SaveChangesAsync();
+		}
 		public async Task<bool> HasValidRefreshTokenAsync(string refreshToken, Guid appUserId, string remoteIpAddress)
 		{
 			var matchedUser = await _identityDbContext.AppUsers

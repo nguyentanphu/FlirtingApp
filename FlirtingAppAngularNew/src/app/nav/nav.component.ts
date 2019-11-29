@@ -14,6 +14,6 @@ export class NavComponent implements OnInit {
   }
 
   public get loggedIn() {
-    return this.authService.loggedIn();
+    return this.authService.loggedIn;
   }
 }

@@ -38,6 +38,15 @@
       </mat-form-field>
 
       <mat-form-field>
+        <mat-label>Gender</mat-label>
+        <mat-select formControlName="gender">
+          <mat-option *ngFor="let gender of genderOptions" [value]="gender.id">
+            {{gender.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
         <input matInput type="text" placeholder="Email" formControlName="email">
         <mat-error *ngIf="signUpFormGroup.get('email').hasError('required')">
           Email is <strong>required</strong>.
@@ -66,9 +75,9 @@
         </mat-error>
       </mat-form-field>
 
-      <div class="form-group text-center">
-        <button class="btn btn-success" type="submit">Register</button>
-        <button class="btn btn-default" type="button">Cancel</button>
+      <div class="form-group text-center" fxLayout="row" fxLayoutGap="1rem">
+        <button mat-raised-button color="primary" class="btn btn-success" type="submit">Register</button>
+        <button mat-raised-button class="btn btn-default" type="button">Cancel</button>
       </div>
 
     </form>

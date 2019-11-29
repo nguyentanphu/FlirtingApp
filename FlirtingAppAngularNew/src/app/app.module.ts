@@ -18,6 +18,7 @@ import { AppMenuComponent } from './nav/app-menu/app-menu.component';
 import { NavLogoutComponent } from './nav/nav-logout/nav-logout.component';
 import { RegistrationComponent } from './home/registration/registration.component';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material';
+import { MemberListComponent } from './members/member-list/member-list.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material';
     ErrorSnackbarComponent,
 
     HomeComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    MemberListComponent
   ],
   imports: [
     BrowserModule,

@@ -7,5 +7,6 @@ namespace FlirtingApp.Application.Common.Interfaces
 	public interface ICurrentUser
 	{
 		Guid? UserId { get; set; }
+		Guid? AppUserId { get; set; }
 	}
 }

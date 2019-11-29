@@ -42,7 +42,7 @@ export class AuthService {
       );
   }
 
-  loggedIn() {
+  get loggedIn() {
     const token = localStorage.getItem('accessToken');
     if (!token) {
       return false;
@@ -51,8 +51,13 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    return this.httpClient.post(APIURL.auth.logout, {})
+      .pipe(
+        tap(() => {
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
+        })
+      );
   }
 
   private storeTokens(tokens) {

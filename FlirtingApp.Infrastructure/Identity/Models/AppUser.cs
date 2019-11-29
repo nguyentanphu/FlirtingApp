@@ -17,9 +17,9 @@ namespace FlirtingApp.Infrastructure.Identity.Models
 			_refreshTokens.Add(new RefreshToken(token, remoteIpAddress, DateTime.UtcNow.AddDays(daysToExpire)));
 		}
 
-		public void RemoveRefreshToken(string refreshToken)
+		public void RemoveRefreshToken(string remoteIpAddress)
 		{
-			_refreshTokens.Remove(RefreshTokens.First(t => t.Token == refreshToken));
+			_refreshTokens.RemoveWhere(r => r.RemoteIpAddress == remoteIpAddress);
 		}
 
 		public bool HasValidRefreshToken(string refreshToken, string remoteIpAddress)

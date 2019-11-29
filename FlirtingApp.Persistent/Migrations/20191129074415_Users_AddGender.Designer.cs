@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlirtingApp.Persistent.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20191128100436_Users_AddGender")]
+    [Migration("20191129074415_Users_AddGender")]
     partial class Users_AddGender
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,8 +96,8 @@ namespace FlirtingApp.Persistent.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("byte");
+                    b.Property<byte>("Gender")
+                        .HasColumnType("tinyint");
 
                     b.Property<Guid>("IdentityId")
                         .HasColumnType("uniqueidentifier");

@@ -94,8 +94,8 @@ namespace FlirtingApp.Persistent.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("byte");
+                    b.Property<byte>("Gender")
+                        .HasColumnType("tinyint");
 
                     b.Property<Guid>("IdentityId")
                         .HasColumnType("uniqueidentifier");

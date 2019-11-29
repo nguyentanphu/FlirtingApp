@@ -11,7 +11,7 @@ import { NotificationService } from 'src/app/_services/notification-service';
 export class NavLogoutComponent {
 
   constructor(
-    private authService: AuthService, 
+    private authService: AuthService,
     private router: Router,
     private notiService: NotificationService
   ) { }
@@ -24,8 +24,10 @@ export class NavLogoutComponent {
   }
 
   public logout() {
-    this.authService.logout();
-    this.notiService.sendSuccess('Logout succeeded.');
-    this.router.navigate(['']);
+    this.authService.logout().subscribe(() => {
+      this.notiService.sendSuccess('Logout succeeded.');
+      this.router.navigate(['']);
+    });
+
   }
 }

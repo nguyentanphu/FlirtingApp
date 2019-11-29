@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Gender } from 'src/app/_models/users/sign-up-model';
+import { enumToKeyValueArray } from 'src/app/_services/helpers/enum-helpers';
 
 @Component({
   selector: 'app-registration',
@@ -20,6 +21,8 @@ export class RegistrationComponent implements OnInit {
       gender: [Gender.Unknown, Validators.required]
     });
   }
+  genderOptions = enumToKeyValueArray<number>(Gender);
+
 
   ngOnInit() {}
 }

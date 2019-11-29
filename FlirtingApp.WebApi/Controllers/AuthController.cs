@@ -1,7 +1,9 @@
 ﻿using System.Threading.Tasks;
 using FlirtingApp.Application.Auth.Commands.ExchangeTokens;
 using FlirtingApp.Application.Auth.Commands.Login;
+using FlirtingApp.Application.Auth.Commands.Logout;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlirtingApp.WebApi.Controllers
@@ -29,7 +31,18 @@ namespace FlirtingApp.WebApi.Controllers
 		    return Ok(loginResponse);
 	    }
 
-	    [HttpPost("exchangeTokens")]
+	    [HttpPost("logout")]
+		[Authorize]
+	    public async Task<IActionResult> Logout()
+	    {
+		    await _mediator.Send(new LogoutCommand
+		    {
+			    RemoteIpAddress = HttpContext.Connection.RemoteIpAddress.ToString()
+		    });
+		    return Ok();
+	    }
+
+		[HttpPost("exchangeTokens")]
 	    public async Task<IActionResult> ExchangeTokens(ExchangeTokensRequest exchangeTokensRequest)
 	    {
 		    var exchangeTokensResult = await _mediator.Send(new ExchangeTokensCommand

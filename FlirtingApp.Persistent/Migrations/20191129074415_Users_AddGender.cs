@@ -6,12 +6,12 @@ namespace FlirtingApp.Persistent.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
+            migrationBuilder.AddColumn<byte>(
                 name: "Gender",
                 table: "Users",
-                type: "byte",
+                type: "tinyint",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: (byte)0);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
