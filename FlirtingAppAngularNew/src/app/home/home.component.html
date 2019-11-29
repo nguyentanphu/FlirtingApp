@@ -1,9 +1,11 @@
 <div class="container" fxLayout="column" fxLayoutAlign="center center">
   <h1 class="mat-display-2 text-primary">Find your match</h1>
   <p class="mat-display-1 text-accent">Come on in to view your matches... All you need to do is sign up!</p>
+  <ng-container *ngIf="!loggedIn">
   <div *ngIf="!isRegistering">
     <button mat-raised-button color="primary" (click)="isRegistering = true">Register</button>
     <button mat-raised-button>Learn more</button>
   </div>
   <app-registration *ngIf="isRegistering"></app-registration>
+</ng-container>
 </div>

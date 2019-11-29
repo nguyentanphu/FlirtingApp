@@ -1,6 +1,6 @@
 <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
   <div>
-    <span class="app-logo"><mat-icon [inline]="true">pregnant_woman</mat-icon> <span>Flirting app</span></span>
+    <a mat-button [routerLink]="['']" class="app-logo"><mat-icon [inline]="true">pregnant_woman</mat-icon> <span>Flirting app</span></a>
     <app-menu *ngIf="loggedIn"></app-menu>
   </div>
   <div>

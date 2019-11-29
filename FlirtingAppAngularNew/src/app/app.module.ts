@@ -19,6 +19,8 @@ import { NavLogoutComponent } from './nav/nav-logout/nav-logout.component';
 import { RegistrationComponent } from './home/registration/registration.component';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material';
 import { MemberListComponent } from './members/member-list/member-list.component';
+import { ListComponent } from './lists/list/list.component';
+import { MessageComponent } from './messages/message/message.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { MemberListComponent } from './members/member-list/member-list.component
 
     HomeComponent,
     RegistrationComponent,
-    MemberListComponent
+    MemberListComponent,
+    ListComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,

@@ -7,8 +7,12 @@ import { AuthService } from '../_services/auth-service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  isRegistering = this.authService.loggedIn;
   constructor(private authService: AuthService) { }
+  isRegistering = false;
+
+  public get loggedIn() {
+    return this.authService.loggedIn;
+  }
 
   ngOnInit() {
   }
