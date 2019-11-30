@@ -1,0 +1,31 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center stretch" fxLayoutGap="5rem">
+  <mat-card class="example-card" fxFlex="25%" fxLayout="column">
+    <mat-card-header fxFlexAlign="center">
+      <mat-card-title>{{user.userName}}</mat-card-title>
+      <mat-card-subtitle>{{user.firstName}} {{user.lastName}}</mat-card-subtitle>
+    </mat-card-header>
+    <img fxFlexAlign="center" class="profile-image" [src]="user.photoUrl" alt="Profile photo">
+    <mat-card-content>
+      <div>
+        <p><strong>Age:</strong></p>
+        <p>{{user.age}}</p>
+      </div>
+      <div>
+        <p><strong>Last active:</strong></p>
+        <p>{{user.lastActive | date:'dd/MM/yyyy'}}</p>
+      </div>
+      <div>
+        <p><strong>Member since:</strong></p>
+        <p>{{user.created | date:'dd/MM/yyyy'}}</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="example-card" fxFlex="60%" fxLayout="column">
+    <mat-tab-group>
+      <mat-tab label="Description">
+        <app-member-edit-intro id="memberEditIntro" #memberEditIntro [user]="user"></app-member-edit-intro>
+      </mat-tab>
+      <mat-tab label="Photos"> Content 2 </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>

@@ -12,7 +12,7 @@ import { NavLoginComponent } from './nav/nav-login/nav-login.component';
 import { HomeComponent } from './home/home.component';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
-import { interceptorProviders } from './_services/interceptors/interceptor-providers';
+import { interceptorProviders } from './_services/_interceptors/interceptor-providers';
 import { ErrorSnackbarComponent } from './notifications/error-snackbar/error-snackbar.component';
 import { AppMenuComponent } from './nav/app-menu/app-menu.component';
 import { NavLogoutComponent } from './nav/nav-logout/nav-logout.component';
@@ -21,6 +21,8 @@ import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material';
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { ListComponent } from './lists/list/list.component';
 import { MessageComponent } from './messages/message/message.component';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { MemberEditIntroComponent } from './members/member-edit/member-edit-intro/member-edit-intro.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { MessageComponent } from './messages/message/message.component';
     HomeComponent,
     RegistrationComponent,
     MemberListComponent,
+    MemberEditComponent,
+    MemberEditIntroComponent,
     ListComponent,
     MessageComponent
   ],
@@ -56,7 +60,8 @@ import { MessageComponent } from './messages/message/message.component';
     MatModules.MatDividerModule,
     MatModules.MatCardModule,
     MatModules.MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatModules.MatTabsModule
   ],
   providers: [
     ...interceptorProviders,

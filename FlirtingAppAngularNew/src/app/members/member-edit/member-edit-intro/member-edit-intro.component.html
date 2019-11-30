@@ -1,0 +1,41 @@
+<form fxLayout="column" [formGroup]="editIntroFormGroup" (ngSubmit)="submitAdditionalUserDetail()">
+  <mat-form-field floatLabel="always">
+    <mat-label class="mat-h1">Introduction:</mat-label>
+    <textarea rows="4" matInput formControlName="introduction"></textarea>
+    <mat-error *ngIf="editIntroFormGroup.get('introduction').hasError('minlength')">
+      Introduction must be at least 20 characters.
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field floatLabel="always">
+    <mat-label class="mat-h1">Looking for:</mat-label>
+    <textarea rows="4" matInput formControlName="lookingFor"></textarea>
+    <mat-error *ngIf="editIntroFormGroup.get('lookingFor').hasError('minlength')">
+      Looking for must be at least 20 characters.
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field floatLabel="always">
+    <mat-label class="mat-h1">Interests:</mat-label>
+    <textarea rows="4" matInput formControlName="interests"></textarea>
+    <mat-error *ngIf="editIntroFormGroup.get('interests').hasError('minlength')">
+      Interests must be at least 20 characters.
+    </mat-error>
+  </mat-form-field>
+  <h3 class="mat-headline">Location details</h3>
+  <div fxLayout="row" fxLayoutGap="5rem">
+    <mat-form-field floatLabel="always">
+      <mat-label>City</mat-label>
+      <input type="text" matInput formControlName="city"/>
+      <mat-error *ngIf="editIntroFormGroup.get('city').hasError('minlength')">
+        City must be at least 3 characters.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field floatLabel="always">
+      <mat-label>Country</mat-label>
+      <input type="text" matInput formControlName="country"/>
+      <mat-error *ngIf="editIntroFormGroup.get('country').hasError('minlength')">
+        Country must be at least 5 characters.
+      </mat-error>
+    </mat-form-field>
+    <button type="submit" mat-button color="primary">Save changes</button>
+  </div>
+</form>
