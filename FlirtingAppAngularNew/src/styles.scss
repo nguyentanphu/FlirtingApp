@@ -31,3 +31,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   margin: 2rem;
 }
 
+.text-center {
+  text-align: center;
+}
+
+.animate {
+    transition: all 0.3s ease-in-out;
+}

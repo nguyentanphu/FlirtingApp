@@ -1,0 +1,21 @@
+<mat-card class="card">
+  <div class="card-image-wrapper" mat-card-image>
+    <img mat-card-image style="margin-bottom: 0" [src]="user.photoUrl"
+      alt="Photo of a Shiba Inu">
+    <div class="member-icons member-icons-animation animate" fxLayout="row" fxLayoutGap="1rem">
+      <button mat-mini-fab color="primary">
+        <mat-icon>person</mat-icon>
+      </button>
+      <button mat-mini-fab color="accent">
+        <mat-icon>thumb_up_alt</mat-icon>
+      </button>
+      <button mat-mini-fab color="warning">
+        <mat-icon>chat</mat-icon>
+      </button>
+    </div>
+  </div>
+  <p class="text-center">
+    <mat-icon>face</mat-icon> {{user.userName}}, {{user.age}}
+  </p>
+  <p class="text-center">{{user.city}}, {{user.country}}</p>
+</mat-card>

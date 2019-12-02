@@ -1,0 +1,37 @@
+:host {
+  display: flex;
+  max-width: 200px;
+  margin-bottom: 2rem;
+}
+
+.card:hover {
+  img {
+    transform: scale(1.2, 1.2);
+    transition-duration: 500ms;
+    transition-timing-function: ease-out;
+    opacity: 0.7;
+  }
+
+  .member-icons-animation {
+    bottom: 1rem;
+    opacity: 1;
+  }
+}
+
+.mat-card-image {
+  position: relative;
+  overflow: hidden;
+}
+.card img {
+  width: 216px;
+  transform: scale(1, 1);
+  transition-duration: 500ms;
+  transition-timing-function: ease-out;
+}
+
+.member-icons {
+  position: absolute;
+  left: 25px;
+  bottom: -40px;
+  opacity: 0;
+}

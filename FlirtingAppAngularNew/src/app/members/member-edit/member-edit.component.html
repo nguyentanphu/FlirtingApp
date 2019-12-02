@@ -4,7 +4,8 @@
       <mat-card-title>{{user.userName}}</mat-card-title>
       <mat-card-subtitle>{{user.firstName}} {{user.lastName}}</mat-card-subtitle>
     </mat-card-header>
-    <img fxFlexAlign="center" class="profile-image" [src]="user.photoUrl" alt="Profile photo">
+    <img fxFlexAlign="center" class="profile-image"
+      [src]="user.photoUrl || 'https://randomuser.me/api/portraits/lego/1.jpg'" alt="Profile photo">
     <mat-card-content>
       <div>
         <p><strong>Age:</strong></p>

@@ -37,7 +37,7 @@ namespace FlirtingApp.Domain.Entities
 
 		public string GetMainPhotoUrl()
 		{
-			return _photos.FirstOrDefault(p => p.IsMain)?.Url;
+			return _photos.FirstOrDefault(p => p.IsMain)?.Url ?? "https://randomuser.me/api/portraits/lego/1.jpg";
 		}
 
 		public void AddPhoto(Photo photo)

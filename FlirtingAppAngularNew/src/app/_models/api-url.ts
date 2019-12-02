@@ -5,6 +5,7 @@ export const APIURL = {
     exchangeTokens: 'auth/exchangeTokens'
   },
   users: {
+    get: 'users',
     create: 'users',
     getUserDetail: (userId: string) => `users/${userId}`,
     updateAdditionalDetail: 'users'

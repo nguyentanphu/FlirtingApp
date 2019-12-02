@@ -7,6 +7,7 @@ import { MessageComponent } from './messages/message/message.component';
 import { UserDetailResolver } from './_services/_resolvers/user-detail.resolver';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { PreventUnsavedChangesMemberEdit } from './_services/_guards/prevent-unsaved-changes-member-edit.guard';
+import { MemberListResolver } from './_services/_resolvers/member-list.resolver';
 
 export const appRoutes: Routes = [
   {
@@ -20,7 +21,10 @@ export const appRoutes: Routes = [
     children: [
       {
         path: 'members',
-        component: MemberListComponent
+        component: MemberListComponent,
+        resolve: {
+          users: MemberListResolver
+        }
       },
       {
         path: 'members/edit',

@@ -23,6 +23,7 @@ import { ListComponent } from './lists/list/list.component';
 import { MessageComponent } from './messages/message/message.component';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberEditIntroComponent } from './members/member-edit/member-edit-intro/member-edit-intro.component';
+import { MemberCardComponent } from './members/member-card/member-card.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { MemberEditIntroComponent } from './members/member-edit/member-edit-intr
     MemberListComponent,
     MemberEditComponent,
     MemberEditIntroComponent,
+    MemberCardComponent,
     ListComponent,
     MessageComponent
   ],
