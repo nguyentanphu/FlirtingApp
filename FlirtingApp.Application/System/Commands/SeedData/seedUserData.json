@@ -1,8 +1,8 @@
 ﻿[
 	{
 		"Username": "Mindy",
-		"Email": "nguyentanphu@hotmail.com", 
-		"Gender": "female",
+		"Email": "nguyentanphu@hotmail.com",
+		"Gender": 2,
 		"DateOfBirth": "1994-12-26",
 		"Password": "password",
 		"KnownAs": "Mindy",
@@ -17,7 +17,7 @@
 	{
 		"Username": "Jeanne",
 		"Email": "nguyentanphu@hotmail.com",
-		"Gender": "female",
+		"Gender": 2,
 		"DateOfBirth": "1995-08-06",
 		"Password": "password",
 		"KnownAs": "Jeanne",
@@ -32,7 +32,7 @@
 	{
 		"Username": "Lina",
 		"Email": "nguyentanphu@hotmail.com",
-		"Gender": "female",
+		"Gender": 2,
 		"DateOfBirth": "1980-03-01",
 		"Password": "password",
 		"KnownAs": "Lina",
@@ -47,7 +47,7 @@
 	{
 		"Username": "Minnie",
 		"Email": "nguyentanphu@hotmail.com",
-		"Gender": "female",
+		"Gender": 2,
 		"DateOfBirth": "1992-05-16",
 		"Password": "password",
 		"KnownAs": "Minnie",
@@ -62,7 +62,7 @@
 	{
 		"Username": "Tracie",
 		"Email": "nguyentanphu@hotmail.com",
-		"Gender": "female",
+		"Gender": 2,
 		"DateOfBirth": "1980-03-04",
 		"Password": "password",
 		"KnownAs": "Tracie",
@@ -77,7 +77,7 @@
 	{
 		"Username": "Price",
 		"Email": "nguyentanphu@hotmail.com",
-		"Gender": "male",
+		"Gender": 1,
 		"DateOfBirth": "1993-08-05",
 		"Password": "password",
 		"KnownAs": "Price",
@@ -92,7 +92,7 @@
 	{
 		"Username": "Lee",
 		"Email": "nguyentanphu@hotmail.com",
-		"Gender": "male",
+		"Gender": 1,
 		"DateOfBirth": "1974-06-18",
 		"Password": "password",
 		"KnownAs": "Lee",
@@ -107,7 +107,7 @@
 	{
 		"Username": "Ingram",
 		"Email": "nguyentanphu@hotmail.com",
-		"Gender": "male",
+		"Gender": 1,
 		"DateOfBirth": "1957-09-28",
 		"Password": "password",
 		"KnownAs": "Ingram",
@@ -122,7 +122,7 @@
 	{
 		"Username": "Hebert",
 		"Email": "nguyentanphu@hotmail.com",
-		"Gender": "male",
+		"Gender": 1,
 		"DateOfBirth": "1999-02-07",
 		"Password": "password",
 		"KnownAs": "Hebert",
@@ -137,7 +137,7 @@
 	{
 		"Username": "Wise",
 		"Email": "nguyentanphu@hotmail.com",
-		"Gender": "male",
+		"Gender": 1,
 		"DateOfBirth": "1983-09-23",
 		"Password": "password",
 		"KnownAs": "Wise",
