@@ -5,7 +5,8 @@
 
 ## Features
 
-- ASP.NET Core 3, ASP.NET Core 3 Identity, angular 8
+- ASP.NET Core 3.1 LTS, ASP.NET Core 3.1 Identity
+- Angular 8 with Angular material component, Angular flex-layout
 - Jwt Authentication with refresh token.
 - Simple, focus on intention of the code.
 - Single responsibility classes.
@@ -21,6 +22,6 @@
 ## In progress
 
 - Update tests for Application layer.
-- Real-time private chat and group chat with SignalR 3
 - Using mongodb for queries.
+- Real-time private chat and group chat with SignalR 3
 - Dockerizing the app.
