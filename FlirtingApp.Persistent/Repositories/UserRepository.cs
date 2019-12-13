@@ -10,34 +10,41 @@ namespace FlirtingApp.Persistent.Repositories
 {
 	class UserRepository: IUserRepository
 	{
-		//private readonly IAppDbContext
-		public UserRepository()
+		private readonly IAppDbContext _sqlDb;
+		private readonly IMongoRepository<User> _mongoRepository;
+
+		public UserRepository(IAppDbContext sqlDb, IMongoRepository<User> mongoRepository)
 		{
-			
+			_sqlDb = sqlDb;
+			_mongoRepository = mongoRepository;
 		}
 		public Task<User> GetAsync(Guid id)
 		{
-			throw new NotImplementedException();
+			return _mongoRepository.GetAsync(id);
 		}
 
 		public Task<User> GetAsync(Expression<Func<User, bool>> predicate)
 		{
-			throw new NotImplementedException();
+			return _mongoRepository.GetAsync(predicate);
 		}
 
 		public Task<IEnumerable<User>> FindAsync(Expression<Func<User, bool>> predicate)
 		{
-			throw new NotImplementedException();
+			return _mongoRepository.FindAsync(predicate);
 		}
 
-		public Task AddAsync(User user)
+		public async Task AddAsync(User user)
 		{
-			throw new NotImplementedException();
+			_sqlDb.Users.Add(user);
+			await _sqlDb.SaveChangesAsync();
+			await _mongoRepository.AddAsync(user);
 		}
 
-		public Task UpdateAsync(User user)
+		public async Task UpdateAsync(User user)
 		{
-			throw new NotImplementedException();
+			_sqlDb.Update(user);
+			await _sqlDb.SaveChangesAsync();
+			await _mongoRepository.UpdateAsync(user);
 		}
 	}
 }
