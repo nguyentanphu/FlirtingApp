@@ -5,6 +5,7 @@ using System.Text;
 using FlirtingApp.Application.Common.Interfaces;
 using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Persistent.Registrars;
+using FlirtingApp.Persistent.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -22,7 +23,7 @@ namespace FlirtingApp.Persistent
 				.AddMongoDb()
 				.AddMongoRepositories();
 
-
+			services.AddScoped<IUserRepository, UserRepository>();
 			return services;
 		}
 	}

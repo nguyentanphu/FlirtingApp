@@ -53,6 +53,11 @@ namespace FlirtingApp.Persistent.Registrars
 				cm.AutoMap();
 				cm.MapField("_photos").SetElementName("Photos");
 			});
+			BsonClassMap.RegisterClassMap<Photo>(cm =>
+			{
+				cm.AutoMap();
+				cm.UnmapProperty(p => p.User);
+			});
 		}
 	}
 }

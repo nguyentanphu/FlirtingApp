@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Domain.Entities;
+using FlirtingApp.Persistent.Mongo;
 
 namespace FlirtingApp.Persistent.Repositories
 {
@@ -38,6 +39,13 @@ namespace FlirtingApp.Persistent.Repositories
 			_sqlDb.Users.Add(user);
 			await _sqlDb.SaveChangesAsync();
 			await _mongoRepository.AddAsync(user);
+		}
+
+		public async Task AddRangeAsync(IEnumerable<User> users)
+		{
+			_sqlDb.Users.AddRange(users);
+			await _sqlDb.SaveChangesAsync();
+			await _mongoRepository.AddRangeAsync(users);
 		}
 
 		public async Task UpdateAsync(User user)

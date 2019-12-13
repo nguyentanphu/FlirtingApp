@@ -14,7 +14,7 @@ namespace FlirtingApp.Persistent.Mongo
 		public readonly IMongoCollection<TEntity> _collection;
 		public MongoRepository(IMongoDatabase database)
 		{
-			_collection = database.GetCollection<TEntity>(nameof(TEntity));
+			_collection = database.GetCollection<TEntity>(typeof(TEntity).Name);
 		}
 
 		public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
@@ -35,6 +35,10 @@ namespace FlirtingApp.Persistent.Mongo
 		public async Task AddAsync(TEntity entity)
 		{
 			await _collection.InsertOneAsync(entity);
+		}
+		public async Task AddRangeAsync(IEnumerable<TEntity> entities)
+		{
+			await _collection.InsertManyAsync(entities);
 		}
 
 		public async Task DeleteAsync(Guid id)
