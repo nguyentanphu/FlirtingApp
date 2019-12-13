@@ -9,17 +9,22 @@ using MongoDB.Driver;
 
 namespace FlirtingApp.Persistent.Mongo
 {
-	class MongoRepository<TEntity>: IMongoRepository<TEntity> where TEntity: AuditableEntity
+	class MongoRepository<TEntity>: IMongoRepository<TEntity> where TEntity: IIdentifiable
 	{
 		public readonly IMongoCollection<TEntity> _collection;
 		public MongoRepository(IMongoDatabase database)
 		{
-			database.GetCollection<TEntity>(nameof(TEntity));
+			_collection = database.GetCollection<TEntity>(nameof(TEntity));
 		}
 
 		public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
 		{
 			return await _collection.Find(predicate).ToListAsync();
+		}
+
+		public Task<TEntity> GetAsync(Guid id)
+		{
+			return GetAsync(e => e.Id == id);
 		}
 
 		public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate)
@@ -32,9 +37,9 @@ namespace FlirtingApp.Persistent.Mongo
 			await _collection.InsertOneAsync(entity);
 		}
 
-		public async Task DeleteAsync(Expression<Func<TEntity, bool>> predicate)
+		public async Task DeleteAsync(Guid id)
 		{
-			await _collection.DeleteOneAsync(predicate);
+			await _collection.DeleteOneAsync(e => e.Id == id);
 		}
 
 		public async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate)
@@ -42,11 +47,10 @@ namespace FlirtingApp.Persistent.Mongo
 			return await _collection.Find(predicate).AnyAsync();
 		}
 
-		public Task UpdateAsync(TEntity entity)
+		public async Task UpdateAsync(TEntity entity)
 		{
-			_collection.update
+			await _collection.ReplaceOneAsync(e => e.Id == entity.Id, entity);
 		}
 	}
-	{
-	}
+
 }
