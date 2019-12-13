@@ -41,11 +41,12 @@ namespace FlirtingApp.Persistent.Registrars
 
 		public static IServiceCollection AddMongoRepositories(this IServiceCollection services)
 		{
+			AddMongoClassConfiguration();
 			services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
 			return services;
 		}
 
-		public static void AddMongoClassConfiguration()
+		private static void AddMongoClassConfiguration()
 		{
 			BsonClassMap.RegisterClassMap<User>(cm =>
 			{
