@@ -11,13 +11,13 @@ namespace FlirtingApp.Infrastructure.Identity
 {
 	
 
-	class AppIdentityDbContext : IdentityDbContext<AppUser, AppRole, Guid>, IAppIdentityDbContext
+	class AppIdentityDbContext : IdentityDbContext<SecurityUser, AppRole, Guid>, IAppIdentityDbContext
 	{
 		public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options): base(options)
 		{
 		}
 
-		public DbSet<AppUser> AppUsers { get; set; }
+		public DbSet<SecurityUser> AppUsers { get; set; }
 		public DbSet<RefreshToken> RefreshTokens { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder builder)

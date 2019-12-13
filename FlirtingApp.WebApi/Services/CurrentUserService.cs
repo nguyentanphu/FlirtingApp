@@ -20,14 +20,14 @@ namespace FlirtingApp.WebApi.Services
 				UserId = userId;
 			}
 
-			var appUserIdString = httpContextAccessor.HttpContext.User.FindFirstValue(AppClaimTypes.AppUserId);
-			if (Guid.TryParse(appUserIdString, out var appUserId))
+			var securityUserIdString = httpContextAccessor.HttpContext.User.FindFirstValue(AppClaimTypes.SecurityUserId);
+			if (Guid.TryParse(securityUserIdString, out var securityUserId))
 			{
-				AppUserId = appUserId;
+				SecurityUserId = securityUserId;
 			}
 		}
 
 		public Guid? UserId { get; set; }
-		public Guid? AppUserId { get; set; }
+		public Guid? SecurityUserId { get; set; }
 	}
 }

@@ -60,8 +60,8 @@ namespace FlirtingApp.Application.System.Commands.SeedData
 			for (int i = 0; i < userList.Count; i++)
 			{
 				var currentUser = userList[i];
-				var appUserId = await _appUserManager.CreateUserAsync(currentUser.UserName, "password");
-				currentUser.IdentityId = appUserId;
+				var securityUserId = await _appUserManager.CreateUserAsync(currentUser.UserName, "password");
+				currentUser.IdentityId = securityUserId;
 				if (photoList.ElementAtOrDefault(i) != null)
 				{
 					currentUser.AddPhoto(photoList[i]);

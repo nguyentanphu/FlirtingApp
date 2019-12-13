@@ -45,8 +45,8 @@ namespace FlirtingApp.Application.Auth.Commands.Login
 				throw new LoginException();
 			}
 
-			var user = await GetUserByIdentityUser(loginResult.AppUserId);
-			var accessToken = _jwtFactory.GenerateEncodedTokens(user.Id, loginResult.AppUserId, user.UserName);
+			var user = await GetUserByIdentityUser(loginResult.SecurityUserId);
+			var accessToken = _jwtFactory.GenerateEncodedTokens(user.Id, loginResult.SecurityUserId, user.UserName);
 
 			return new LoginCommandResponse
 			{
@@ -55,9 +55,9 @@ namespace FlirtingApp.Application.Auth.Commands.Login
 			};
 		}
 
-		private async Task<User> GetUserByIdentityUser(Guid appUserId)
+		private async Task<User> GetUserByIdentityUser(Guid securityUserId)
 		{
-			return await _dbContext.Users.FirstAsync(u => u.IdentityId == appUserId);
+			return await _dbContext.Users.FirstAsync(u => u.IdentityId == securityUserId);
 		}
 	}
 }

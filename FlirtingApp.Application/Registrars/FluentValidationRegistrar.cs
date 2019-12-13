@@ -15,7 +15,7 @@ namespace FlirtingApp.Application.Registrars
 			{
 				services.Add(ServiceDescriptor.Transient(pair.InterfaceType, pair.ValidatorType));
 			});
-			services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+			
 
 			return services;
 		} 

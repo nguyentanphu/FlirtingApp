@@ -33,12 +33,12 @@ namespace FlirtingApp.Application.Auth.Commands.ExchangeTokens
 		public async Task<ExchangeTokensCommandResult> Handle(ExchangeTokensCommand request, CancellationToken cancellationToken)
 		{
 			var claimPrincipal = _jwtFactory.GetClaimPrinciple(request.AccessToken);
-			var appUserId = Guid.Parse(claimPrincipal.FindFirst(AppClaimTypes.AppUserId).Value);
+			var securityUserId = Guid.Parse(claimPrincipal.FindFirst(AppClaimTypes.SecurityUserId).Value);
 			var userId = Guid.Parse(claimPrincipal.FindFirst(AppClaimTypes.UserId).Value);
 			var userName = claimPrincipal.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-			var newRefreshToken = await _userManager.ExchangeRefreshTokenAsync(appUserId, request.RefreshToken, request.RemoteIpAddress);
-			var newAccessToken = _jwtFactory.GenerateEncodedTokens(userId, appUserId, userName);
+			var newRefreshToken = await _userManager.ExchangeRefreshTokenAsync(securityUserId, request.RefreshToken, request.RemoteIpAddress);
+			var newAccessToken = _jwtFactory.GenerateEncodedTokens(userId, securityUserId, userName);
 
 			return new ExchangeTokensCommandResult
 			{

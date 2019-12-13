@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FlirtingApp.Infrastructure.Identity.Migrations
 {
-    public partial class InitIdentityDb : Migration
+    public partial class ReinitIdentity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -156,18 +156,18 @@ namespace FlirtingApp.Infrastructure.Identity.Migrations
                 name: "RefreshTokens",
                 columns: table => new
                 {
-                    RefreshTokenId = table.Column<Guid>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     Token = table.Column<string>(maxLength: 200, nullable: true),
                     Expires = table.Column<DateTime>(nullable: false),
-                    AppUserId = table.Column<Guid>(nullable: false),
+                    SecurityUserId = table.Column<Guid>(nullable: false),
                     RemoteIpAddress = table.Column<string>(maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RefreshTokens", x => x.RefreshTokenId);
+                    table.PrimaryKey("PK_RefreshTokens", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RefreshTokens_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
+                        name: "FK_RefreshTokens_AspNetUsers_SecurityUserId",
+                        column: x => x.SecurityUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -213,9 +213,9 @@ namespace FlirtingApp.Infrastructure.Identity.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RefreshTokens_AppUserId",
+                name: "IX_RefreshTokens_SecurityUserId",
                 table: "RefreshTokens",
-                column: "AppUserId");
+                column: "SecurityUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

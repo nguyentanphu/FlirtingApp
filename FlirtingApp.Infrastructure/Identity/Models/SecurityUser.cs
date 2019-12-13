@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace FlirtingApp.Infrastructure.Identity.Models
 {
-	public class AppUser : IdentityUser<Guid>
+	public class SecurityUser : IdentityUser<Guid>
 	{
 		private readonly HashSet<RefreshToken> _refreshTokens = new HashSet<RefreshToken>();
 		public IEnumerable<RefreshToken> RefreshTokens => _refreshTokens.ToList();

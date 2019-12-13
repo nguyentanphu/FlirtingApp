@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FlirtingApp.Infrastructure.Identity.Configurations
 {
-	class AppUserConfiguration: IEntityTypeConfiguration<AppUser>
+	class AppUserConfiguration: IEntityTypeConfiguration<SecurityUser>
 	{
-		public void Configure(EntityTypeBuilder<AppUser> builder)
+		public void Configure(EntityTypeBuilder<SecurityUser> builder)
 		{
-			builder.Metadata.FindNavigation(nameof(AppUser.RefreshTokens))
+			builder.Metadata.FindNavigation(nameof(SecurityUser.RefreshTokens))
 				.SetPropertyAccessMode(PropertyAccessMode.Field);
 		}
 	}
