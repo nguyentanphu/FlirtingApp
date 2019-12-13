@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace FlirtingApp.Application.Common.Interfaces.Databases
 {
-	public interface IAppUserManager
+	public interface ISecurityUserManager
 	{
 		Task<bool> UserNameExistAsync(string userName);
 		Task<Guid> CreateUserAsync(string userName, string password);

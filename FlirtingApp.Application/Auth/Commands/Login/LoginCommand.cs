@@ -22,11 +22,11 @@ namespace FlirtingApp.Application.Auth.Commands.Login
 
 	public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginCommandResponse>
 	{
-		private readonly IAppUserManager _userManager;
+		private readonly ISecurityUserManager _userManager;
 		private readonly IJwtFactory _jwtFactory;
 		private readonly IAppDbContext _dbContext;
 
-		public LoginCommandHandler(IAppUserManager userManager, IJwtFactory jwtFactory, IAppDbContext dbContext)
+		public LoginCommandHandler(ISecurityUserManager userManager, IJwtFactory jwtFactory, IAppDbContext dbContext)
 		{
 			_userManager = userManager;
 			_jwtFactory = jwtFactory;

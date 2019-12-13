@@ -22,9 +22,9 @@ namespace FlirtingApp.Application.Auth.Commands.ExchangeTokens
 	public class ExchangeTokensCommandHandler : IRequestHandler<ExchangeTokensCommand, ExchangeTokensCommandResult>
 	{
 		private readonly IJwtFactory _jwtFactory;
-		private readonly IAppUserManager _userManager;
+		private readonly ISecurityUserManager _userManager;
 
-		public ExchangeTokensCommandHandler(IJwtFactory jwtFactory, IAppUserManager userManager)
+		public ExchangeTokensCommandHandler(IJwtFactory jwtFactory, ISecurityUserManager userManager)
 		{
 			_jwtFactory = jwtFactory;
 			_userManager = userManager;

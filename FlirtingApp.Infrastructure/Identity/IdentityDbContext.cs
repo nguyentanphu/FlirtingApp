@@ -11,9 +11,9 @@ namespace FlirtingApp.Infrastructure.Identity
 {
 	
 
-	class AppIdentityDbContext : IdentityDbContext<SecurityUser, AppRole, Guid>, IAppIdentityDbContext
+	class IdentityDbContext : IdentityDbContext<SecurityUser, AppRole, Guid>, IIdentityDbContext
 	{
-		public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options): base(options)
+		public IdentityDbContext(DbContextOptions<IdentityDbContext> options): base(options)
 		{
 		}
 
@@ -22,7 +22,7 @@ namespace FlirtingApp.Infrastructure.Identity
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
-			builder.ApplyConfigurationsFromAssembly(typeof(AppIdentityDbContext).Assembly);
+			builder.ApplyConfigurationsFromAssembly(typeof(IdentityDbContext).Assembly);
 			base.OnModelCreating(builder);
 		}
 

@@ -24,11 +24,11 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 
 	public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
 	{
-		private readonly IAppUserManager _userManager;
+		private readonly ISecurityUserManager _userManager;
 		private readonly IAppDbContext _dbContext;
 		private readonly IMachineDateTime _dateTime;
 
-		public CreateUserCommandHandler(IAppUserManager userManager, IAppDbContext dbContext, IMachineDateTime dateTime)
+		public CreateUserCommandHandler(ISecurityUserManager userManager, IAppDbContext dbContext, IMachineDateTime dateTime)
 		{
 			_userManager = userManager;
 			_dbContext = dbContext;
