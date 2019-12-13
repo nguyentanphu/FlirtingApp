@@ -30,7 +30,7 @@ namespace FlirtingApp.Application.Users.Commands.UpdateUser
 			var user = await _context.Users.FindAsync(request.UserId);
 			if (user == null)
 			{
-				throw new ResourceExistedException(nameof(User), nameof(User.UserId));
+				throw new ResourceExistedException(nameof(User), nameof(User.Id));
 			}
 			user.Introduction = request.Introduction;
 			user.LookingFor = request.LookingFor;

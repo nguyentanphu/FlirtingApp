@@ -5,9 +5,9 @@ using FlirtingApp.Domain.Common;
 
 namespace FlirtingApp.Domain.Entities
 {
-	public class User: AuditableEntity
+	public class User: AuditableEntity, IIdentifiable
 	{
-		public Guid UserId { get; set; }
+		public Guid Id { get; set; }
 		public Guid IdentityId { get; set; }
 
 		public string UserName { get; set; }
@@ -32,7 +32,7 @@ namespace FlirtingApp.Domain.Entities
 
 		public Photo GetPhoto(Guid photoId)
 		{
-			return _photos.FirstOrDefault(p => p.PhotoId == photoId);
+			return _photos.FirstOrDefault(p => p.Id == photoId);
 		}
 
 		public string GetMainPhotoUrl()
@@ -49,5 +49,7 @@ namespace FlirtingApp.Domain.Entities
 
 			_photos.Add(photo);
 		}
+
+		
 	}
 }

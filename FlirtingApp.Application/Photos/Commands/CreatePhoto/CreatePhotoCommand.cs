@@ -34,7 +34,7 @@ namespace FlirtingApp.Application.Photos.Commands.CreatePhoto
 		{
 			var user = await _context.Users
 				.Include(u => u.Photos)
-				.FirstOrDefaultAsync(u => u.UserId == request.UserId, cancellationToken);
+				.FirstOrDefaultAsync(u => u.Id == request.UserId, cancellationToken);
 			if (user == null)
 			{
 				throw new ResourceNotFoundException("User", request.UserId);
@@ -59,7 +59,7 @@ namespace FlirtingApp.Application.Photos.Commands.CreatePhoto
 
 			await _context.SaveChangesAsync(cancellationToken);
 
-			return newPhoto.PhotoId;
+			return newPhoto.Id;
 		}
 	}
 }
