@@ -13,12 +13,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlirtingApp.Infrastructure.Identity
 {
-	class AppUserManager : IAppUserManager
+	class SecurityUserManager : ISecurityUserManager
 	{
 		private readonly UserManager<SecurityUser> _userManager;
-		private readonly AppIdentityDbContext _identityDbContext;
+		private readonly IdentityDbContext _identityDbContext;
 		private readonly ITokenFactory _tokenFactory;
-		public AppUserManager(UserManager<SecurityUser> userManager, AppIdentityDbContext identityDbContext, ITokenFactory tokenFactory)
+		public SecurityUserManager(UserManager<SecurityUser> userManager, IdentityDbContext identityDbContext, ITokenFactory tokenFactory)
 		{
 			_userManager = userManager;
 			_identityDbContext = identityDbContext;

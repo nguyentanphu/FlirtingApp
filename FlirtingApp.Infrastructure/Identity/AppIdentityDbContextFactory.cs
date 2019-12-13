@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlirtingApp.Infrastructure.Identity
 {
-	class AppIdentityDbContextFactory: DesignTimeDbContextFactoryBase<AppIdentityDbContext>
+	class AppIdentityDbContextFactory: DesignTimeDbContextFactoryBase<IdentityDbContext>
 	{
-		protected override AppIdentityDbContext CreateNewInstance(DbContextOptions<AppIdentityDbContext> options)
+		protected override IdentityDbContext CreateNewInstance(DbContextOptions<IdentityDbContext> options)
 		{
-			return new AppIdentityDbContext(options);
+			return new IdentityDbContext(options);
 		}
 	}
 }

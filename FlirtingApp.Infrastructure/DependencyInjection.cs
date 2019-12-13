@@ -19,11 +19,11 @@ namespace FlirtingApp.Infrastructure
 	{
 		public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
 		{
-			services.AddDbContext<AppIdentityDbContext>(options =>
-				options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionString"), sqlServerOptions => sqlServerOptions.MigrationsAssembly(typeof(AppIdentityDbContext).Assembly.GetName().Name)));
+			services.AddDbContext<IdentityDbContext>(options =>
+				options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionString"), sqlServerOptions => sqlServerOptions.MigrationsAssembly(typeof(IdentityDbContext).Assembly.GetName().Name)));
 
-			services.AddScoped<IAppIdentityDbContext>(provider => provider.GetService<AppIdentityDbContext>());
-			services.AddScoped<IAppUserManager, AppUserManager>();
+			services.AddScoped<IIdentityDbContext>(provider => provider.GetService<IdentityDbContext>());
+			services.AddScoped<ISecurityUserManager, SecurityUserManager>();
 			services.AddScoped<ITokenFactory, TokenFactory>();
 			services.AddScoped<JwtSecurityTokenHandler>();
 			services.AddScoped<IJwtFactory, JwtFactory>();

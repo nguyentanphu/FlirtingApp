@@ -21,19 +21,19 @@ namespace FlirtingApp.Application.System.Commands.SeedData
 
 	public class SeedDataCommandHandler : IRequestHandler<SeedDataCommand>
 	{
-		private readonly IAppIdentityDbContext _identityDbContext;
+		private readonly IIdentityDbContext _identityDbContext;
 		private readonly IAppDbContext _dbContext;
-		private readonly IAppUserManager _appUserManager;
+		private readonly ISecurityUserManager _securityUserManager;
 
 		public SeedDataCommandHandler(
-			IAppIdentityDbContext identityDbContext, 
+			IIdentityDbContext identityDbContext, 
 			IAppDbContext dbContext, 
-			IAppUserManager appUserManager
+			ISecurityUserManager securityUserManager
 			)
 		{
 			_identityDbContext = identityDbContext;
 			_dbContext = dbContext;
-			_appUserManager = appUserManager;
+			_securityUserManager = securityUserManager;
 		}
 
 		public async Task<Unit> Handle(SeedDataCommand request, CancellationToken cancellationToken)
@@ -60,7 +60,7 @@ namespace FlirtingApp.Application.System.Commands.SeedData
 			for (int i = 0; i < userList.Count; i++)
 			{
 				var currentUser = userList[i];
-				var securityUserId = await _appUserManager.CreateUserAsync(currentUser.UserName, "password");
+				var securityUserId = await _securityUserManager.CreateUserAsync(currentUser.UserName, "password");
 				currentUser.IdentityId = securityUserId;
 				if (photoList.ElementAtOrDefault(i) != null)
 				{

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace FlirtingApp.Application.Common.Interfaces.Databases
 {
-	public interface IAppIdentityDbContext
+	public interface IIdentityDbContext
 	{
 		Task MigrateAsync(CancellationToken cancellationToken = default);
 	}

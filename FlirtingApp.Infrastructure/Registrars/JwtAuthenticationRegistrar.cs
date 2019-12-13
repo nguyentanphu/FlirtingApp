@@ -34,7 +34,7 @@ namespace FlirtingApp.Infrastructure.Registrars
 				o.Password.RequireUppercase = false;
 				o.Password.RequireNonAlphanumeric = false;
 				o.Password.RequiredLength = 6;
-			}).AddEntityFrameworkStores<AppIdentityDbContext>();
+			}).AddEntityFrameworkStores<IdentityDbContext>();
 
 			services.AddAuthentication(options =>
 			{

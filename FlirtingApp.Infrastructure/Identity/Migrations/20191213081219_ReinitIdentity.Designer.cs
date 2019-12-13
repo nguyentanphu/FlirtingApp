@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FlirtingApp.Infrastructure.Identity.Migrations
 {
-    [DbContext(typeof(AppIdentityDbContext))]
+    [DbContext(typeof(IdentityDbContext))]
     [Migration("20191213081219_ReinitIdentity")]
     partial class ReinitIdentity
     {

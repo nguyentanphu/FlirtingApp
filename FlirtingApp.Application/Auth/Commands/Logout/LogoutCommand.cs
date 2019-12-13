@@ -16,10 +16,10 @@ namespace FlirtingApp.Application.Auth.Commands.Logout
 
 	public class LogoutCommandHandler : IRequestHandler<LogoutCommand>
 	{
-		private readonly IAppUserManager _userManager;
+		private readonly ISecurityUserManager _userManager;
 		private readonly ICurrentUser _currentUser;
 
-		public LogoutCommandHandler(ICurrentUser currentUser, IAppUserManager userManager)
+		public LogoutCommandHandler(ICurrentUser currentUser, ISecurityUserManager userManager)
 		{
 			_currentUser = currentUser;
 			_userManager = userManager;
