@@ -3,9 +3,9 @@ using FlirtingApp.Domain.Common;
 
 namespace FlirtingApp.Domain.Entities
 {
-	public class Photo: AuditableEntity
+	public class Photo: AuditableEntity, IIdentifiable
 	{
-		public Guid PhotoId { get; set; }
+		public Guid Id { get; set; }
 		public string Url { get; set; }
 		public string Description { get; set; }
 		public bool IsMain { get; set; }

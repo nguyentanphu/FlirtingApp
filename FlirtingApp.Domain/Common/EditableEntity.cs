@@ -2,7 +2,7 @@
 
 namespace FlirtingApp.Domain.Common
 {
-	public class AuditableEntity
+	public abstract class AuditableEntity
 	{
 		public Guid? CreatedBy { get; set; }
 

@@ -46,7 +46,7 @@ namespace FlirtingApp.Application.Auth.Commands.Login
 			}
 
 			var user = await GetUserByIdentityUser(loginResult.AppUserId);
-			var accessToken = _jwtFactory.GenerateEncodedTokens(user.UserId, loginResult.AppUserId, user.UserName);
+			var accessToken = _jwtFactory.GenerateEncodedTokens(user.Id, loginResult.AppUserId, user.UserName);
 
 			return new LoginCommandResponse
 			{

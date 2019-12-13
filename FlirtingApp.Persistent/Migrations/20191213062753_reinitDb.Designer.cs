@@ -10,20 +10,20 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlirtingApp.Persistent.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20191129074415_Users_AddGender")]
-    partial class Users_AddGender
+    [Migration("20191213062753_reinitDb")]
+    partial class reinitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.0.0")
+                .HasAnnotation("ProductVersion", "3.1.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("FlirtingApp.Domain.Entities.Photo", b =>
                 {
-                    b.Property<Guid>("PhotoId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -57,7 +57,7 @@ namespace FlirtingApp.Persistent.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("PhotoId");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
@@ -66,7 +66,7 @@ namespace FlirtingApp.Persistent.Migrations
 
             modelBuilder.Entity("FlirtingApp.Domain.Entities.User", b =>
                 {
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -137,7 +137,7 @@ namespace FlirtingApp.Persistent.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.ToTable("Users");
                 });
