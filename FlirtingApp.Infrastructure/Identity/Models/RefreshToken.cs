@@ -1,8 +1,9 @@
 ﻿using System;
+using FlirtingApp.Domain.Common;
 
 namespace FlirtingApp.Infrastructure.Identity.Models
 {
-	public class RefreshToken
+	public class RefreshToken: IIdentifiable
 	{
 		internal RefreshToken()
 		{
@@ -19,11 +20,11 @@ namespace FlirtingApp.Infrastructure.Identity.Models
 			Expires = expires;
 		}
 
-		public Guid RefreshTokenId { get; set; }
+		public Guid Id { get; set; }
 		public string Token { get; set; }
 		public DateTime Expires { get; set; }
-		public Guid AppUserId { get; set; }
-		public AppUser AppUser { get; set; }
+		public Guid SecurityUserId { get; set; }
+		public SecurityUser SecurityUser { get; set; }
 		public bool Active => DateTime.UtcNow <= Expires;
 		public string RemoteIpAddress { get; set; }
 	}

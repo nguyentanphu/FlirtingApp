@@ -27,7 +27,7 @@ namespace FlirtingApp.Application.Auth.Commands.Logout
 
 		public async Task<Unit> Handle(LogoutCommand request, CancellationToken cancellationToken)
 		{
-			await _userManager.LogoutUserAsync(_currentUser.AppUserId.Value, request.RemoteIpAddress);
+			await _userManager.LogoutUserAsync(_currentUser.SecurityUserId.Value, request.RemoteIpAddress);
 			return Unit.Value;
 		}
 	}

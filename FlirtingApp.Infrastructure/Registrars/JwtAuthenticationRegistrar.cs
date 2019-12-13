@@ -26,7 +26,7 @@ namespace FlirtingApp.Infrastructure.Registrars
 			});
 			services.Configure<JwtAuthOptions>(authSettings);
 
-			services.AddIdentityCore<AppUser>(o =>
+			services.AddIdentityCore<SecurityUser>(o =>
 			{
 				// configure identity options
 				o.Password.RequireDigit = false;

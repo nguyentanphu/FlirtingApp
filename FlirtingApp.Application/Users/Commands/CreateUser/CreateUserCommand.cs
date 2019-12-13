@@ -46,10 +46,10 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 				throw new ResourceExistedException("User", "Email");
 			}
 
-			var appUserId = await _userManager.CreateUserAsync(request.UserName, request.Password);
+			var securityUserId = await _userManager.CreateUserAsync(request.UserName, request.Password);
 			_dbContext.Users.Add(new User
 			{
-				IdentityId = appUserId,
+				IdentityId = securityUserId,
 				UserName = request.UserName,
 				FirstName = request.FirstName,
 				LastName = request.LastName,

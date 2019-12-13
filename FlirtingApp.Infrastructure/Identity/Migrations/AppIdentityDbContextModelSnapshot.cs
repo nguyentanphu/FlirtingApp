@@ -15,7 +15,7 @@ namespace FlirtingApp.Infrastructure.Identity.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.0.0")
+                .HasAnnotation("ProductVersion", "3.1.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -47,7 +47,34 @@ namespace FlirtingApp.Infrastructure.Identity.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("FlirtingApp.Infrastructure.Identity.Models.AppUser", b =>
+            modelBuilder.Entity("FlirtingApp.Infrastructure.Identity.Models.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Expires")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RemoteIpAddress")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<Guid>("SecurityUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SecurityUserId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
+            modelBuilder.Entity("FlirtingApp.Infrastructure.Identity.Models.SecurityUser", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -111,33 +138,6 @@ namespace FlirtingApp.Infrastructure.Identity.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("FlirtingApp.Infrastructure.Identity.Models.RefreshToken", b =>
-                {
-                    b.Property<Guid>("RefreshTokenId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AppUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("Expires")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("RemoteIpAddress")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Token")
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
-
-                    b.HasKey("RefreshTokenId");
-
-                    b.HasIndex("AppUserId");
-
-                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -243,9 +243,9 @@ namespace FlirtingApp.Infrastructure.Identity.Migrations
 
             modelBuilder.Entity("FlirtingApp.Infrastructure.Identity.Models.RefreshToken", b =>
                 {
-                    b.HasOne("FlirtingApp.Infrastructure.Identity.Models.AppUser", "AppUser")
+                    b.HasOne("FlirtingApp.Infrastructure.Identity.Models.SecurityUser", "SecurityUser")
                         .WithMany("RefreshTokens")
-                        .HasForeignKey("AppUserId")
+                        .HasForeignKey("SecurityUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -261,7 +261,7 @@ namespace FlirtingApp.Infrastructure.Identity.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("FlirtingApp.Infrastructure.Identity.Models.AppUser", null)
+                    b.HasOne("FlirtingApp.Infrastructure.Identity.Models.SecurityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -270,7 +270,7 @@ namespace FlirtingApp.Infrastructure.Identity.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("FlirtingApp.Infrastructure.Identity.Models.AppUser", null)
+                    b.HasOne("FlirtingApp.Infrastructure.Identity.Models.SecurityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -285,7 +285,7 @@ namespace FlirtingApp.Infrastructure.Identity.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FlirtingApp.Infrastructure.Identity.Models.AppUser", null)
+                    b.HasOne("FlirtingApp.Infrastructure.Identity.Models.SecurityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -294,7 +294,7 @@ namespace FlirtingApp.Infrastructure.Identity.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("FlirtingApp.Infrastructure.Identity.Models.AppUser", null)
+                    b.HasOne("FlirtingApp.Infrastructure.Identity.Models.SecurityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

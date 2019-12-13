@@ -7,7 +7,7 @@ namespace FlirtingApp.Application.Common.Interfaces.Identity
 {
 	public interface IJwtFactory
 	{
-		string GenerateEncodedTokens(Guid userId, Guid appUserId, string userName);
+		string GenerateEncodedTokens(Guid userId, Guid securityUserId, string userName);
 		ClaimsPrincipal GetClaimPrinciple(string accessToken);
 	}
 }

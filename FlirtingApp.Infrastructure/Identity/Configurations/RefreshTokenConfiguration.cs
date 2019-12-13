@@ -14,9 +14,9 @@ namespace FlirtingApp.Infrastructure.Identity.Configurations
 			builder.Property(r => r.RemoteIpAddress).HasMaxLength(50);
 			builder.Property(r => r.Token).HasMaxLength(200);
 
-			builder.HasOne(r => r.AppUser)
+			builder.HasOne(r => r.SecurityUser)
 				.WithMany(a => a.RefreshTokens)
-				.HasForeignKey(r => r.AppUserId);
+				.HasForeignKey(r => r.SecurityUserId);
 
 		}
 	}

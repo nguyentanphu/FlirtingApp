@@ -25,12 +25,12 @@ namespace FlirtingApp.Infrastructure.Identity
 			_jwtOptions = jwtOptions.Value;
 		}
 
-		public string GenerateEncodedTokens(Guid userId, Guid appUserId, string userName)
+		public string GenerateEncodedTokens(Guid userId, Guid securityUserId, string userName)
 		{
 			var claims = new[]
 			{
 				new Claim(AppClaimTypes.UserId, userId.ToString()),
-				new Claim(AppClaimTypes.AppUserId, appUserId.ToString()),
+				new Claim(AppClaimTypes.SecurityUserId, securityUserId.ToString()),
 				new Claim(AppClaimTypes.Role, "api_access"),
 				new Claim(AppClaimTypes.Sub, userName),
 				new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
