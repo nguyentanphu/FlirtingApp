@@ -29,6 +29,11 @@ namespace FlirtingApp.Persistent.Repositories
 			return _mongoRepository.GetAsync(predicate);
 		}
 
+		public Task<bool> AnyAsync(Expression<Func<User, bool>> predicate)
+		{
+			return _mongoRepository.AnyAsync(predicate);
+		}
+
 		public Task<IEnumerable<User>> FindAsync(Expression<Func<User, bool>> predicate)
 		{
 			return _mongoRepository.FindAsync(predicate);

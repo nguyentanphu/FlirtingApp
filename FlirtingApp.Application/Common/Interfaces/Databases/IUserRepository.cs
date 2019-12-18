@@ -12,6 +12,7 @@ namespace FlirtingApp.Application.Common.Interfaces.Databases
 		Task<User> GetAsync(Guid id);
 		Task<User> GetAsync(Expression<Func<User, bool>> predicate);
 		Task<IEnumerable<User>> FindAsync(Expression<Func<User, bool>> predicate);
+		Task<bool> AnyAsync(Expression<Func<User, bool>> predicate);
 		Task AddAsync(User user);
 		Task AddRangeAsync(IEnumerable<User> users);
 		Task UpdateAsync(User user);

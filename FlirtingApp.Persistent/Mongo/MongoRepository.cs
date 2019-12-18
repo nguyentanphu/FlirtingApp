@@ -22,6 +22,11 @@ namespace FlirtingApp.Persistent.Mongo
 			return await _collection.Find(predicate).ToListAsync();
 		}
 
+		public Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
+		{
+			return _collection.Find(predicate).AnyAsync();
+		}
+
 		public Task<TEntity> GetAsync(Guid id)
 		{
 			return GetAsync(e => e.Id == id);

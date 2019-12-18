@@ -25,13 +25,13 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 	public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
 	{
 		private readonly ISecurityUserManager _userManager;
-		private readonly IAppDbContext _dbContext;
+		private readonly IUserRepository _userRepository;
 		private readonly IMachineDateTime _dateTime;
 
-		public CreateUserCommandHandler(ISecurityUserManager userManager, IAppDbContext dbContext, IMachineDateTime dateTime)
+		public CreateUserCommandHandler(ISecurityUserManager userManager, IUserRepository userRepository, IMachineDateTime dateTime)
 		{
 			_userManager = userManager;
-			_dbContext = dbContext;
+			_userRepository = userRepository;
 			_dateTime = dateTime;
 		}
 
@@ -41,13 +41,14 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 			{
 				throw new ResourceExistedException("AppUser", "UserName");
 			}
-			if (await _dbContext.Users.AnyAsync(u => u.Email == request.Email, cancellationToken))
+			if (await _userRepository.AnyAsync(u => u.Email == request.Email))
 			{
 				throw new ResourceExistedException("User", "Email");
 			}
 
 			var securityUserId = await _userManager.CreateUserAsync(request.UserName, request.Password);
-			_dbContext.Users.Add(new User
+
+			await _userRepository.AddAsync(new User
 			{
 				IdentityId = securityUserId,
 				UserName = request.UserName,
@@ -57,7 +58,6 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 				DateOfBirth = request.DateOfBirth,
 				LastActive = _dateTime.UtcNow
 			});
-			await _dbContext.SaveChangesAsync(cancellationToken);
 
 			return Unit.Value;
 		}

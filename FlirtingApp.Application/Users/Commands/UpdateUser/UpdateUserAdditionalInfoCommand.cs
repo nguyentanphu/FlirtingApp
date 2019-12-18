@@ -18,16 +18,16 @@ namespace FlirtingApp.Application.Users.Commands.UpdateUser
 
 	public class UpdateUserAdditionalInfoCommandHandler : IRequestHandler<UpdateUserAdditionalInfoCommand>
 	{
-		private readonly IAppDbContext _context;
+		private readonly IUserRepository _userRepository;
 
-		public UpdateUserAdditionalInfoCommandHandler(IAppDbContext context)
+		public UpdateUserAdditionalInfoCommandHandler(IUserRepository userRepository)
 		{
-			_context = context;
+			_userRepository = userRepository;
 		}
 
 		public async Task<Unit> Handle(UpdateUserAdditionalInfoCommand request, CancellationToken cancellationToken)
 		{
-			var user = await _context.Users.FindAsync(request.UserId);
+			var user = await _userRepository.GetAsync(request.UserId);
 			if (user == null)
 			{
 				throw new ResourceExistedException(nameof(User), nameof(User.Id));
@@ -38,7 +38,7 @@ namespace FlirtingApp.Application.Users.Commands.UpdateUser
 			user.City = request.City;
 			user.Country = request.Country;
 
-			await _context.SaveChangesAsync(cancellationToken);
+			await _userRepository.UpdateAsync(user);
 
 			return Unit.Value;
 		}
