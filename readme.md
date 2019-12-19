@@ -12,7 +12,7 @@
 
 - ASP.NET Core 3.1 LTS, ASP.NET Core 3.1 Identity
 - Angular 8 with Angular material component, Angular flex-layout
-- CQRS with Mediator: Writing parts will write to both SQL Server and MongoDb, Reading ports will read from MongoDb for optimized performance.
+- CQRS with Mediator: Commands will write to both SQL Server and MongoDb, Queries ports will read from MongoDb for optimized performance.
 - Jwt Authentication with refresh token.
 - Simple, focus on intention of the code.
 - Single responsibility classes.
@@ -27,6 +27,5 @@
 ## In progress
 
 - Update tests for Application layer.
-- Using mongodb for queries.
 - Real-time private chat and group chat with SignalR 3
 - Dockerizing the app.
