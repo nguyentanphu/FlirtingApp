@@ -9,7 +9,7 @@ namespace FlirtingApp.Application.Users.Queries.GetUserDetails
 	{
 		public GetUserDetailQueryValidator()
 		{
-			RuleFor(u => u.UserId).NotEmpty();
+			RuleFor(u => u.Id).NotEmpty();
 		}
 	}
 }

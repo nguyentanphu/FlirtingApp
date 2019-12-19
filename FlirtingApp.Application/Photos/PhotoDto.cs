@@ -7,7 +7,7 @@ namespace FlirtingApp.Application.Photos
 {
 	public class PhotoDto : IMapFrom<Photo>
 	{
-		public Guid PhotoId { get; set; }
+		public Guid Id { get; set; }
 		public string Url { get; set; }
 		public string Description { get; set; }
 		public DateTime DateAdded { get; set; }

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Text;
 using FlirtingApp.Application.Common.Interfaces;
 using FlirtingApp.Application.Common.Interfaces.Databases;
+using FlirtingApp.Persistent.Registrars;
+using FlirtingApp.Persistent.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -17,6 +19,11 @@ namespace FlirtingApp.Persistent
 				options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionString"), sqlServerOptions => sqlServerOptions.MigrationsAssembly(typeof(AppDbContext).Assembly.GetName().Name)));
 
 			services.AddScoped<IAppDbContext>(provider => provider.GetService<AppDbContext>());
+			services
+				.AddMongoDb()
+				.AddMongoRepositories();
+
+			services.AddScoped<IUserRepository, UserRepository>();
 			return services;
 		}
 	}

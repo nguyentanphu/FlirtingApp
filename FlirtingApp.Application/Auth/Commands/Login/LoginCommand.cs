@@ -24,13 +24,13 @@ namespace FlirtingApp.Application.Auth.Commands.Login
 	{
 		private readonly ISecurityUserManager _userManager;
 		private readonly IJwtFactory _jwtFactory;
-		private readonly IAppDbContext _dbContext;
+		private readonly IUserRepository _userRepository;
 
-		public LoginCommandHandler(ISecurityUserManager userManager, IJwtFactory jwtFactory, IAppDbContext dbContext)
+		public LoginCommandHandler(ISecurityUserManager userManager, IJwtFactory jwtFactory, IUserRepository userRepository)
 		{
 			_userManager = userManager;
 			_jwtFactory = jwtFactory;
-			_dbContext = dbContext;
+			_userRepository = userRepository;
 		}
 
 		public async Task<LoginCommandResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
@@ -57,7 +57,7 @@ namespace FlirtingApp.Application.Auth.Commands.Login
 
 		private async Task<User> GetUserByIdentityUser(Guid securityUserId)
 		{
-			return await _dbContext.Users.FirstAsync(u => u.IdentityId == securityUserId);
+			return await _userRepository.GetAsync(u => u.IdentityId == securityUserId);
 		}
 	}
 }

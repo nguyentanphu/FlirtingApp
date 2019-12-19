@@ -24,16 +24,19 @@ namespace FlirtingApp.Application.System.Commands.SeedData
 		private readonly IIdentityDbContext _identityDbContext;
 		private readonly IAppDbContext _dbContext;
 		private readonly ISecurityUserManager _securityUserManager;
+		private readonly IUserRepository _userRepo;
 
 		public SeedDataCommandHandler(
 			IIdentityDbContext identityDbContext, 
 			IAppDbContext dbContext, 
-			ISecurityUserManager securityUserManager
-			)
+			ISecurityUserManager securityUserManager, 
+			IUserRepository userRepo
+		)
 		{
 			_identityDbContext = identityDbContext;
 			_dbContext = dbContext;
 			_securityUserManager = securityUserManager;
+			_userRepo = userRepo;
 		}
 
 		public async Task<Unit> Handle(SeedDataCommand request, CancellationToken cancellationToken)
@@ -67,10 +70,9 @@ namespace FlirtingApp.Application.System.Commands.SeedData
 					currentUser.AddPhoto(photoList[i]);
 				}
 
-				_dbContext.Users.Add(currentUser);
 			}
 
-			await _dbContext.SaveChangesAsync(cancellationToken);
+			await _userRepo.AddRangeAsync(userList);
 
 			return Unit.Value;
 		}

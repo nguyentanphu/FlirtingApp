@@ -13,27 +13,25 @@ namespace FlirtingApp.Application.Users.Queries.GetUserDetails
 {
 	public class GetUserDetailQuery: IRequest<UserDetailDto>
 	{
-		public Guid UserId { get; set; }
+		public Guid Id { get; set; }
 	}
 
 	public class GetUserDetailQueryHandler: IRequestHandler<GetUserDetailQuery, UserDetailDto>
 	{
-		private readonly IAppDbContext _context;
+		private readonly IUserRepository _userRepository;
 		private readonly IMapper _mapper;
-		public GetUserDetailQueryHandler(IAppDbContext context, IMapper mapper)
+		public GetUserDetailQueryHandler(IUserRepository userRepository, IMapper mapper)
 		{
-			_context = context;
+			_userRepository = userRepository;
 			_mapper = mapper;
 		}
 
 		public async Task<UserDetailDto> Handle(GetUserDetailQuery request, CancellationToken cancellationToken)
 		{
-			var user = await _context.Users
-				.Include(u => u.Photos)
-				.FirstOrDefaultAsync(u => u.Id == request.UserId, cancellationToken);
+			var user = await _userRepository.GetAsync(request.Id);
 			if (user == null)
 			{
-				throw new ResourceNotFoundException("User", request.UserId);
+				throw new ResourceNotFoundException("User", request.Id);
 			}
 
 			return _mapper.Map<UserDetailDto>(user);

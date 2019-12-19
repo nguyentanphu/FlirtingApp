@@ -23,18 +23,16 @@ namespace FlirtingApp.Application.Photos.Commands.CreatePhoto
 	public class CreatePhotoCommandHandler: IRequestHandler<CreatePhotoCommand, Guid>
 	{
 		private readonly ICloudinary _cloudinary;
-		private readonly IAppDbContext _context;
-		public CreatePhotoCommandHandler(ICloudinary cloudinary, IAppDbContext context)
+		private readonly IUserRepository _userRepository;
+		public CreatePhotoCommandHandler(ICloudinary cloudinary, IUserRepository userRepository)
 		{
 			_cloudinary = cloudinary;
-			_context = context;
+			_userRepository = userRepository;
 		}
 
 		public async Task<Guid> Handle(CreatePhotoCommand request, CancellationToken cancellationToken)
 		{
-			var user = await _context.Users
-				.Include(u => u.Photos)
-				.FirstOrDefaultAsync(u => u.Id == request.UserId, cancellationToken);
+			var user = await _userRepository.GetAsync(request.UserId);
 			if (user == null)
 			{
 				throw new ResourceNotFoundException("User", request.UserId);
@@ -57,7 +55,7 @@ namespace FlirtingApp.Application.Photos.Commands.CreatePhoto
 			};
 			user.AddPhoto(newPhoto);
 
-			await _context.SaveChangesAsync(cancellationToken);
+			await _userRepository.UpdateAsync(user);
 
 			return newPhoto.Id;
 		}

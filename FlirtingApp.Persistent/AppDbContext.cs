@@ -57,5 +57,10 @@ namespace FlirtingApp.Persistent
 		{
 			await Database.MigrateAsync(cancellationToken);
 		}
+
+		public new void Update<TEntity>(TEntity model) where TEntity : IIdentifiable
+		{
+			base.Update(model);
+		}
 	}
 }
