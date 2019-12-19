@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using FlirtingApp.Application.Common;
+using FlirtingApp.Application.Common.Interfaces;
 using FlirtingApp.Application.Photos.Queries.GetUserPhoto;
 using FlirtingApp.Application.Users.Commands.CreateUser;
 using FlirtingApp.Application.Users.Commands.UpdateUser;
@@ -18,9 +19,11 @@ namespace FlirtingApp.WebApi.Controllers
     public class UsersController : ControllerBase
     {
 	    private readonly IMediator _mediator;
-	    public UsersController(IMediator mediator)
+	    private readonly ICurrentUser _currentUser;
+	    public UsersController(IMediator mediator, ICurrentUser currentUser)
 	    {
 		    _mediator = mediator;
+		    _currentUser = currentUser;
 	    }
 
 		[AllowAnonymous]
@@ -32,12 +35,12 @@ namespace FlirtingApp.WebApi.Controllers
 		    return NoContent();
 	    }
 
-		[HttpPut]
+		[HttpPatch]
 		public async Task<IActionResult> UpdateCurrentUser(UpdateUserAdditionalInfoRequest request)
 		{
 			await _mediator.Send(new UpdateUserAdditionalInfoCommand
 			{
-				UserId = Guid.Parse(User.FindFirst(AppClaimTypes.UserId).Value),
+				UserId = _currentUser.UserId.Value,
 				Introduction = request.Introduction,
 				Interests = request.Interests,
 				LookingFor = request.LookingFor,
@@ -56,7 +59,7 @@ namespace FlirtingApp.WebApi.Controllers
 		[HttpGet("{id}")]
 		public async Task<IActionResult> GetUser(Guid id)
 		{
-			return Ok(await _mediator.Send(new GetUserDetailQuery {UserId = id}));
+			return Ok(await _mediator.Send(new GetUserDetailQuery {Id = id}));
 		}
 
 		[HttpGet("{userId}/photos/{photoId}", Name = "GetUserPhoto")]

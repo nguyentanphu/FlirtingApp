@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Application.Common.Interfaces.System;
 using FlirtingApp.Application.Exceptions;
+using FlirtingApp.Domain.Common;
 using FlirtingApp.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 		public string Email { get; set; }
 		public string Password { get; set; }
 		public DateTime DateOfBirth { get; set; }
+		public Gender Gender { get; set; }
 	}
 
 	public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
@@ -56,7 +58,8 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 				LastName = request.LastName,
 				Email = request.Email,
 				DateOfBirth = request.DateOfBirth,
-				LastActive = _dateTime.UtcNow
+				Gender = request.Gender,
+				LastActive = _dateTime.UtcNow,
 			});
 
 			return Unit.Value;

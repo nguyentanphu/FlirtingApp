@@ -17,20 +17,18 @@ namespace FlirtingApp.Application.Photos.Queries.GetUserPhoto
 
 	public class GetUserPhotoQueryHandler : IRequestHandler<GetUserPhotoQuery, PhotoDto>
 	{
-		private readonly IAppDbContext _context;
+		private readonly IUserRepository _userRepository;
 		private readonly IMapper _mapper;
 
-		public GetUserPhotoQueryHandler(IAppDbContext context, IMapper mapper)
+		public GetUserPhotoQueryHandler(IUserRepository userRepository, IMapper mapper)
 		{
-			_context = context;
+			_userRepository = userRepository;
 			_mapper = mapper;
 		}
 
 		public async Task<PhotoDto> Handle(GetUserPhotoQuery request, CancellationToken cancellationToken)
 		{
-			var user = await _context.Users
-				.Include(u => u.Photos)
-				.FirstOrDefaultAsync(u => u.Id == request.UserId, cancellationToken);
+			var user = await _userRepository.GetAsync(request.UserId);
 			if (user == null)
 			{
 				throw new ResourceNotFoundException("User", request.UserId);
