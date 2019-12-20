@@ -2,6 +2,8 @@
 using FlirtingApp.Application.Auth.Commands.ExchangeTokens;
 using FlirtingApp.Application.Auth.Commands.Login;
 using FlirtingApp.Application.Auth.Commands.Logout;
+using FlirtingApp.WebApi.ApiPresenters;
+using FlirtingApp.WebApi.RequestModels;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,22 +15,25 @@ namespace FlirtingApp.WebApi.Controllers
     public class AuthController : ControllerBase
     {
 	    private readonly IMediator _mediator;
-
-	    public AuthController(IMediator mediator)
+	    private readonly LoginPresenter _loginPresenter;
+	    public AuthController(IMediator mediator, LoginPresenter loginPresenter)
 	    {
 		    _mediator = mediator;
+		    _loginPresenter = loginPresenter;
 	    }
 
 	    [HttpPost("login")]
 	    public async Task<IActionResult> Login(LoginRequest loginRequest)
 	    {
-		    var loginResponse = await _mediator.Send(new LoginCommand
-		    {
+			await _mediator.Send(new LoginCommand
+			{
 				UserName = loginRequest.UserName,
 				Password = loginRequest.Password,
-				RemoteIpAddress = HttpContext.Connection.RemoteIpAddress.ToString()
-		    });
-		    return Ok(loginResponse);
+				RemoteIpAddress = HttpContext.Connection.RemoteIpAddress.ToString(),
+				OutputPort = _loginPresenter
+			});
+
+			return _loginPresenter.Result;
 	    }
 
 	    [HttpPost("logout")]

@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using FlirtingApp.Application.Common;
 using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Application.Common.Interfaces.System;
 using FlirtingApp.Application.Exceptions;
 using FlirtingApp.Domain.Common;
 using FlirtingApp.Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace FlirtingApp.Application.Users.Commands.CreateUser
 {
-	public class CreateUserCommand: IRequest
+	public class CreateUserCommand: RequestBase<CreateUserCommandResponse>
 	{
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
@@ -23,6 +21,7 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 		public DateTime DateOfBirth { get; set; }
 		public Gender Gender { get; set; }
 	}
+	public class CreateUserCommandResponse: ResponseBase { }
 
 	public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
 	{
@@ -41,11 +40,21 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 		{
 			if (await _userManager.UserNameExistAsync(request.UserName))
 			{
-				throw new ResourceExistedException("AppUser", "UserName");
+				request.OutputPort.Handle(new CreateUserCommandResponse
+				{
+					Success = false,
+					ErrorMessage = "User name is not available"
+				});
+				return Unit.Value;
 			}
 			if (await _userRepository.AnyAsync(u => u.Email == request.Email))
 			{
-				throw new ResourceExistedException("User", "Email");
+				request.OutputPort.Handle(new CreateUserCommandResponse
+				{
+					Success = false,
+					ErrorMessage = "Email is not available"
+				});
+				return Unit.Value;
 			}
 
 			var securityUserId = await _userManager.CreateUserAsync(request.UserName, request.Password);
@@ -62,6 +71,10 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 				LastActive = _dateTime.UtcNow,
 			});
 
+			request.OutputPort.Handle(new CreateUserCommandResponse
+			{
+				Success = true
+			});
 			return Unit.Value;
 		}
 	}

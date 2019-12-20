@@ -38,6 +38,9 @@ namespace FlirtingApp.WebApi
 			services.AddCors();
 
 			services.AddSwaggerWithBearerToken();
+
+			services.AddPresenters();
+
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

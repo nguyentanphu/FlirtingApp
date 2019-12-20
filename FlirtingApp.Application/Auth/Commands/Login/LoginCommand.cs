@@ -6,21 +6,23 @@ using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Application.Common.Interfaces.Identity;
 using FlirtingApp.Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace FlirtingApp.Application.Auth.Commands.Login
 {
-	public class LoginCommand: LoginRequest, IRequest<LoginCommandResponse>
+	public class LoginCommand: RequestBase<LoginCommandResponse>
 	{
+		public string UserName { get; set; }
+		public string Password { get; set; }
 		public string RemoteIpAddress { get; set; }
 	}
 
-	public class LoginCommandResponse : BaseTokensModel
+	public class LoginCommandResponse : ResponseBase
 	{
-
+		public string AccessToken { get; set; }
+		public string RefreshToken { get; set; }
 	}
 
-	public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginCommandResponse>
+	public class LoginCommandHandler : IRequestHandler<LoginCommand>
 	{
 		private readonly ISecurityUserManager _userManager;
 		private readonly IJwtFactory _jwtFactory;
@@ -33,7 +35,7 @@ namespace FlirtingApp.Application.Auth.Commands.Login
 			_userRepository = userRepository;
 		}
 
-		public async Task<LoginCommandResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
+		public async Task<Unit> Handle(LoginCommand request, CancellationToken cancellationToken)
 		{
 			var loginResult = await _userManager.LoginUserAsync(
 				request.UserName, 
@@ -42,22 +44,29 @@ namespace FlirtingApp.Application.Auth.Commands.Login
 			);
 			if (!loginResult.Success)
 			{
-				throw new LoginException();
+				request.OutputPort.Handle(new LoginCommandResponse
+				{
+					Success = false,
+					ErrorMessage = "Login failed. Either user name or password is not correct"
+				});
+				return Unit.Value;
 			}
 
 			var user = await GetUserByIdentityUser(loginResult.SecurityUserId);
 			var accessToken = _jwtFactory.GenerateEncodedTokens(user.Id, loginResult.SecurityUserId, user.UserName);
 
-			return new LoginCommandResponse
+			request.OutputPort.Handle(new LoginCommandResponse
 			{
+				Success = true,
 				AccessToken = accessToken,
 				RefreshToken = loginResult.RefreshToken
-			};
+			});
+			return Unit.Value;
 		}
 
-		private async Task<User> GetUserByIdentityUser(Guid securityUserId)
+		private Task<User> GetUserByIdentityUser(Guid securityUserId)
 		{
-			return await _userRepository.GetAsync(u => u.IdentityId == securityUserId);
+			return _userRepository.GetAsync(u => u.IdentityId == securityUserId);
 		}
 	}
 }

@@ -7,6 +7,7 @@ using FlirtingApp.Application.Users.Commands.CreateUser;
 using FlirtingApp.Application.Users.Commands.UpdateUser;
 using FlirtingApp.Application.Users.Queries.GetUserDetails;
 using FlirtingApp.Application.Users.Queries.GetUsers;
+using FlirtingApp.WebApi.ApiPresenters;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,10 +21,13 @@ namespace FlirtingApp.WebApi.Controllers
     {
 	    private readonly IMediator _mediator;
 	    private readonly ICurrentUser _currentUser;
-	    public UsersController(IMediator mediator, ICurrentUser currentUser)
+	    private readonly CreateUserPresenter _createUserPresenter;
+
+	    public UsersController(IMediator mediator, ICurrentUser currentUser, CreateUserPresenter createUserPresenter)
 	    {
 		    _mediator = mediator;
 		    _currentUser = currentUser;
+		    _createUserPresenter = createUserPresenter;
 	    }
 
 		[AllowAnonymous]
