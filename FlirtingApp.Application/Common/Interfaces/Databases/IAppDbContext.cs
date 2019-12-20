@@ -12,6 +12,7 @@ namespace FlirtingApp.Application.Common.Interfaces.Databases
 		DbSet<Photo> Photos { get; set; }
 		Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken());
 		Task MigrateAsync(CancellationToken cancellationToken = default);
+		Task EnsureDeletedAsync(CancellationToken cancellationToken = default);
 		void Update<TEntity>(TEntity model) where TEntity : IIdentifiable;
 	}
 }

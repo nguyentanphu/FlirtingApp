@@ -6,17 +6,18 @@ using System.Threading.Tasks;
 using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Domain.Entities;
 using FlirtingApp.Persistent.Mongo;
+using Microsoft.EntityFrameworkCore;
 
 namespace FlirtingApp.Persistent.Repositories
 {
 	class UserRepository: IUserRepository
 	{
-		private readonly IAppDbContext _sqlDb;
+		private readonly IAppDbContext _sql;
 		private readonly IMongoRepository<User> _mongoRepository;
 
-		public UserRepository(IAppDbContext sqlDb, IMongoRepository<User> mongoRepository)
+		public UserRepository(IAppDbContext sql, IMongoRepository<User> mongoRepository)
 		{
-			_sqlDb = sqlDb;
+			_sql = sql;
 			_mongoRepository = mongoRepository;
 		}
 		public Task<User> GetAsync(Guid id)
@@ -41,23 +42,24 @@ namespace FlirtingApp.Persistent.Repositories
 
 		public async Task AddAsync(User user)
 		{
-			_sqlDb.Users.Add(user);
-			await _sqlDb.SaveChangesAsync();
+			_sql.Users.Add(user);
+			await _sql.SaveChangesAsync();
 			await _mongoRepository.AddAsync(user);
 		}
 
 		public async Task AddRangeAsync(IEnumerable<User> users)
 		{
-			_sqlDb.Users.AddRange(users);
-			await _sqlDb.SaveChangesAsync();
+			_sql.Users.AddRange(users);
+			await _sql.SaveChangesAsync();
 			await _mongoRepository.AddRangeAsync(users);
 		}
 
 		public async Task UpdateAsync(User user)
 		{
-			_sqlDb.Update(user);
-			await _sqlDb.SaveChangesAsync();
+			_sql.Update(user);
+			await _sql.SaveChangesAsync();
 			await _mongoRepository.UpdateAsync(user);
 		}
+
 	}
 }

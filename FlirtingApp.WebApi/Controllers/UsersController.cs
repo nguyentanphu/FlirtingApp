@@ -34,9 +34,10 @@ namespace FlirtingApp.WebApi.Controllers
 	    [HttpPost]
 	    public async Task<IActionResult> Create(CreateUserCommand createUserCommand)
 	    {
-		    await _mediator.Send(createUserCommand);
+		    createUserCommand.OutputPort = _createUserPresenter;
+			await _mediator.Send(createUserCommand);
 
-		    return NoContent();
+			return _createUserPresenter.Result;
 	    }
 
 		[HttpPatch]
@@ -60,7 +61,7 @@ namespace FlirtingApp.WebApi.Controllers
 			return Ok(await _mediator.Send(new GetUsersQuery()));
 		}
 
-		[HttpGet("{id}")]
+		[HttpGet("{id}", Name = "GetUser")]
 		public async Task<IActionResult> GetUser(Guid id)
 		{
 			return Ok(await _mediator.Send(new GetUserDetailQuery {Id = id}));

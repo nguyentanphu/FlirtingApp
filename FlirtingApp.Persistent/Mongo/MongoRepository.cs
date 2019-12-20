@@ -50,6 +50,10 @@ namespace FlirtingApp.Persistent.Mongo
 		{
 			await _collection.DeleteOneAsync(e => e.Id == id);
 		}
+		public async Task DeleteManyAsync(Expression<Func<TEntity, bool>> predicate)
+		{
+			await _collection.DeleteManyAsync(predicate);
+		}
 
 		public async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate)
 		{

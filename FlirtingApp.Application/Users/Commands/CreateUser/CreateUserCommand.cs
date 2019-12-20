@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using FlirtingApp.Application.Common;
 using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Application.Common.Interfaces.System;
-using FlirtingApp.Application.Exceptions;
 using FlirtingApp.Domain.Common;
 using FlirtingApp.Domain.Entities;
 using MediatR;
@@ -21,7 +20,11 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 		public DateTime DateOfBirth { get; set; }
 		public Gender Gender { get; set; }
 	}
-	public class CreateUserCommandResponse: ResponseBase { }
+
+	public class CreateUserCommandResponse : ResponseBase
+	{
+		public Guid UserId { get; set; }
+	}
 
 	public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
 	{
@@ -59,7 +62,7 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 
 			var securityUserId = await _userManager.CreateUserAsync(request.UserName, request.Password);
 
-			await _userRepository.AddAsync(new User
+			var newUser = new User
 			{
 				IdentityId = securityUserId,
 				UserName = request.UserName,
@@ -69,11 +72,13 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 				DateOfBirth = request.DateOfBirth,
 				Gender = request.Gender,
 				LastActive = _dateTime.UtcNow,
-			});
+			};
+			await _userRepository.AddAsync(newUser);
 
 			request.OutputPort.Handle(new CreateUserCommandResponse
 			{
-				Success = true
+				Success = true,
+				UserId = newUser.Id
 			});
 			return Unit.Value;
 		}

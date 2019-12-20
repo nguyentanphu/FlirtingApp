@@ -23,7 +23,7 @@ namespace FlirtingApp.Persistent.Registrars
 				return configuration.GetOptions<MongoOptions>(nameof(MongoOptions));
 			});
 
-			services.AddSingleton<MongoClient>(sp =>
+			services.AddSingleton<IMongoClient>(sp =>
 			{
 				var mongoOptions = sp.GetRequiredService<MongoOptions>();
 				return new MongoClient(mongoOptions.ConnectionString);
@@ -31,7 +31,7 @@ namespace FlirtingApp.Persistent.Registrars
 
 			services.AddScoped<IMongoDatabase>(sp =>
 			{
-				var client = sp.GetRequiredService<MongoClient>();
+				var client = sp.GetRequiredService<IMongoClient>();
 				var mongoOptions = sp.GetRequiredService<MongoOptions>();
 				return client.GetDatabase(mongoOptions.Database);
 			});

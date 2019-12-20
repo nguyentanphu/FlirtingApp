@@ -64,9 +64,9 @@ namespace FlirtingApp.Application.Auth.Commands.Login
 			return Unit.Value;
 		}
 
-		private Task<User> GetUserByIdentityUser(Guid securityUserId)
+		private async Task<User> GetUserByIdentityUser(Guid securityUserId)
 		{
-			return _userRepository.GetAsync(u => u.IdentityId == securityUserId);
+			return await _userRepository.GetAsync(u => u.IdentityId == securityUserId);
 		}
 	}
 }

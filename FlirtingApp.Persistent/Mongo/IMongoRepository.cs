@@ -18,6 +18,7 @@ namespace FlirtingApp.Persistent.Mongo
 		Task AddRangeAsync(IEnumerable<TEntity> entities);
 		Task UpdateAsync(TEntity entity);
 		Task DeleteAsync(Guid id);
+		Task DeleteManyAsync(Expression<Func<TEntity, bool>> predicate);
 		Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate);
     }
 }

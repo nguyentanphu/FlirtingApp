@@ -12,6 +12,7 @@ namespace FlirtingApp.WebApi.Registrars
 		public static IServiceCollection AddPresenters(this IServiceCollection services)
 		{
 			services.AddSingleton<LoginPresenter>();
+			services.AddSingleton<CreateUserPresenter>();
 
 			return services;
 		}

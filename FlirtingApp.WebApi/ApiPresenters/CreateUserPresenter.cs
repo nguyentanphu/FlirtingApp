@@ -13,7 +13,7 @@ namespace FlirtingApp.WebApi.ApiPresenters
 		{
 			if (model.Success)
 			{
-				Result = new NoContentResult();
+				Result = new CreatedAtRouteResult("GetUser", new {id = model.UserId}, null);
 			}
 			else
 			{
