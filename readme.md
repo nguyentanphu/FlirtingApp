@@ -21,6 +21,11 @@
 - Separation of concerns.
 - Validation with FluentValidation.
 - Remove usage of default ASP.NET Core validation with ModelState and move validation to Application layer as it's part of business logic.
+- Implement Presenter and IOutputPort to separate presentation logic from controllers
+
+<img src="https://imgur.com/download/zwI5AlQ/"
+     alt="Clean architecture" />
+     
 - Cloudinary integration for uploading images
 - Custom exceptions for each layers.
 - Unify exceptions errors message with ExceptionMiddleware
