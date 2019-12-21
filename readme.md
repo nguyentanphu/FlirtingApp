@@ -12,20 +12,22 @@
 
 - ASP.NET Core 3.1 LTS, ASP.NET Core 3.1 Identity
 - Angular 8 with Angular material component, Angular flex-layout
+
 - CQRS with Mediator: Commands will write to both SQL Server and MongoDb, Queries will read from MongoDb for optimized performance.
+- 2 DbContext: 1 for Application entities, 1 for IdentityDbContext.
 - Jwt Authentication with refresh token.
 - Simple, focus on intention of the code.
-- Single responsibility classes.
+- Design with SOLID principals in mind.
 - Separation of concerns.
 - Validation with FluentValidation.
 - Remove usage of default ASP.NET Core validation with ModelState and move validation to Application layer as it's part of business logic.
 - Cloudinary integration for uploading images
 - Custom exceptions for each layers.
 - Unify exceptions errors message with ExceptionMiddleware
-- 2 DbContext: 1 for Application entities, 1 for IdentityDbContext.
 
-## In progress
+## Work in progress
 
 - Update tests for Application layer.
-- Real-time private chat and group chat with SignalR 3
+- Integration searching and logging with Elastic search.
+- Real-time private chat and group chat with SignalR 3.
 - Dockerizing the app.
