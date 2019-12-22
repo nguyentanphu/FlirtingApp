@@ -2,7 +2,7 @@
 
 namespace FlirtingApp.Application.Auth.Commands.ExchangeTokens
 {
-	class ExchangeTokensCommandValidator: AbstractValidator<ExchangeTokensCommand>
+	public class ExchangeTokensCommandValidator: AbstractValidator<ExchangeTokensCommand>
 	{
 		public ExchangeTokensCommandValidator()
 		{
