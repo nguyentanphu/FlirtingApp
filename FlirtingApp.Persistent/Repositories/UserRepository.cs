@@ -12,10 +12,10 @@ namespace FlirtingApp.Persistent.Repositories
 {
 	class UserRepository: IUserRepository
 	{
-		private readonly IAppDbContext _sql;
+		private readonly AppDbContext _sql;
 		private readonly IMongoRepository<User> _mongoRepository;
 
-		public UserRepository(IAppDbContext sql, IMongoRepository<User> mongoRepository)
+		public UserRepository(AppDbContext sql, IMongoRepository<User> mongoRepository)
 		{
 			_sql = sql;
 			_mongoRepository = mongoRepository;

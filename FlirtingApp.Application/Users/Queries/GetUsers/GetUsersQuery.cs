@@ -3,9 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using FlirtingApp.Application.Common.Interfaces.Databases;
-using FlirtingApp.Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace FlirtingApp.Application.Users.Queries.GetUsers
 {

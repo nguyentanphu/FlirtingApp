@@ -11,8 +11,6 @@ using FlirtingApp.Application.Common.Interfaces;
 using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using MongoDB.Driver;
 
 namespace FlirtingApp.Application.System.Commands.SeedData
 {
@@ -24,14 +22,12 @@ namespace FlirtingApp.Application.System.Commands.SeedData
 	{
 		private readonly IIdentityDbContext _identityDbContext;
 		private readonly IAppDbContext _dbContext;
-		private readonly IMongoClient _mongoClient;
 		private readonly ISecurityUserManager _securityUserManager;
 		private readonly IUserRepository _userRepo;
 
 		public SeedDataCommandHandler(
 			IIdentityDbContext identityDbContext, 
 			IAppDbContext dbContext,
-			IMongoClient mongoClient,
 			ISecurityUserManager securityUserManager, 
 			IUserRepository userRepo
 			)
@@ -40,7 +36,6 @@ namespace FlirtingApp.Application.System.Commands.SeedData
 			_dbContext = dbContext;
 			_securityUserManager = securityUserManager;
 			_userRepo = userRepo;
-			_mongoClient = mongoClient;
 		}
 
 		public async Task<Unit> Handle(SeedDataCommand request, CancellationToken cancellationToken)
@@ -48,12 +43,10 @@ namespace FlirtingApp.Application.System.Commands.SeedData
 			await _identityDbContext.MigrateAsync(cancellationToken);
 			await _dbContext.MigrateAsync(cancellationToken);
 
-			if (await _dbContext.Users.AnyAsync(cancellationToken) && await _userRepo.AnyAsync(u => true))
+			if (await _userRepo.AnyAsync(u => true))
 			{
 				return Unit.Value;
 			}
-
-			await RecreateDatabase(cancellationToken);
 
 			var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 			var jsonSerializeSettings = new JsonSerializerOptions
@@ -81,14 +74,6 @@ namespace FlirtingApp.Application.System.Commands.SeedData
 			await _userRepo.AddRangeAsync(userList);
 
 			return Unit.Value;
-		}
-
-		private async Task RecreateDatabase(CancellationToken cancellationToken = default)
-		{
-			await _dbContext.EnsureDeletedAsync(cancellationToken);
-			await _mongoClient.DropDatabaseAsync("FlirtingApp", cancellationToken);
-			await _identityDbContext.MigrateAsync(cancellationToken);
-			await _dbContext.MigrateAsync(cancellationToken);
 		}
 	}
 }

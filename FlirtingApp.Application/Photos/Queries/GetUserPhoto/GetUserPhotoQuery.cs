@@ -5,7 +5,6 @@ using AutoMapper;
 using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Application.Exceptions;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace FlirtingApp.Application.Photos.Queries.GetUserPhoto
 {

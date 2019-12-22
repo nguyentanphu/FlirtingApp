@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using FlirtingApp.Application.Common.Interfaces.Databases;
-using FlirtingApp.Application.Common.Interfaces.System;
-using FlirtingApp.Application.Common.Interfaces.ThirdPartyVendors;
 using FlirtingApp.Application.Common.Interfaces.ThirdPartyVendors.Cloudinary;
 using FlirtingApp.Application.Exceptions;
 using FlirtingApp.Domain.Entities;
 using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 
 namespace FlirtingApp.Application.Photos.Commands.CreatePhoto
 {

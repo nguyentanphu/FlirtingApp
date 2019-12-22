@@ -7,7 +7,6 @@ using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Application.Exceptions;
 using FlirtingApp.Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace FlirtingApp.Application.Users.Commands.UpdateUser
 {
