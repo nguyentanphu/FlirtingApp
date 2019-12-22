@@ -30,6 +30,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{379E5A3D-3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlirtingApp.Application.Tests", "FlirtingApp.Application.Tests\FlirtingApp.Application.Tests.csproj", "{834BBC3E-97EA-4900-A85D-3A48B7B4FB0F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlirtingApp.Persistent.Tests", "FlirtingApp.Persistent.Tests\FlirtingApp.Persistent.Tests.csproj", "{CA7CA597-B4F3-4912-8717-A990B716BF5C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,6 +62,10 @@ Global
 		{834BBC3E-97EA-4900-A85D-3A48B7B4FB0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{834BBC3E-97EA-4900-A85D-3A48B7B4FB0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{834BBC3E-97EA-4900-A85D-3A48B7B4FB0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA7CA597-B4F3-4912-8717-A990B716BF5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA7CA597-B4F3-4912-8717-A990B716BF5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA7CA597-B4F3-4912-8717-A990B716BF5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA7CA597-B4F3-4912-8717-A990B716BF5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +80,7 @@ Global
 		{275ACE98-FD26-4E15-8FC6-B487E0A003AD} = {EADA736A-7CDF-404F-A229-2C2BB5545D87}
 		{1D1B214F-0ED0-4A2E-A799-FD8B3540A6C3} = {EADA736A-7CDF-404F-A229-2C2BB5545D87}
 		{834BBC3E-97EA-4900-A85D-3A48B7B4FB0F} = {4B0FB671-6706-4DED-B337-D47C49458D4C}
+		{CA7CA597-B4F3-4912-8717-A990B716BF5C} = {4B0FB671-6706-4DED-B337-D47C49458D4C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4A5C32EE-6730-4F4B-9964-CE2AEE0412CD}
