@@ -11,7 +11,7 @@ namespace FlirtingApp.Infrastructure.Identity
 {
 	
 
-	class IdentityDbContext : IdentityDbContext<SecurityUser, AppRole, Guid>, IIdentityDbContext
+	public class IdentityDbContext : IdentityDbContext<SecurityUser, AppRole, Guid>, IIdentityDbContext
 	{
 		public IdentityDbContext(DbContextOptions<IdentityDbContext> options): base(options)
 		{

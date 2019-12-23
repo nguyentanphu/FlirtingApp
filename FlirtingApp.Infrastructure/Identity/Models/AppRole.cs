@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace FlirtingApp.Infrastructure.Identity.Models
 {
-	class AppRole: IdentityRole<Guid>
+	public class AppRole: IdentityRole<Guid>
 	{
 	}
 }
