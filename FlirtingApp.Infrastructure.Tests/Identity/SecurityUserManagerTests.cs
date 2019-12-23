@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FlirtingApp.Application.Common.Interfaces;
+using FlirtingApp.Application.Exceptions;
 using FlirtingApp.Infrastructure.Exceptions;
 using FlirtingApp.Infrastructure.Identity;
 using FlirtingApp.Infrastructure.Identity.Models;
@@ -149,6 +150,61 @@ namespace FlirtingApp.Infrastructure.Tests.Identity
 			_context.RefreshTokens.Any(r => r.Token == refreshToken).Should().BeFalse();
 		}
 
+		[Fact]
+		public async Task HasValidRefreshTokenAsync_DifferentIp_Invalid()
+		{
+			var result = await _sut.HasValidRefreshTokenAsync(TestIdentityDbContextFactory.DefaultRefreshToken,
+				TestIdentityDbContextFactory.DefaultId, "localhost");
+
+			result.Should().BeFalse();
+		}
+
+		[Fact]
+		public async Task HasValidRefreshTokenAsync_Success()
+		{
+			var result = await _sut.HasValidRefreshTokenAsync(TestIdentityDbContextFactory.DefaultRefreshToken,
+				TestIdentityDbContextFactory.DefaultId, TestIdentityDbContextFactory.DefaultIp);
+
+			result.Should().BeTrue();
+		}
+
+		[Fact]
+		public void ExchangeRefreshTokenAsync_InvalidRefreshToken_ThrowException()
+		{
+			Func<Task<string>> act = async () =>
+				await _sut.ExchangeRefreshTokenAsync(TestIdentityDbContextFactory.DefaultId, "random refresh token",
+					TestIdentityDbContextFactory.DefaultIp);
+
+			act.Should().Throw<InvalidRefreshTokenException>();
+		}
+
+		[Fact]
+		public void ExchangeRefreshTokenAsync_InvalidIp_ThrowException()
+		{
+			Func<Task<string>> act = async () =>
+				await _sut.ExchangeRefreshTokenAsync(
+					TestIdentityDbContextFactory.DefaultId, 
+					TestIdentityDbContextFactory.DefaultRefreshToken,
+					"localhost");
+
+			act.Should().Throw<InvalidRefreshTokenException>();
+		}
+
+		[Fact]
+		public async Task ExchangeRefreshTokenAsync_Success()
+		{
+			var newRefreshToken = "dfkrnrtrtirueijcnsmwe";
+			_tokenFactory.Setup(t => t.GenerateToken(It.IsAny<int>()))
+				.Returns(newRefreshToken);
+
+			var result = await _sut.ExchangeRefreshTokenAsync(
+				TestIdentityDbContextFactory.DefaultId,
+				TestIdentityDbContextFactory.DefaultRefreshToken,
+				TestIdentityDbContextFactory.DefaultIp);
+
+			result.Should().Be(newRefreshToken);
+			_context.RefreshTokens.Any(r => r.Token == newRefreshToken).Should().BeTrue();
+		}
 
 	}
 }
