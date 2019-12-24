@@ -16,6 +16,7 @@
 - CQRS with Mediator: Commands will write to both SQL Server and MongoDb, Queries will read from MongoDb for optimized performance.
 - 2 DbContext: 1 for Application entities, 1 for IdentityDbContext.
 - Jwt Authentication with refresh token.
+- Heavily unit tested with separates test projects.
 - Simple, focus on intention of the code.
 - Design with SOLID principals in mind.
 - Separation of concerns.
@@ -32,7 +33,6 @@
 
 ## Work in progress
 
-- Update tests for Application layer.
 - Integration searching and logging with Elastic search.
 - Real-time private chat and group chat with SignalR 3.
 - Dockerizing the app.
