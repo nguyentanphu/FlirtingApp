@@ -16,9 +16,9 @@ namespace FlirtingApp.Infrastructure.ThirdPartyVendor
 	{
 		private readonly CloudinaryCredential _cloudinaryCredential;
 		private readonly Cloudinary _cloudinary;
-		public CloudinaryAdapter(IOptions<CloudinaryCredential> cloudinaryCredential)
+		public CloudinaryAdapter(CloudinaryCredential cloudinaryCredential)
 		{
-			_cloudinaryCredential = cloudinaryCredential.Value;
+			_cloudinaryCredential = cloudinaryCredential;
 			var account = new Account(
 				_cloudinaryCredential.CloudName,
 				_cloudinaryCredential.ApiKey,

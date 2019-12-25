@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using FlirtingApp.Application.Utils;
 using FlirtingApp.Infrastructure.ConfigOptions;
 using FlirtingApp.Infrastructure.Identity;
 using FlirtingApp.Infrastructure.Identity.Models;
@@ -14,18 +15,18 @@ namespace FlirtingApp.Infrastructure.Registrars
 	{
 		public static IServiceCollection AddAppJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
 		{
-			var authSettings = configuration.GetSection(nameof(JwtAuthOptions));
-			var jwtOptions = configuration.GetSection(nameof(JwtOptions));
+			var authSettings = configuration.GetOptions<JwtAuthOptions>(nameof(JwtAuthOptions));
+			services.AddSingleton<JwtAuthOptions>(authSettings);
 			var signingKey =
-				new SymmetricSecurityKey(Encoding.ASCII.GetBytes(authSettings[nameof(JwtAuthOptions.Secret)]));
-			services.Configure<JwtOptions>(options =>
-			{
-				options.Issuer = jwtOptions[nameof(JwtOptions.Issuer)];
-				options.Audience = jwtOptions[nameof(JwtOptions.Audience)];
-				options.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha512Signature);
-			});
-			services.Configure<JwtAuthOptions>(authSettings);
+				new SymmetricSecurityKey(Encoding.ASCII.GetBytes(authSettings.Secret));
 
+			var jwtOptions = configuration.GetOptions<JwtOptions>(nameof(JwtOptions));
+			services.AddSingleton<JwtOptions>(sp =>
+			{
+				jwtOptions.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha512Signature);
+				return jwtOptions;
+			});
+			
 			services.AddIdentityCore<SecurityUser>(o =>
 			{
 				// configure identity options
@@ -45,16 +46,16 @@ namespace FlirtingApp.Infrastructure.Registrars
 				var tokenValidationParameters = new TokenValidationParameters
 				{
 					ValidateIssuer = true,
-					ValidIssuer = jwtOptions[nameof(JwtOptions.Issuer)],
+					ValidIssuer = jwtOptions.Issuer,
 					ValidateAudience = true,
-					ValidAudience = jwtOptions[nameof(JwtOptions.Audience)],
+					ValidAudience = jwtOptions.Audience,
 					ValidateIssuerSigningKey = true,
 					IssuerSigningKey = signingKey,
 					ValidateLifetime = true,
 					ClockSkew = TimeSpan.Zero
 				};
 
-				options.ClaimsIssuer = jwtOptions[nameof(JwtOptions.Issuer)];
+				options.ClaimsIssuer = jwtOptions.Issuer;
 				options.TokenValidationParameters = tokenValidationParameters;
 			});
 

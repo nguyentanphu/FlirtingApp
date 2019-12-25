@@ -18,11 +18,11 @@ namespace FlirtingApp.Infrastructure.Identity
 		private readonly JwtAuthOptions _jwtAuthOptions;
 		private readonly JwtSecurityTokenHandler _jwtHandler;
 
-		public JwtFactory(IOptions<JwtOptions> jwtOptions, IOptions<JwtAuthOptions> jwtAuthOptions, JwtSecurityTokenHandler jwtHandler)
+		public JwtFactory(JwtOptions jwtOptions, JwtAuthOptions jwtAuthOptions, JwtSecurityTokenHandler jwtHandler)
 		{
 			_jwtHandler = jwtHandler;
-			_jwtAuthOptions = jwtAuthOptions.Value;
-			_jwtOptions = jwtOptions.Value;
+			_jwtAuthOptions = jwtAuthOptions;
+			_jwtOptions = jwtOptions;
 		}
 
 		public string GenerateEncodedTokens(Guid userId, Guid securityUserId, string userName)

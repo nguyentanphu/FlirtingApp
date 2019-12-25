@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using FlirtingApp.Application.Utils;
 using FlirtingApp.Infrastructure.ConfigOptions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,7 +11,7 @@ namespace FlirtingApp.Infrastructure.Registrars
 	{
 		public static IServiceCollection AddStronglyTypeOptions(this IServiceCollection services, IConfiguration configuration)
 		{
-			services.Configure<CloudinaryCredential>(configuration.GetSection(nameof(CloudinaryCredential)));
+			services.AddSingleton(sp => configuration.GetOptions<CloudinaryCredential>(nameof(CloudinaryCredential)));
 			return services;
 		}
 	}
