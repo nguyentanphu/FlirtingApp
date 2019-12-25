@@ -34,5 +34,5 @@
 ## Work in progress
 
 - Integration searching and logging with Elastic search.
-- Real-time private chat and group chat with SignalR 3.
+- Real-time private chat and group chat with SignalR 3 and Apache Hbase
 - Dockerizing the app.
