@@ -68,8 +68,8 @@ namespace FlirtingApp.Application.Tests.Auth.Commands.Login
 			_securityUserManager.Setup(u => u.LoginUserAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
 				.Returns(Task.FromResult<(bool Success, Guid SecurityUserId, string RefreshToken)>((true, securityUserId, refreshToken)));
 
-			_userRepo.Setup(u => u.GetAsync(It.IsAny<Expression<Func<User, bool>>>()))
-				.Returns(Task.FromResult(new User {Id = userId, UserName = userName}));
+			//_userRepo.Setup(u => u.GetAsync(It.IsAny<Expression<Func<User, bool>>>()))
+			//	.Returns(Task.FromResult(new User {Id = userId, UserName = userName}));
 
 			_jwtFactory.Setup(j => j.GenerateEncodedTokens(userId, securityUserId, userName))
 				.Returns(accessToken);

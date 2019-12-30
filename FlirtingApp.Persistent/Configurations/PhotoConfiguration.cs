@@ -14,10 +14,6 @@ namespace FlirtingApp.Persistent.Configurations
 			builder.Property(p => p.Url).HasMaxLength(150);
 			builder.Property(p => p.Description).HasMaxLength(1000);
 			builder.Property(p => p.ExternalId).HasMaxLength(50);
-
-			builder.HasOne(p => p.User)
-				.WithMany(u => u.Photos)
-				.HasForeignKey(t => t.UserId);
 		}
 	}
 }

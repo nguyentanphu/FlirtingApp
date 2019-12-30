@@ -17,7 +17,7 @@ namespace FlirtingApp.Domain.Tests.Entities
 		{
 			var newPhoto = new Photo
 			{
-				Id = Guid.NewGuid()
+				//Id = Guid.NewGuid()
 			};
 
 			_sut.AddPhoto(newPhoto);
@@ -30,11 +30,11 @@ namespace FlirtingApp.Domain.Tests.Entities
 		{
 			var firstPhoto = new Photo
 			{
-				Id = Guid.NewGuid()
+				//Id = Guid.NewGuid()
 			};
 			var secondPhoto = new Photo
 			{
-				Id = Guid.NewGuid()
+				//Id = Guid.NewGuid()
 			};
 
 			_sut.AddPhoto(firstPhoto);
@@ -56,7 +56,7 @@ namespace FlirtingApp.Domain.Tests.Entities
 		{
 			var newPhoto = new Photo
 			{
-				Id = Guid.NewGuid(),
+				//Id = Guid.NewGuid(),
 				Url = "test url"
 			};
 

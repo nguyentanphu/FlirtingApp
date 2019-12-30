@@ -9,7 +9,7 @@ using MongoDB.Driver;
 
 namespace FlirtingApp.Persistent.Mongo
 {
-	class MongoRepository<TEntity>: IMongoRepository<TEntity> where TEntity: IIdentifiable
+	class MongoRepository<TEntity>: IMongoRepository<TEntity> where TEntity: Entity
 	{
 		public readonly IMongoCollection<TEntity> _collection;
 		public MongoRepository(IMongoDatabase database)

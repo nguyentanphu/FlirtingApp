@@ -33,7 +33,7 @@ namespace FlirtingApp.Persistent.Tests
 			var id = Guid.NewGuid();
 			var user = new User
 			{
-				Id = Guid.NewGuid(),
+				//Id = Guid.NewGuid(),
 				IdentityId = Guid.NewGuid(),
 				UserName = "phunguyen"
 			};
@@ -50,7 +50,7 @@ namespace FlirtingApp.Persistent.Tests
 			var id = Guid.NewGuid();
 			var user = new User
 			{
-				Id = Guid.NewGuid(),
+				//Id = Guid.NewGuid(),
 				IdentityId = Guid.NewGuid(),
 				UserName = "phunguyen"
 			};
@@ -81,14 +81,14 @@ namespace FlirtingApp.Persistent.Tests
 			{
 				new User
 				{
-					Id = Guid.NewGuid(),
+					//Id = Guid.NewGuid(),
 					IdentityId = Guid.NewGuid(),
 					UserName = "phunguyen",
 					LastName = "Nguyen"
 				},
 				new User
 				{
-					Id = Guid.NewGuid(),
+					//Id = Guid.NewGuid(),
 					IdentityId = Guid.NewGuid(),
 					UserName = "nhunguyen",
 					LastName = "Nguyen"
@@ -107,7 +107,7 @@ namespace FlirtingApp.Persistent.Tests
 		{
 			var user = new User
 			{
-				Id = Guid.NewGuid(),
+				//Id = Guid.NewGuid(),
 				IdentityId = Guid.NewGuid(),
 				UserName = "phunguyen1"
 			};
@@ -127,13 +127,13 @@ namespace FlirtingApp.Persistent.Tests
 			{
 				new User
 				{
-					Id = Guid.NewGuid(),
+					//Id = Guid.NewGuid(),
 					IdentityId = Guid.NewGuid(),
 					UserName = "phunguyen2"
 				},
 				new User
 				{
-					Id = Guid.NewGuid(),
+					//Id = Guid.NewGuid(),
 					IdentityId = Guid.NewGuid(),
 					UserName = "nhuhuynh2"
 				}
@@ -154,7 +154,7 @@ namespace FlirtingApp.Persistent.Tests
 			var id = Guid.Parse("b59d73a3-5664-400d-a5b2-a480de818919");
 			var updateUser = new User
 			{
-				Id = id,
+				//Id = id,
 				IdentityId = Guid.NewGuid(),
 				UserName = "phunguyen4"
 			};

@@ -153,20 +153,21 @@ namespace FlirtingApp.Infrastructure.Identity.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RefreshTokens",
+                name: "RefreshToken",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    SecurityUserId = table.Column<Guid>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Token = table.Column<string>(maxLength: 200, nullable: true),
                     Expires = table.Column<DateTime>(nullable: false),
-                    SecurityUserId = table.Column<Guid>(nullable: false),
                     RemoteIpAddress = table.Column<string>(maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RefreshTokens", x => x.Id);
+                    table.PrimaryKey("PK_RefreshToken", x => new { x.SecurityUserId, x.Id });
                     table.ForeignKey(
-                        name: "FK_RefreshTokens_AspNetUsers_SecurityUserId",
+                        name: "FK_RefreshToken_AspNetUsers_SecurityUserId",
                         column: x => x.SecurityUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -211,11 +212,6 @@ namespace FlirtingApp.Infrastructure.Identity.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RefreshTokens_SecurityUserId",
-                table: "RefreshTokens",
-                column: "SecurityUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -236,7 +232,7 @@ namespace FlirtingApp.Infrastructure.Identity.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "RefreshTokens");
+                name: "RefreshToken");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -5,9 +5,8 @@ using FlirtingApp.Domain.Common;
 
 namespace FlirtingApp.Domain.Entities
 {
-	public class User: AuditableEntity, IIdentifiable
+	public class User: AuditableEntity
 	{
-		public Guid Id { get; set; }
 		public Guid IdentityId { get; set; }
 
 		public string UserName { get; set; }
@@ -26,7 +25,7 @@ namespace FlirtingApp.Domain.Entities
 		public string City { get; set; }
 		public string Country { get; set; }
 
-		private HashSet<Photo> _photos = new HashSet<Photo>();
+		private ICollection<Photo> _photos = new HashSet<Photo>();
 		public IEnumerable<Photo> Photos => _photos.ToList();
 
 

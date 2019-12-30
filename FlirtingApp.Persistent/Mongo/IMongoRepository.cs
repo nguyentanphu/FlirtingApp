@@ -6,7 +6,7 @@ using FlirtingApp.Domain.Common;
 
 namespace FlirtingApp.Persistent.Mongo
 {
-	public interface IMongoRepository<TEntity> where TEntity: IIdentifiable
+	public interface IMongoRepository<TEntity> where TEntity: Entity
 	{
 		Task<TEntity> GetAsync(Guid id);
 		Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate);

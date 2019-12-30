@@ -27,25 +27,25 @@ namespace FlirtingApp.Persistent.Tests
 			var context = new AppDbContext(options, currentUser.Object, machineDateTime.Object);
 			context.Database.EnsureCreated();
 
-			context.Users.AddRange(new[]
-			{
-				new User
-				{
-					Id = Guid.Parse("b59d73a3-5664-400d-a5b2-a480de818919"),
-					IdentityId = Guid.NewGuid(),
-					UserName = "nguyenvanA",
-					FirstName = "Mark",
-					LastName = "Kenn"
-				},
-				new User
-				{
-					Id = Guid.Parse("03760e90-9bdb-4b99-9089-2361c3dc0e8b"),
-					IdentityId = Guid.NewGuid(),
-					UserName = "nguyenvanB",
-					FirstName = "Oper",
-					LastName = "Ops"
-				}
-			});
+			//context.Users.AddRange(new[]
+			//{
+			//	new User
+			//	{
+			//		Id = Guid.Parse("b59d73a3-5664-400d-a5b2-a480de818919"),
+			//		IdentityId = Guid.NewGuid(),
+			//		UserName = "nguyenvanA",
+			//		FirstName = "Mark",
+			//		LastName = "Kenn"
+			//	},
+			//	new User
+			//	{
+			//		Id = Guid.Parse("03760e90-9bdb-4b99-9089-2361c3dc0e8b"),
+			//		IdentityId = Guid.NewGuid(),
+			//		UserName = "nguyenvanB",
+			//		FirstName = "Oper",
+			//		LastName = "Ops"
+			//	}
+			//});
 
 			context.SaveChanges();
 

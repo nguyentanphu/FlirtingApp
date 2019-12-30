@@ -63,7 +63,7 @@ namespace FlirtingApp.Persistent
 			await Database.EnsureDeletedAsync(cancellationToken);
 		}
 
-		public new void Update<TEntity>(TEntity model) where TEntity : IIdentifiable
+		public new void Update<TEntity>(TEntity model) where TEntity : Entity
 		{
 			base.Update(model);
 		}

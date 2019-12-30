@@ -25,6 +25,10 @@ namespace FlirtingApp.Persistent.Configurations
 			builder.Property(u => u.LookingFor).HasMaxLength(1000);
 			builder.Property(u => u.Interests).HasMaxLength(1000);
 
+			builder.HasMany(u => u.Photos)
+				.WithOne()
+				.HasForeignKey(p => p.UserId);
+
 			builder.Metadata.FindNavigation(nameof(User.Photos))
 				.SetPropertyAccessMode(PropertyAccessMode.Field);
 		}
