@@ -40,13 +40,11 @@ namespace FlirtingApp.Application.Photos.Commands.CreatePhoto
 			};
 			var uploadResult = await _cloudinary.Upload(cloudinaryUploadOptions, cancellationToken);
 
-			var newPhoto = new Photo
-			{
-				UserId = request.UserId,
-				Description = request.Description,
-				Url = uploadResult.Url,
-				ExternalId = uploadResult.PublicId,
-			};
+			var newPhoto = new Photo(
+				uploadResult.Url,
+				uploadResult.PublicId,
+				request.Description
+			);
 			user.AddPhoto(newPhoto);
 
 			await _userRepository.UpdateAsync(user);

@@ -11,6 +11,8 @@ using FlirtingApp.Application.Common.Interfaces;
 using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Domain.Entities;
 using MediatR;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace FlirtingApp.Application.System.Commands.SeedData
 {
@@ -49,21 +51,21 @@ namespace FlirtingApp.Application.System.Commands.SeedData
 			}
 
 			var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			var jsonSerializeSettings = new JsonSerializerOptions
-			{
-				PropertyNameCaseInsensitive = true
-			};
+
 			var usersJson = File.ReadAllText(Path.Combine(dir, "System/Commands/SeedData/seedUserData.json"));
-			var userList = JsonSerializer.Deserialize<List<User>>(usersJson, jsonSerializeSettings);
+			var userList = JsonConvert.DeserializeObject<List<User>>(usersJson);
 
 			var photosJson = File.ReadAllText(Path.Combine(dir, "System/Commands/SeedData/seedPhotoData.json"));
-			var photoList = JsonSerializer.Deserialize<List<Photo>>(photosJson, jsonSerializeSettings);
+			var photoList = JsonConvert.DeserializeObject<List<Photo>>(photosJson);
 
 			for (int i = 0; i < userList.Count; i++)
 			{
 				var currentUser = userList[i];
 				var securityUserId = await _securityUserManager.CreateUserAsync(currentUser.UserName, "password");
-				currentUser.IdentityId = securityUserId;
+
+				var property = typeof(User).GetProperty(nameof(User.IdentityId));
+				property.GetSetMethod(true).Invoke(currentUser, new object[] { securityUserId });
+
 				if (photoList.ElementAtOrDefault(i) != null)
 				{
 					currentUser.AddPhoto(photoList[i]);

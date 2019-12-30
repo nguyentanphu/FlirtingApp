@@ -62,17 +62,16 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 
 			var securityUserId = await _userManager.CreateUserAsync(request.UserName, request.Password);
 
-			var newUser = new User
-			{
-				IdentityId = securityUserId,
-				UserName = request.UserName,
-				FirstName = request.FirstName,
-				LastName = request.LastName,
-				Email = request.Email,
-				DateOfBirth = request.DateOfBirth,
-				Gender = request.Gender,
-				LastActive = _dateTime.UtcNow,
-			};
+			var newUser = new User(
+				securityUserId,
+				request.UserName,
+				request.FirstName,
+				request.LastName,
+				request.Email,
+				request.DateOfBirth,
+				request.Gender,
+				_dateTime.UtcNow
+			);
 			await _userRepository.AddAsync(newUser);
 
 			request.OutputPort.Handle(new CreateUserCommandResponse

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FlirtingApp.Domain.Common;
 using FlirtingApp.Domain.Entities;
 using FluentAssertions;
 using Xunit;
@@ -10,7 +11,16 @@ namespace FlirtingApp.Domain.Tests.Entities
 {
 	public class UserTests
 	{
-		private readonly User _sut = new User();
+		private readonly User _sut = new User(
+			Guid.NewGuid(),
+			"phunguyen",
+			"phu",
+			"nguyen",
+			"nguyentanphu@hotmail.com",
+			new DateTime(1992, 18, 5),
+			Gender.Male,
+			DateTime.UtcNow
+		);
 
 		[Fact]
 		public void AddFirstPhoto_MarkAsMain()

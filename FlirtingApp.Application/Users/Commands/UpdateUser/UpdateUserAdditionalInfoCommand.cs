@@ -31,11 +31,15 @@ namespace FlirtingApp.Application.Users.Commands.UpdateUser
 			{
 				throw new ResourceExistedException(nameof(User), nameof(User.Id));
 			}
-			user.Introduction = request.Introduction;
-			user.LookingFor = request.LookingFor;
-			user.Interests = request.Interests;
-			user.City = request.City;
-			user.Country = request.Country;
+
+			user.UpdateUserAdditionalInfo(
+				request.KnownAs,
+				request.Introduction,
+				request.LookingFor,
+				request.Interests,
+				request.City,
+				request.Country
+			);
 
 			await _userRepository.UpdateAsync(user);
 
