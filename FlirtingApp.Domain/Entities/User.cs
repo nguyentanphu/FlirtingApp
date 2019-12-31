@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FlirtingApp.Domain.Common;
+using FlirtingApp.Domain.ValueObjects;
 
 namespace FlirtingApp.Domain.Entities
 {
@@ -28,6 +29,7 @@ namespace FlirtingApp.Domain.Entities
 			DateOfBirth = dateOfBirth;
 			Gender = gender;
 			LastActive = machineUtcNow;
+			Location = Location.UnknownLocation;
 		}
 		public Guid IdentityId { get; private set; }
 
@@ -44,6 +46,13 @@ namespace FlirtingApp.Domain.Entities
 		public void UpdateLastActive(DateTime machineUtcNow)
 		{
 			LastActive = machineUtcNow;
+		}
+
+		public Location Location { get; private set; }
+
+		public void SetLocation(decimal[] coordinates)
+		{
+			Location = coordinates == null ? Location.UnknownLocation : new Location(coordinates);
 		}
 		public string KnownAs { get; private set; }
 		

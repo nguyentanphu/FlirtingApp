@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using FlirtingApp.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,14 @@ namespace FlirtingApp.Persistent.Configurations
 
 			builder.Metadata.FindNavigation(nameof(User.Photos))
 				.SetPropertyAccessMode(PropertyAccessMode.Field);
+
+			builder.OwnsOne(u => u.Location, build =>
+			{
+				build.Property(l => l.Coordinates)
+					.HasConversion(
+						d => string.Join(',', d),
+						s => s.Split(',', StringSplitOptions.None).Select(decimal.Parse).ToArray());
+			});
 		}
 	}
 }

@@ -19,6 +19,7 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 		public string Password { get; set; }
 		public DateTime DateOfBirth { get; set; }
 		public Gender Gender { get; set; }
+		public decimal[] Coordinates { get; set; }
 	}
 
 	public class CreateUserCommandResponse : ResponseBase
@@ -72,6 +73,9 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 				request.Gender,
 				_dateTime.UtcNow
 			);
+
+			newUser.SetLocation(request.Coordinates);
+
 			await _userRepository.AddAsync(newUser);
 
 			request.OutputPort.Handle(new CreateUserCommandResponse
