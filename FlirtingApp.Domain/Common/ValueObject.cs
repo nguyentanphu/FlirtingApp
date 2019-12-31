@@ -6,9 +6,9 @@ using System.Text;
 namespace FlirtingApp.Domain.Common
 {
 	//https://docs.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/implement-value-objects
-	public abstract class ValueObject
+	public abstract class ValueObject<T>
 	{
-		protected static bool EqualOperator(ValueObject left, ValueObject right)
+		protected static bool EqualOperator(ValueObject<T> left, ValueObject<T> right)
 		{
 			if (ReferenceEquals(left, null) ^ ReferenceEquals(right, null))
 			{
@@ -17,7 +17,7 @@ namespace FlirtingApp.Domain.Common
 			return ReferenceEquals(left, null) || left.Equals(right);
 		}
 
-		protected static bool NotEqualOperator(ValueObject left, ValueObject right)
+		protected static bool NotEqualOperator(ValueObject<T> left, ValueObject<T> right)
 		{
 			return !(EqualOperator(left, right));
 		}
@@ -31,7 +31,7 @@ namespace FlirtingApp.Domain.Common
 				return false;
 			}
 
-			ValueObject other = (ValueObject)obj;
+			ValueObject<T> other = (ValueObject<T>)obj;
 			IEnumerator<object> thisValues = GetAtomicValues().GetEnumerator();
 			IEnumerator<object> otherValues = other.GetAtomicValues().GetEnumerator();
 			while (thisValues.MoveNext() && otherValues.MoveNext())
@@ -57,6 +57,12 @@ namespace FlirtingApp.Domain.Common
 				.Select(x => x != null ? x.GetHashCode() : 0)
 				.Aggregate((x, y) => x ^ y);
 		}
+
+		public T Clone()
+		{
+			return (T) MemberwiseClone();
+		}
+
 		// Other utility methods
 	}
 }

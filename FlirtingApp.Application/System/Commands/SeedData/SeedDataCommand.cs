@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using FlirtingApp.Application.Common.Interfaces;
 using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Domain.Entities;
 using MediatR;
@@ -70,6 +67,7 @@ namespace FlirtingApp.Application.System.Commands.SeedData
 				{
 					currentUser.AddPhoto(photoList[i]);
 				}
+				currentUser.SetLocation(null);
 
 			}
 

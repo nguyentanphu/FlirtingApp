@@ -5,13 +5,13 @@ using FlirtingApp.Domain.Common;
 
 namespace FlirtingApp.Domain.ValueObjects
 {
-	public class Location: ValueObject
+	public class Location: ValueObject<Location>
 	{
-		public static Location UnknownLocation = new Location(new []{0m, 0m});
+		public static Location UnknownLocation = new Location(new []{0d, 0d});
 		private const string defaultType = "Point";
 		private Location() { }
 
-		public Location(decimal[] coordinates)
+		public Location(double[] coordinates)
 		{
 			if (coordinates == null || coordinates.Length != 2)
 			{
@@ -21,8 +21,8 @@ namespace FlirtingApp.Domain.ValueObjects
 			Coordinates = coordinates;
 		}
 
-		public string Type { get; } = defaultType;
-		public decimal[] Coordinates { get; private set; }
+		public string Type { get; private set; } = defaultType;
+		public double[] Coordinates { get; private set; }
 		protected override IEnumerable<object> GetAtomicValues()
 		{
 			yield return Type;

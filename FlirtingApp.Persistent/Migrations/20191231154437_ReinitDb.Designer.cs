@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlirtingApp.Persistent.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20191213062753_reinitDb")]
-    partial class reinitDb
+    [Migration("20191231154437_ReinitDb")]
+    partial class ReinitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -144,11 +144,33 @@ namespace FlirtingApp.Persistent.Migrations
 
             modelBuilder.Entity("FlirtingApp.Domain.Entities.Photo", b =>
                 {
-                    b.HasOne("FlirtingApp.Domain.Entities.User", "User")
+                    b.HasOne("FlirtingApp.Domain.Entities.User", null)
                         .WithMany("Photos")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("FlirtingApp.Domain.Entities.User", b =>
+                {
+                    b.OwnsOne("FlirtingApp.Domain.ValueObjects.Location", "Location", b1 =>
+                        {
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Coordinates")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Type")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("Users");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
                 });
 #pragma warning restore 612, 618
         }

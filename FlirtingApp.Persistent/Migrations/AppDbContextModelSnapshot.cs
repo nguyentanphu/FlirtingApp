@@ -159,6 +159,9 @@ namespace FlirtingApp.Persistent.Migrations
                             b1.Property<string>("Coordinates")
                                 .HasColumnType("nvarchar(max)");
 
+                            b1.Property<string>("Type")
+                                .HasColumnType("nvarchar(max)");
+
                             b1.HasKey("UserId");
 
                             b1.ToTable("Users");

@@ -48,11 +48,12 @@ namespace FlirtingApp.Domain.Entities
 			LastActive = machineUtcNow;
 		}
 
-		public Location Location { get; private set; }
+		// Short coming of EF core, cannot share same instance of value object, so = Location.UnknownLocation wont work
+		public Location Location { get; private set; } = Location.UnknownLocation.Clone();
 
-		public void SetLocation(decimal[] coordinates)
+		public void SetLocation(double[] coordinates)
 		{
-			Location = coordinates == null ? Location.UnknownLocation : new Location(coordinates);
+			Location = coordinates == null ? Location.UnknownLocation.Clone() : new Location(coordinates);
 		}
 		public string KnownAs { get; private set; }
 		

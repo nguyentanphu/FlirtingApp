@@ -4,7 +4,7 @@ using FlirtingApp.Domain.Common;
 
 namespace FlirtingApp.Infrastructure.Identity.Models
 {
-	public class RefreshToken: ValueObject
+	public class RefreshToken: ValueObject<RefreshToken>
 	{
 		private RefreshToken()
 		{

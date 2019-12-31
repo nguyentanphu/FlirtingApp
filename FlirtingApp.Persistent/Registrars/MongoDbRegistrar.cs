@@ -9,6 +9,8 @@ using FlirtingApp.Persistent.Mongo;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Conventions;
+using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 
 namespace FlirtingApp.Persistent.Registrars
@@ -48,10 +50,13 @@ namespace FlirtingApp.Persistent.Registrars
 
 		private static void AddMongoClassConfiguration()
 		{
+			var conventionPack = new ConventionPack {new CamelCaseElementNameConvention()};
+			ConventionRegistry.Register("camelCase", conventionPack, t => true);
+
 			BsonClassMap.RegisterClassMap<User>(cm =>
 			{
 				cm.AutoMap();
-				cm.MapField("_photos").SetElementName("Photos");
+				cm.MapField("_photos").SetElementName("photos");
 			});
 			BsonClassMap.RegisterClassMap<Photo>(cm =>
 			{

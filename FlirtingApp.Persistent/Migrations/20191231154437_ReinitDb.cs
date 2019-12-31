@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FlirtingApp.Persistent.Migrations
 {
-    public partial class reinitDb : Migration
+    public partial class ReinitDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,8 +23,10 @@ namespace FlirtingApp.Persistent.Migrations
                     LastName = table.Column<string>(maxLength: 100, nullable: true),
                     Gender = table.Column<byte>(type: "tinyint", nullable: false),
                     DateOfBirth = table.Column<DateTime>(nullable: false),
-                    KnownAs = table.Column<string>(maxLength: 100, nullable: true),
                     LastActive = table.Column<DateTime>(maxLength: 100, nullable: false),
+                    Location_Type = table.Column<string>(nullable: true),
+                    Location_Coordinates = table.Column<string>(nullable: true),
+                    KnownAs = table.Column<string>(maxLength: 100, nullable: true),
                     Introduction = table.Column<string>(maxLength: 1000, nullable: true),
                     LookingFor = table.Column<string>(maxLength: 1000, nullable: true),
                     Interests = table.Column<string>(maxLength: 1000, nullable: true),
@@ -45,11 +47,11 @@ namespace FlirtingApp.Persistent.Migrations
                     Created = table.Column<DateTime>(nullable: true),
                     LastModifiedBy = table.Column<Guid>(nullable: true),
                     LastModified = table.Column<DateTime>(nullable: true),
+                    ExternalId = table.Column<string>(maxLength: 50, nullable: true),
                     Url = table.Column<string>(maxLength: 150, nullable: true),
                     Description = table.Column<string>(maxLength: 1000, nullable: true),
                     IsMain = table.Column<bool>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false),
-                    ExternalId = table.Column<string>(maxLength: 50, nullable: true)
+                    UserId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {

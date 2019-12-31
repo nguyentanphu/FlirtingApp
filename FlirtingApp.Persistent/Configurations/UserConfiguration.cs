@@ -38,7 +38,7 @@ namespace FlirtingApp.Persistent.Configurations
 				build.Property(l => l.Coordinates)
 					.HasConversion(
 						d => string.Join(',', d),
-						s => s.Split(',', StringSplitOptions.None).Select(decimal.Parse).ToArray());
+						s => s.Split(',', StringSplitOptions.None).Select(double.Parse).ToArray());
 			});
 		}
 	}

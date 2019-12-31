@@ -19,7 +19,7 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 		public string Password { get; set; }
 		public DateTime DateOfBirth { get; set; }
 		public Gender Gender { get; set; }
-		public decimal[] Coordinates { get; set; }
+		public double[] Coordinates { get; set; }
 	}
 
 	public class CreateUserCommandResponse : ResponseBase
