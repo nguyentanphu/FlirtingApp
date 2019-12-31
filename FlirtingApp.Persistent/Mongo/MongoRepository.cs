@@ -17,7 +17,7 @@ namespace FlirtingApp.Persistent.Mongo
 			_collection = database.GetCollection<TEntity>(typeof(TEntity).Name);
 		}
 
-		public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
+		public async Task<IReadOnlyList<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
 		{
 			return await _collection.Find(predicate).ToListAsync();
 		}

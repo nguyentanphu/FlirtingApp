@@ -122,7 +122,7 @@ namespace FlirtingApp.Infrastructure.Tests.Identity
 			var refreshToken = "frtrykvddfnme";
 
 			_userManager.Setup(m => m.FindByNameAsync(userName))
-				.Returns((string userName) => Task.FromResult(_context.AppUsers.First(u => u.UserName == userName)));
+				.Returns((string un) => Task.FromResult(_context.AppUsers.First(u => u.UserName == un)));
 
 			_userManager.Setup(m => m.CheckPasswordAsync(It.Is<SecurityUser>(u => u.UserName == userName), password))
 				.Returns(Task.FromResult(true));
@@ -135,8 +135,6 @@ namespace FlirtingApp.Infrastructure.Tests.Identity
 			result.Success.Should().BeTrue();
 			result.RefreshToken.Should().Be(refreshToken);
 			result.SecurityUserId.Should().Be(TestIdentityDbContextFactory.DefaultId);
-
-			//_context.RefreshTokens.Any(r => r.Token == refreshToken).Should().BeTrue();
 		}
 
 		[Fact]
@@ -144,10 +142,9 @@ namespace FlirtingApp.Infrastructure.Tests.Identity
 		{
 			var id = TestIdentityDbContextFactory.DefaultId;
 			var remoteIp = TestIdentityDbContextFactory.DefaultIp;
-			var refreshToken = TestIdentityDbContextFactory.DefaultRefreshToken;
 
 			await _sut.LogoutUserAsync(id, remoteIp);
-			//_context.RefreshTokens.Any(r => r.Token == refreshToken).Should().BeFalse();
+			_context.AppUsers.Any(u => u.RefreshTokens.Any()).Should().BeFalse();
 		}
 
 		[Fact]
@@ -193,17 +190,33 @@ namespace FlirtingApp.Infrastructure.Tests.Identity
 		[Fact]
 		public async Task ExchangeRefreshTokenAsync_Success()
 		{
+			AddDefaultLogin();
+
 			var newRefreshToken = "dfkrnrtrtirueijcnsmwe";
 			_tokenFactory.Setup(t => t.GenerateToken(It.IsAny<int>()))
 				.Returns(newRefreshToken);
 
 			var result = await _sut.ExchangeRefreshTokenAsync(
-				TestIdentityDbContextFactory.DefaultId,
-				TestIdentityDbContextFactory.DefaultRefreshToken,
+				Guid.Parse("434fa408-b4ec-43aa-99d4-cd4256ff73f2"),
+				"123456789",
 				TestIdentityDbContextFactory.DefaultIp);
 
 			result.Should().Be(newRefreshToken);
-			//_context.RefreshTokens.Any(r => r.Token == newRefreshToken).Should().BeTrue();
+		}
+
+		private void AddDefaultLogin()
+		{
+			var refreshToken = "123456789";
+			var user = new SecurityUser
+			{
+				Id = Guid.Parse("434fa408-b4ec-43aa-99d4-cd4256ff73f2"),
+				UserName = "newuser",
+				Email = "nguyentanphu344@hotmail.com",
+				PasswordHash = "bddadsadsa"
+			};
+			user.AddRefreshToken(refreshToken, TestIdentityDbContextFactory.DefaultIp);
+			_context.AppUsers.Add(user);
+			_context.SaveChanges();
 		}
 
 	}

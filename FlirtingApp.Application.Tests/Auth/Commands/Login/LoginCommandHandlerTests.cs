@@ -8,6 +8,7 @@ using FlirtingApp.Application.Auth.Commands.Login;
 using FlirtingApp.Application.Common.Interfaces;
 using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Application.Common.Interfaces.Identity;
+using FlirtingApp.Domain.Common;
 using FlirtingApp.Domain.Entities;
 using Moq;
 using Xunit;
@@ -60,7 +61,6 @@ namespace FlirtingApp.Application.Tests.Auth.Commands.Login
 		public async Task Handle_LoginSucceed_ReturnTokens()
 		{
 			var securityUserId = Guid.NewGuid();
-			var userId = Guid.NewGuid();
 			var userName = "phunguyen";
 			var refreshToken = "refresh token";
 			var accessToken = "access token";
@@ -68,10 +68,19 @@ namespace FlirtingApp.Application.Tests.Auth.Commands.Login
 			_securityUserManager.Setup(u => u.LoginUserAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
 				.Returns(Task.FromResult<(bool Success, Guid SecurityUserId, string RefreshToken)>((true, securityUserId, refreshToken)));
 
-			//_userRepo.Setup(u => u.GetAsync(It.IsAny<Expression<Func<User, bool>>>()))
-			//	.Returns(Task.FromResult(new User {Id = userId, UserName = userName}));
+			_userRepo.Setup(u => u.GetAsync(It.IsAny<Expression<Func<User, bool>>>()))
+				.Returns(Task.FromResult(new User(
+					Guid.NewGuid(),
+					userName,
+					"phu",
+					"nguyen",
+					"nguyentanphu@hotmail.com",
+					new DateTime(1992, 5, 18),
+					Gender.Male,
+					DateTime.UtcNow
+				)));
 
-			_jwtFactory.Setup(j => j.GenerateEncodedTokens(userId, securityUserId, userName))
+			_jwtFactory.Setup(j => j.GenerateEncodedTokens(It.IsAny<Guid>(), securityUserId, userName))
 				.Returns(accessToken);
 
 			_outputPort.Setup(o => o.Handle(It.Is<LoginCommandResponse>(

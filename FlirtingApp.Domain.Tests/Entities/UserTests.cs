@@ -17,7 +17,7 @@ namespace FlirtingApp.Domain.Tests.Entities
 			"phu",
 			"nguyen",
 			"nguyentanphu@hotmail.com",
-			new DateTime(1992, 18, 5),
+			new DateTime(1992, 5, 18),
 			Gender.Male,
 			DateTime.UtcNow
 		);
@@ -25,10 +25,7 @@ namespace FlirtingApp.Domain.Tests.Entities
 		[Fact]
 		public void AddFirstPhoto_MarkAsMain()
 		{
-			var newPhoto = new Photo
-			{
-				//Id = Guid.NewGuid()
-			};
+			var newPhoto = new Photo("http://abc", "545uuhh", "nod dsessd");
 
 			_sut.AddPhoto(newPhoto);
 
@@ -38,19 +35,14 @@ namespace FlirtingApp.Domain.Tests.Entities
 		[Fact]
 		public void AddSecondPhoto_DoesNotMarkAsMain()
 		{
-			var firstPhoto = new Photo
-			{
-				//Id = Guid.NewGuid()
-			};
-			var secondPhoto = new Photo
-			{
-				//Id = Guid.NewGuid()
-			};
+			var firstPhoto = new Photo("http://abc", "545uuhh", "nod dsessd");
+			var secondPhoto = new Photo("http://abc35544", "secondId", "nod dsessd");
 
 			_sut.AddPhoto(firstPhoto);
 			_sut.AddPhoto(secondPhoto);
 
-			_sut.Photos.Any(p => p.Id == secondPhoto.Id && !p.IsMain).Should().BeTrue();
+			_sut.Photos.Any(p => p.IsMain).Should().BeTrue();
+			_sut.Photos.Any(p => !p.IsMain).Should().BeTrue();
 		}
 
 		[Fact]
@@ -64,16 +56,12 @@ namespace FlirtingApp.Domain.Tests.Entities
 		[Fact]
 		public void GetMainPhoto_ReturnUrlOfMainPhoto()
 		{
-			var newPhoto = new Photo
-			{
-				//Id = Guid.NewGuid(),
-				Url = "test url"
-			};
+			var newPhoto = new Photo("http://testurl", "545uuhh", "nod dsessd");
 
 			_sut.AddPhoto(newPhoto);
 			var result = _sut.GetMainPhotoUrl();
 
-			result.Should().Be("test url");
+			result.Should().Be("http://testurl");
 		}
 	}
 }
