@@ -43,6 +43,9 @@
 		<None Update="System\Commands\SeedData\seedPhotoData.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
+		<None Update="System\Commands\SeedData\seedUserCoordinate.json">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 
 	<ItemGroup>

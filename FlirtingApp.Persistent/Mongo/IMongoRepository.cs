@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using FlirtingApp.Domain.Common;
+using MongoDB.Driver;
 
 namespace FlirtingApp.Persistent.Mongo
 {
 	public interface IMongoRepository<TEntity> where TEntity: Entity
 	{
+		IMongoCollection<TEntity> Collection { get; }
 		Task<TEntity> GetAsync(Guid id);
 		Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate);
 		Task<IReadOnlyList<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);

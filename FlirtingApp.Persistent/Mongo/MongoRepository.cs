@@ -11,20 +11,20 @@ namespace FlirtingApp.Persistent.Mongo
 {
 	class MongoRepository<TEntity>: IMongoRepository<TEntity> where TEntity: Entity
 	{
-		public readonly IMongoCollection<TEntity> _collection;
+		public IMongoCollection<TEntity> Collection { get; }
 		public MongoRepository(IMongoDatabase database)
 		{
-			_collection = database.GetCollection<TEntity>(typeof(TEntity).Name);
+			Collection = database.GetCollection<TEntity>(typeof(TEntity).Name);
 		}
 
 		public async Task<IReadOnlyList<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
 		{
-			return await _collection.Find(predicate).ToListAsync();
+			return await Collection.Find(predicate).ToListAsync();
 		}
 
 		public Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
 		{
-			return _collection.Find(predicate).AnyAsync();
+			return Collection.Find(predicate).AnyAsync();
 		}
 
 		public Task<TEntity> GetAsync(Guid id)
@@ -34,35 +34,35 @@ namespace FlirtingApp.Persistent.Mongo
 
 		public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate)
 		{
-			return await _collection.Find(predicate).FirstOrDefaultAsync();
+			return await Collection.Find(predicate).FirstOrDefaultAsync();
 		}
 
 		public async Task AddAsync(TEntity entity)
 		{
-			await _collection.InsertOneAsync(entity);
+			await Collection.InsertOneAsync(entity);
 		}
 		public async Task AddRangeAsync(IEnumerable<TEntity> entities)
 		{
-			await _collection.InsertManyAsync(entities);
+			await Collection.InsertManyAsync(entities);
 		}
 
 		public async Task DeleteAsync(Guid id)
 		{
-			await _collection.DeleteOneAsync(e => e.Id == id);
+			await Collection.DeleteOneAsync(e => e.Id == id);
 		}
 		public async Task DeleteManyAsync(Expression<Func<TEntity, bool>> predicate)
 		{
-			await _collection.DeleteManyAsync(predicate);
+			await Collection.DeleteManyAsync(predicate);
 		}
 
 		public async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate)
 		{
-			return await _collection.Find(predicate).AnyAsync();
+			return await Collection.Find(predicate).AnyAsync();
 		}
 
 		public async Task UpdateAsync(TEntity entity)
 		{
-			await _collection.ReplaceOneAsync(e => e.Id == entity.Id, entity);
+			await Collection.ReplaceOneAsync(e => e.Id == entity.Id, entity);
 		}
 	}
 

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -9,6 +11,10 @@ namespace FlirtingApp.Application.Users.Queries.GetUsers
 {
 	public class GetUsersQuery: IRequest<IEnumerable<UserOverviewDto>>
 	{
+		[JsonIgnore]
+		public Guid UserId { get; set; }
+		public double[] Coordinates { get; set; }
+		public double Distance { get; set; }
 	}
 
 	public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, IEnumerable<UserOverviewDto>>
@@ -24,7 +30,7 @@ namespace FlirtingApp.Application.Users.Queries.GetUsers
 
 		public async Task<IEnumerable<UserOverviewDto>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
 		{
-			var users = await  _userRepository.FindAsync(u => true);
+			var users = await _userRepository.FindAsync(request);
 
 			return _mapper.Map<IEnumerable<UserOverviewDto>>(users);
 		}

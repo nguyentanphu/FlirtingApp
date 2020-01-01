@@ -51,9 +51,9 @@ namespace FlirtingApp.Domain.Entities
 		// Short coming of EF core, cannot share same instance of value object, so = Location.UnknownLocation wont work
 		public Location Location { get; private set; } = Location.UnknownLocation.Clone();
 
-		public void SetLocation(double[] coordinates)
+		public void SetLocation(IReadOnlyCollection<double> coordinates)
 		{
-			Location = coordinates == null ? Location.UnknownLocation.Clone() : new Location(coordinates);
+			Location = coordinates == null ? Location.UnknownLocation.Clone() : new Location(coordinates.ToArray());
 		}
 		public string KnownAs { get; private set; }
 		

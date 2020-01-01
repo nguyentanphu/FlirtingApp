@@ -38,6 +38,8 @@ namespace FlirtingApp.Persistent.Registrars
 				return client.GetDatabase(mongoOptions.Database);
 			});
 
+			services.AddScoped<IDbRunTimeConfig, MongoRunTimeConfig>();
+
 			return services;
 		}
 
@@ -45,6 +47,7 @@ namespace FlirtingApp.Persistent.Registrars
 		{
 			AddMongoClassConfiguration();
 			services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
+
 			return services;
 		}
 

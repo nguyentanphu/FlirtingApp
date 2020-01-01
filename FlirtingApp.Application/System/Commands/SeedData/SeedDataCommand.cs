@@ -23,18 +23,20 @@ namespace FlirtingApp.Application.System.Commands.SeedData
 		private readonly IAppDbContext _dbContext;
 		private readonly ISecurityUserManager _securityUserManager;
 		private readonly IUserRepository _userRepo;
+		private readonly IDbRunTimeConfig _dbRunTimeConfig;
 
 		public SeedDataCommandHandler(
 			IIdentityDbContext identityDbContext, 
 			IAppDbContext dbContext,
 			ISecurityUserManager securityUserManager, 
-			IUserRepository userRepo
-			)
+			IUserRepository userRepo, 
+			IDbRunTimeConfig dbRunTimeConfig)
 		{
 			_identityDbContext = identityDbContext;
 			_dbContext = dbContext;
 			_securityUserManager = securityUserManager;
 			_userRepo = userRepo;
+			_dbRunTimeConfig = dbRunTimeConfig;
 		}
 
 		public async Task<Unit> Handle(SeedDataCommand request, CancellationToken cancellationToken)
@@ -47,6 +49,7 @@ namespace FlirtingApp.Application.System.Commands.SeedData
 				return Unit.Value;
 			}
 
+			await _dbRunTimeConfig.CreateLocationIndex();
 			var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
 			var usersJson = File.ReadAllText(Path.Combine(dir, "System/Commands/SeedData/seedUserData.json"));
@@ -54,6 +57,10 @@ namespace FlirtingApp.Application.System.Commands.SeedData
 
 			var photosJson = File.ReadAllText(Path.Combine(dir, "System/Commands/SeedData/seedPhotoData.json"));
 			var photoList = JsonConvert.DeserializeObject<List<Photo>>(photosJson);
+
+			var locationsJson = File.ReadAllText(Path.Combine(dir, "System/Commands/SeedData/seedUserCoordinate.json"));
+			locationsJson = locationsJson.Replace("\r\n\t", "");
+			var coordinateList = JsonConvert.DeserializeObject<double[][]>(locationsJson);
 
 			for (int i = 0; i < userList.Count; i++)
 			{
@@ -67,7 +74,7 @@ namespace FlirtingApp.Application.System.Commands.SeedData
 				{
 					currentUser.AddPhoto(photoList[i]);
 				}
-				currentUser.SetLocation(null);
+				currentUser.SetLocation(coordinateList[i]);
 
 			}
 
