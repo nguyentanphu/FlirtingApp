@@ -42,6 +42,16 @@ namespace FlirtingApp.Persistent.Repositories
 
 		public async Task<IReadOnlyList<User>> FindAsync(GetUsersQuery query)
 		{
+			if (query.Coordinates == null)
+			{
+				return await _mongoRepository.FindAsync(u => true);
+			}
+
+			return await FindWithGeoSpatial(query);
+		}
+
+		private async Task<IReadOnlyList<User>> FindWithGeoSpatial(GetUsersQuery query)
+		{
 			var gp = new GeoJsonPoint<GeoJson2DGeographicCoordinates>(new GeoJson2DGeographicCoordinates(query.Coordinates[0], query.Coordinates[1]));
 			var filter = Builders<User>.Filter.Near(u => u.Location, gp, query.Distance);
 			var raw = await _mongoRepository.Collection.Find(filter).ToListAsync();

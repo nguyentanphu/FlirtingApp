@@ -30,6 +30,8 @@ namespace FlirtingApp.Domain.Entities
 			Gender = gender;
 			LastActive = machineUtcNow;
 			Location = Location.UnknownLocation;
+
+			Location = Location.UnknownLocation.Clone();
 		}
 		public Guid IdentityId { get; private set; }
 
@@ -49,7 +51,7 @@ namespace FlirtingApp.Domain.Entities
 		}
 
 		// Short coming of EF core, cannot share same instance of value object, so = Location.UnknownLocation wont work
-		public Location Location { get; private set; } = Location.UnknownLocation.Clone();
+		public Location Location { get; private set; }
 
 		public void SetLocation(IReadOnlyCollection<double> coordinates)
 		{

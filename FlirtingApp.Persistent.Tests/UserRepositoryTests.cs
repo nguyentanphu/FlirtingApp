@@ -4,12 +4,14 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using FlirtingApp.Application.Users.Queries.GetUsers;
 using FlirtingApp.Domain.Common;
 using FlirtingApp.Domain.Entities;
 using FlirtingApp.Persistent.Mongo;
 using FlirtingApp.Persistent.Repositories;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 using Moq;
 using Xunit;
 
@@ -83,7 +85,7 @@ namespace FlirtingApp.Persistent.Tests
 		}
 
 		[Fact]
-		public async Task FindAsync_WithPredicate_Success()
+		public async Task FindAsync_WithEmptyPredicate_ReturnAll()
 		{
 			IReadOnlyList<User> users = new []
 			{
@@ -108,13 +110,29 @@ namespace FlirtingApp.Persistent.Tests
 					DateTime.UtcNow
 				),
 			};
+			//var innerMock = new Mock<IMongoCollection<User>>();
+			//_mongoRepository.Setup(m => m.Collection)
+			//	.Returns(innerMock.Object);
 			_mongoRepository.Setup(m => m.FindAsync(It.IsAny<Expression<Func<User, bool>>>()))
 				.Returns(Task.FromResult(users));
 
-			//var result = await _sut.FindAsync(u => u.FirstName == "nhu");
+			var result = await _sut.FindAsync(new GetUsersQuery());
 
-			//result.Should().HaveCount(2);
+			result.Should().HaveCount(2);
 		}
+
+		// Could not mock yet
+		//[Fact]
+		//public async Task FindAsync_WithCoordinatePredicate()
+		//{
+		//	var innerMock = new Mock<IMongoCollection<User>>();
+		//	_mongoRepository.Setup(m => m.Collection)
+		//		.Returns(innerMock.Object);
+
+		//	var result = await _sut.FindAsync(new GetUsersQuery {Coordinates = new []{1d, 2d}});
+
+		//	innerMock.Verify(m => m.Find(It.IsAny<FilterDefinition<User>>(), null), Times.Once);
+		//}
 
 		[Fact]
 		public async Task AddAsyncSuccess()
