@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using FlirtingApp.Domain.Common;
 
 namespace FlirtingApp.Infrastructure.Identity.Models
 {
-	public class RefreshToken: IIdentifiable
+	public class RefreshToken: ValueObject<RefreshToken>
 	{
-		internal RefreshToken()
+		private RefreshToken()
 		{
 
 		}
@@ -20,12 +21,15 @@ namespace FlirtingApp.Infrastructure.Identity.Models
 			Expires = expires;
 		}
 
-		public Guid Id { get; set; }
-		public string Token { get; set; }
-		public DateTime Expires { get; set; }
-		public Guid SecurityUserId { get; set; }
-		public SecurityUser SecurityUser { get; set; }
+		public string Token { get; private set; }
+		public DateTime Expires { get; private set; }
 		public bool Active => DateTime.UtcNow <= Expires;
-		public string RemoteIpAddress { get; set; }
+		public string RemoteIpAddress { get; private set; }
+		protected override IEnumerable<object> GetAtomicValues()
+		{
+			yield return Token;
+			yield return RemoteIpAddress;
+			yield return Expires;
+		}
 	}
 }

@@ -10,6 +10,6 @@ namespace FlirtingApp.Application.Common.Interfaces.Databases
 		Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken());
 		Task MigrateAsync(CancellationToken cancellationToken = default);
 		Task EnsureDeletedAsync(CancellationToken cancellationToken = default);
-		void Update<TEntity>(TEntity model) where TEntity : IIdentifiable;
+		void Update<TEntity>(TEntity model) where TEntity : Entity;
 	}
 }

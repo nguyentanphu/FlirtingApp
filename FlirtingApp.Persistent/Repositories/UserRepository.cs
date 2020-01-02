@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using FlirtingApp.Application.Common.Interfaces.Databases;
+using FlirtingApp.Application.Users.Queries.GetUsers;
 using FlirtingApp.Domain.Entities;
 using FlirtingApp.Persistent.Mongo;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Bson.Serialization;
+using MongoDB.Driver;
+using MongoDB.Driver.GeoJsonObjectModel;
 
 namespace FlirtingApp.Persistent.Repositories
 {
@@ -35,9 +40,22 @@ namespace FlirtingApp.Persistent.Repositories
 			return _mongoRepository.AnyAsync(predicate);
 		}
 
-		public Task<IEnumerable<User>> FindAsync(Expression<Func<User, bool>> predicate)
+		public async Task<IReadOnlyList<User>> FindAsync(GetUsersQuery query)
 		{
-			return _mongoRepository.FindAsync(predicate);
+			if (query.Coordinates == null)
+			{
+				return await _mongoRepository.FindAsync(u => true);
+			}
+
+			return await FindWithGeoSpatial(query);
+		}
+
+		private async Task<IReadOnlyList<User>> FindWithGeoSpatial(GetUsersQuery query)
+		{
+			var gp = new GeoJsonPoint<GeoJson2DGeographicCoordinates>(new GeoJson2DGeographicCoordinates(query.Coordinates[0], query.Coordinates[1]));
+			var filter = Builders<User>.Filter.Near(u => u.Location, gp, query.Distance);
+			var raw = await _mongoRepository.Collection.Find(filter).ToListAsync();
+			return raw.Where(u => u.Id != query.UserId).ToArray();
 		}
 
 		public async Task AddAsync(User user)

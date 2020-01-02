@@ -2,33 +2,88 @@
 using System.Collections.Generic;
 using System.Linq;
 using FlirtingApp.Domain.Common;
+using FlirtingApp.Domain.ValueObjects;
 
 namespace FlirtingApp.Domain.Entities
 {
-	public class User: AuditableEntity, IIdentifiable
+	public class User: AuditableEntity
 	{
-		public Guid Id { get; set; }
-		public Guid IdentityId { get; set; }
+		private User() { }
 
-		public string UserName { get; set; }
-		public string Email { get; set; }
-		public string FirstName { get; set; }
-		public string LastName { get; set; }
+		public User(
+			Guid securityUserId,
+			string userName,
+			string firstName,
+			string lastName,
+			string email,
+			DateTime dateOfBirth,
+			Gender gender,
+			DateTime machineUtcNow
+			)
+		{
+			IdentityId = securityUserId;
+			UserName = userName;
+			FirstName = firstName;
+			LastName = lastName;
+			Email = email;
+			DateOfBirth = dateOfBirth;
+			Gender = gender;
+			LastActive = machineUtcNow;
+			Location = Location.UnknownLocation;
 
-		public Gender Gender { get; set; }
+			Location = Location.UnknownLocation.Clone();
+		}
+		public Guid IdentityId { get; private set; }
 
-		public DateTime DateOfBirth { get; set; }
-		public string KnownAs { get; set; }
-		public DateTime LastActive { get; set; }
-		public string Introduction { get; set; }
-		public string LookingFor { get; set; }
-		public string Interests { get; set; }
-		public string City { get; set; }
-		public string Country { get; set; }
+		public string UserName { get; private set; }
+		public string Email { get; private set; }
+		public string FirstName { get; private set; }
+		public string LastName { get; private set; }
 
-		private HashSet<Photo> _photos = new HashSet<Photo>();
-		public IEnumerable<Photo> Photos => _photos.ToList();
+		public Gender Gender { get; private set; }
 
+		public DateTime DateOfBirth { get; private set; }
+		public DateTime LastActive { get; private set; }
+
+		public void UpdateLastActive(DateTime machineUtcNow)
+		{
+			LastActive = machineUtcNow;
+		}
+
+		// Short coming of EF core, cannot share same instance of value object, so = Location.UnknownLocation wont work
+		public Location Location { get; private set; }
+
+		public void SetLocation(IReadOnlyCollection<double> coordinates)
+		{
+			Location = coordinates == null ? Location.UnknownLocation.Clone() : new Location(coordinates.ToArray());
+		}
+		public string KnownAs { get; private set; }
+		
+		public string Introduction { get; private set; }
+		public string LookingFor { get; private set; }
+		public string Interests { get; private set; }
+		public string City { get; private set; }
+		public string Country { get; private set; }
+
+		private ICollection<Photo> _photos = new List<Photo>();
+		public IEnumerable<Photo> Photos => _photos.ToArray();
+
+		public void UpdateUserAdditionalInfo(
+			string knownAs,
+			string introduction,
+			string lookingFor,
+			string interests,
+			string city,
+			string country
+			)
+		{
+			KnownAs = knownAs;
+			Introduction = introduction;
+			LookingFor = lookingFor;
+			Interests = interests;
+			City = city;
+			Country = country;
+		}
 
 		public Photo GetPhoto(Guid photoId)
 		{
@@ -44,7 +99,7 @@ namespace FlirtingApp.Domain.Entities
 		{
 			if (!Photos.Any())
 			{
-				photo.IsMain = true;
+				photo.SetMain();
 			}
 
 			_photos.Add(photo);

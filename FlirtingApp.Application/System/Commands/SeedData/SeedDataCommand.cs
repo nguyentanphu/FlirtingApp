@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using FlirtingApp.Application.Common.Interfaces;
 using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Domain.Entities;
 using MediatR;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace FlirtingApp.Application.System.Commands.SeedData
 {
@@ -24,18 +23,20 @@ namespace FlirtingApp.Application.System.Commands.SeedData
 		private readonly IAppDbContext _dbContext;
 		private readonly ISecurityUserManager _securityUserManager;
 		private readonly IUserRepository _userRepo;
+		private readonly IDbRunTimeConfig _dbRunTimeConfig;
 
 		public SeedDataCommandHandler(
 			IIdentityDbContext identityDbContext, 
 			IAppDbContext dbContext,
 			ISecurityUserManager securityUserManager, 
-			IUserRepository userRepo
-			)
+			IUserRepository userRepo, 
+			IDbRunTimeConfig dbRunTimeConfig)
 		{
 			_identityDbContext = identityDbContext;
 			_dbContext = dbContext;
 			_securityUserManager = securityUserManager;
 			_userRepo = userRepo;
+			_dbRunTimeConfig = dbRunTimeConfig;
 		}
 
 		public async Task<Unit> Handle(SeedDataCommand request, CancellationToken cancellationToken)
@@ -48,26 +49,32 @@ namespace FlirtingApp.Application.System.Commands.SeedData
 				return Unit.Value;
 			}
 
+			await _dbRunTimeConfig.CreateLocationIndex();
 			var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			var jsonSerializeSettings = new JsonSerializerOptions
-			{
-				PropertyNameCaseInsensitive = true
-			};
+
 			var usersJson = File.ReadAllText(Path.Combine(dir, "System/Commands/SeedData/seedUserData.json"));
-			var userList = JsonSerializer.Deserialize<List<User>>(usersJson, jsonSerializeSettings);
+			var userList = JsonConvert.DeserializeObject<List<User>>(usersJson);
 
 			var photosJson = File.ReadAllText(Path.Combine(dir, "System/Commands/SeedData/seedPhotoData.json"));
-			var photoList = JsonSerializer.Deserialize<List<Photo>>(photosJson, jsonSerializeSettings);
+			var photoList = JsonConvert.DeserializeObject<List<Photo>>(photosJson);
+
+			var locationsJson = File.ReadAllText(Path.Combine(dir, "System/Commands/SeedData/seedUserCoordinate.json"));
+			locationsJson = locationsJson.Replace("\r\n\t", "");
+			var coordinateList = JsonConvert.DeserializeObject<double[][]>(locationsJson);
 
 			for (int i = 0; i < userList.Count; i++)
 			{
 				var currentUser = userList[i];
 				var securityUserId = await _securityUserManager.CreateUserAsync(currentUser.UserName, "password");
-				currentUser.IdentityId = securityUserId;
+
+				var property = typeof(User).GetProperty(nameof(User.IdentityId));
+				property.GetSetMethod(true).Invoke(currentUser, new object[] { securityUserId });
+
 				if (photoList.ElementAtOrDefault(i) != null)
 				{
 					currentUser.AddPhoto(photoList[i]);
 				}
+				currentUser.SetLocation(coordinateList[i]);
 
 			}
 

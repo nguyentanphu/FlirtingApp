@@ -4,11 +4,14 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using FlirtingApp.Application.Users.Queries.GetUsers;
+using FlirtingApp.Domain.Common;
 using FlirtingApp.Domain.Entities;
 using FlirtingApp.Persistent.Mongo;
 using FlirtingApp.Persistent.Repositories;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 using Moq;
 using Xunit;
 
@@ -31,13 +34,17 @@ namespace FlirtingApp.Persistent.Tests
 		public async Task GetAsync_WithId_Success()
 		{
 			var id = Guid.NewGuid();
-			var user = new User
-			{
-				Id = Guid.NewGuid(),
-				IdentityId = Guid.NewGuid(),
-				UserName = "phunguyen"
-			};
-			_mongoRepository.Setup(m => m.GetAsync(id))
+			var user = new User(
+				Guid.NewGuid(),
+				"phunguyenId",
+				"phu",
+				"nguyen",
+				"nguyentanphu@hotmail.com",
+				new DateTime(1992, 5, 18),
+				Gender.Male,
+				DateTime.UtcNow
+			);
+			_mongoRepository.Setup(m => m.GetAsync(It.IsAny<Guid>()))
 				.Returns(Task.FromResult(user));
 
 			var result = await _sut.GetAsync(id);
@@ -47,17 +54,20 @@ namespace FlirtingApp.Persistent.Tests
 		[Fact]
 		public async Task GetAsync_WithPredicate_Success()
 		{
-			var id = Guid.NewGuid();
-			var user = new User
-			{
-				Id = Guid.NewGuid(),
-				IdentityId = Guid.NewGuid(),
-				UserName = "phunguyen"
-			};
+			var user = new User(
+				Guid.NewGuid(),
+				"withpredicate",
+				"phu",
+				"nguyen",
+				"nguyentanphu@hotmail.com",
+				new DateTime(1992, 5, 18),
+				Gender.Male,
+				DateTime.UtcNow
+			);
 			_mongoRepository.Setup(m => m.GetAsync(It.IsAny<Expression<Func<User, bool>>>()))
 				.Returns(Task.FromResult(user));
 
-			var result = await _sut.GetAsync(u => u.Id == id);
+			var result = await _sut.GetAsync(u => u.UserName == "withpredicate");
 
 			result.Should().Be(user);
 		}
@@ -75,68 +85,102 @@ namespace FlirtingApp.Persistent.Tests
 		}
 
 		[Fact]
-		public async Task FindAsync_WithPredicate_Success()
+		public async Task FindAsync_WithEmptyPredicate_ReturnAll()
 		{
-			var users = new []
+			IReadOnlyList<User> users = new []
 			{
-				new User
-				{
-					Id = Guid.NewGuid(),
-					IdentityId = Guid.NewGuid(),
-					UserName = "phunguyen",
-					LastName = "Nguyen"
-				},
-				new User
-				{
-					Id = Guid.NewGuid(),
-					IdentityId = Guid.NewGuid(),
-					UserName = "nhunguyen",
-					LastName = "Nguyen"
-				}
+				new User(
+				Guid.NewGuid(),
+				"nhuhuynh",
+				"nhu",
+				"huynh",
+				"nhuhuynh@hotmail.com",
+				new DateTime(1992, 5, 18),
+				Gender.Male,
+				DateTime.UtcNow
+				),
+				new User(
+					Guid.NewGuid(),
+					"phunguyen",
+					"nhu",
+					"nguyen",
+					"nguyentanphu@hotmail.com",
+					new DateTime(1992, 5, 18),
+					Gender.Male,
+					DateTime.UtcNow
+				),
 			};
+			//var innerMock = new Mock<IMongoCollection<User>>();
+			//_mongoRepository.Setup(m => m.Collection)
+			//	.Returns(innerMock.Object);
 			_mongoRepository.Setup(m => m.FindAsync(It.IsAny<Expression<Func<User, bool>>>()))
-				.Returns(Task.FromResult(users.AsEnumerable()));
+				.Returns(Task.FromResult(users));
 
-			var result = await _sut.FindAsync(u => u.LastName == "Nguyen");
+			var result = await _sut.FindAsync(new GetUsersQuery());
 
 			result.Should().HaveCount(2);
 		}
 
+		// Could not mock yet
+		//[Fact]
+		//public async Task FindAsync_WithCoordinatePredicate()
+		//{
+		//	var innerMock = new Mock<IMongoCollection<User>>();
+		//	_mongoRepository.Setup(m => m.Collection)
+		//		.Returns(innerMock.Object);
+
+		//	var result = await _sut.FindAsync(new GetUsersQuery {Coordinates = new []{1d, 2d}});
+
+		//	innerMock.Verify(m => m.Find(It.IsAny<FilterDefinition<User>>(), null), Times.Once);
+		//}
+
 		[Fact]
 		public async Task AddAsyncSuccess()
 		{
-			var user = new User
-			{
-				Id = Guid.NewGuid(),
-				IdentityId = Guid.NewGuid(),
-				UserName = "phunguyen1"
-			};
+			var user = new User(
+				Guid.NewGuid(),
+				"nhuhuynh1",
+				"nhu",
+				"huynh",
+				"nhuhuynh@hotmail.com",
+				new DateTime(1992, 5, 18),
+				Gender.Male,
+				DateTime.UtcNow
+			);
 			_mongoRepository.Setup(m => m.AddAsync(user))
 				.Returns(Task.CompletedTask);
 
 			await _sut.AddAsync(user);
 
 			_mongoRepository.Verify(m => m.AddAsync(user), Times.Once);
-			_context.Users.Any(u => u.UserName == "phunguyen1").Should().BeTrue();
+			_context.Users.Any(u => u.UserName == "nhuhuynh1").Should().BeTrue();
 		}
 
 		[Fact]
 		public async Task AddRangeAsyncSuccess()
 		{
-			var users = new []
+			var users = new[]
 			{
-				new User
-				{
-					Id = Guid.NewGuid(),
-					IdentityId = Guid.NewGuid(),
-					UserName = "phunguyen2"
-				},
-				new User
-				{
-					Id = Guid.NewGuid(),
-					IdentityId = Guid.NewGuid(),
-					UserName = "nhuhuynh2"
-				}
+				new User(
+					Guid.NewGuid(),
+					"nhuhuynh2",
+					"nhu",
+					"huynh",
+					"nhuhuynh@hotmail.com",
+					new DateTime(1992, 5, 18),
+					Gender.Male,
+					DateTime.UtcNow
+				),
+				new User(
+					Guid.NewGuid(),
+					"phunguyen2",
+					"nhu",
+					"nguyen",
+					"nguyentanphu@hotmail.com",
+					new DateTime(1992, 5, 18),
+					Gender.Male,
+					DateTime.UtcNow
+				),
 			};
 			_mongoRepository.Setup(m => m.AddRangeAsync(users))
 				.Returns(Task.CompletedTask);
@@ -151,22 +195,22 @@ namespace FlirtingApp.Persistent.Tests
 		[Fact]
 		public async Task UpdateAsyncSuccess()
 		{
-			var id = Guid.Parse("b59d73a3-5664-400d-a5b2-a480de818919");
-			var updateUser = new User
-			{
-				Id = id,
-				IdentityId = Guid.NewGuid(),
-				UserName = "phunguyen4"
-			};
-			_mongoRepository.Setup(m => m.UpdateAsync(updateUser))
+			var existingUser = await _context.Users.FirstAsync(u => u.UserName == "nguyenvanA");
+			existingUser.UpdateUserAdditionalInfo(
+				"updatedKnownas", 
+				"I'm sexy and I know it", 
+				"everyone with love", 
+				"mysself", 
+				"Ho chi minh",
+				"Vietname");
+
+			_mongoRepository.Setup(m => m.UpdateAsync(existingUser))
 				.Returns(Task.CompletedTask);
-			var localUser = _context.Users.Local.First(u => u.Id == id);
-			_context.Entry(localUser).State = EntityState.Detached;
 
-			await _sut.UpdateAsync(updateUser);
+			await _sut.UpdateAsync(existingUser);
 
-			_mongoRepository.Verify(m => m.UpdateAsync(updateUser), Times.Once());
-			_context.Users.Any(u => u.UserName == "phunguyen4").Should().BeTrue();
+			_mongoRepository.Verify(m => m.UpdateAsync(existingUser), Times.Once());
+			_context.Users.Any(u => u.KnownAs == "updatedKnownas").Should().BeTrue();
 		}
 	}
 }
