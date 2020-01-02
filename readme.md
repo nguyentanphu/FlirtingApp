@@ -15,6 +15,7 @@
 
 - CQRS with Mediator: Commands will write to both SQL Server and MongoDb, Queries will read from MongoDb for optimized performance.
 - 2 DbContext: 1 for Application entities, 1 for IdentityDbContext.
+- Location searching for users and find users based on X distances using mongodb geospatial
 - Jwt Authentication with refresh token.
 - Heavily unit tested with separates test projects.
 - Simple, focus on intention of the code.
@@ -33,7 +34,6 @@
 
 ## Work in progress
 
-- Add locations/addresses for users and find users based on X distances using mongodb geospatial
 - Integration searching and logging with Elastic search.
 - Real-time private chat and group chat with SignalR 3 and Apache Hbase
 - Dockerizing the app.
