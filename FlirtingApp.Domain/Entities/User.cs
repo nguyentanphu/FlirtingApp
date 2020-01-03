@@ -8,7 +8,7 @@ namespace FlirtingApp.Domain.Entities
 {
 	public class User: AuditableEntity
 	{
-		private User() { }
+		protected User() { }
 
 		public User(
 			Guid securityUserId,

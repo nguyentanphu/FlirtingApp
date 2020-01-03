@@ -110,9 +110,7 @@ namespace FlirtingApp.Persistent.Tests
 					DateTime.UtcNow
 				),
 			};
-			//var innerMock = new Mock<IMongoCollection<User>>();
-			//_mongoRepository.Setup(m => m.Collection)
-			//	.Returns(innerMock.Object);
+
 			_mongoRepository.Setup(m => m.FindAsync(It.IsAny<Expression<Func<User, bool>>>()))
 				.Returns(Task.FromResult(users));
 
@@ -123,7 +121,7 @@ namespace FlirtingApp.Persistent.Tests
 
 		// Could not mock yet
 		//[Fact]
-		//public async Task FindAsync_WithCoordinatePredicate()
+		//public async Task FindWithGeoSpatial_Success()
 		//{
 		//	var innerMock = new Mock<IMongoCollection<User>>();
 		//	_mongoRepository.Setup(m => m.Collection)

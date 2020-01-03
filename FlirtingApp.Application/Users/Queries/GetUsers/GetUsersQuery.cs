@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using FlirtingApp.Application.Common.Interfaces.Databases;
+using FlirtingApp.Domain.Common;
 using MediatR;
 
 namespace FlirtingApp.Application.Users.Queries.GetUsers
@@ -15,6 +16,7 @@ namespace FlirtingApp.Application.Users.Queries.GetUsers
 		public Guid UserId { get; set; }
 		public double[] Coordinates { get; set; }
 		public double Distance { get; set; }
+		public Gender? Gender { get; set; }
 	}
 
 	public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, IEnumerable<UserOverviewDto>>
@@ -30,7 +32,15 @@ namespace FlirtingApp.Application.Users.Queries.GetUsers
 
 		public async Task<IEnumerable<UserOverviewDto>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
 		{
-			var users = await _userRepository.FindAsync(request);
+			dynamic users;
+			if (request.Coordinates == null)
+			{
+				users = await _userRepository.FindAsync(request);
+			}
+			else
+			{
+				users = await _userRepository.FindWithGeoSpatial(request);
+			}
 
 			return _mapper.Map<IEnumerable<UserOverviewDto>>(users);
 		}
