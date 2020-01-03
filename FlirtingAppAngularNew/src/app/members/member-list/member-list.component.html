@@ -1,3 +1,20 @@
+<div class="container">
+  <form fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5rem" [formGroup]="filterFormGroup"
+    (ngSubmit)="submitFilter()">
+    <mat-slider formControlName="distance" thumbLabel [displayWith]="formatLabel" tickInterval="1000" min="1000"
+      max="50000" [disabled]="!geolocationAllowed"></mat-slider>
+    <mat-form-field>
+      <mat-label>Gender</mat-label>
+      <mat-select formControlName="gender">
+        <mat-option>All</mat-option>
+        <mat-option *ngFor="let gender of genderOptions" [value]="gender.id">
+          {{gender.value}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" class="btn btn-success" type="submit">Find</button>
+  </form>
+</div>
 <div class="container" fxLayout="row wrap" fxLayoutGap="2rem">
   <app-member-card *ngFor="let user of users" [user]="user"></app-member-card>
 </div>

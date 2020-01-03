@@ -17,5 +17,5 @@
   <p class="text-center">
     <mat-icon>face</mat-icon> {{user.userName}}, {{user.age}}
   </p>
-  <p class="text-center">{{ user.distance | number: '3.0-2' }} meters away</p>
+  <p *ngIf="user.distance" class="text-center">{{ user.distance | number: '3.0-2' }} meters away</p>
 </mat-card>

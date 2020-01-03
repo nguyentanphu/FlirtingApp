@@ -19,8 +19,17 @@ export class UserService {
   }
 
   getUsersOverview(filter: IMemberListFilter) {
-    return this.http.get<IUserOverview[]>
-    (APIURL.users.get + `?distance=${filter.distance}&coordinates=${filter.coordinates[0]}&coordinates=${filter.coordinates[1]}`)
+    const params = new URLSearchParams();
+    params.append('distance', filter.distance.toString());
+    if (filter.gender) {
+      params.append('gender', filter.gender.toString());
+    }
+    if (filter.coordinates) {
+      params.append('coordinates', filter.coordinates[0].toString());
+      params.append('coordinates', filter.coordinates[1].toString());
+    }
+    return this.http
+      .get<IUserOverview[]>(APIURL.users.get + `?${params.toString()}`)
       .pipe(take(1));
   }
 

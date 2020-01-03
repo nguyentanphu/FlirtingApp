@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import * as MatModules from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -47,6 +47,7 @@ import { MemberCardComponent } from './members/member-card/member-card.component
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
     FlexLayoutModule,
@@ -63,7 +64,8 @@ import { MemberCardComponent } from './members/member-card/member-card.component
     MatModules.MatCardModule,
     MatModules.MatDatepickerModule,
     MatNativeDateModule,
-    MatModules.MatTabsModule
+    MatModules.MatTabsModule,
+    MatModules.MatSliderModule
   ],
   providers: [
     ...interceptorProviders,
