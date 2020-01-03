@@ -1,5 +1,5 @@
 export interface IPhotoDto {
-  photoId: string;
+  id: string;
   url: string;
   description: string;
   dateAdded: Date;

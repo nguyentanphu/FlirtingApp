@@ -7,6 +7,7 @@ import { IUserDetail } from '../_models/users/user-detail';
 import { IUserAdditionalModel } from '../_models/users/user-additional-model';
 import { IUserOverview } from '../_models/users/user-overview';
 import { pipe } from 'rxjs';
+import { IMemberListFilter } from '../_models/users/member-list-filter';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,9 @@ export class UserService {
     return this.http.post(APIURL.users.create, signUpModel).pipe(take(1));
   }
 
-  getUsersOverview() {
-    return this.http.get<IUserOverview[]>(APIURL.users.get)
+  getUsersOverview(filter: IMemberListFilter) {
+    return this.http.get<IUserOverview[]>
+    (APIURL.users.get + `?distance=${filter.distance}&coordinates=${filter.coordinates[0]}&coordinates=${filter.coordinates[1]}`)
       .pipe(take(1));
   }
 

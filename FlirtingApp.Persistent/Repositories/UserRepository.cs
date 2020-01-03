@@ -44,7 +44,7 @@ namespace FlirtingApp.Persistent.Repositories
 
 		public Task<IReadOnlyList<User>> FindAsync(GetUsersQuery query)
 		{
-			return _mongoRepository.FindAsync(u => !query.Gender.HasValue || u.Gender == query.Gender);
+			return _mongoRepository.FindAsync(u => query.Gender == null || u.Gender == query.Gender);
 		}
 
 		public async Task<IReadOnlyList<UserWithDistanceDto>> FindWithGeoSpatial(GetUsersQuery query)

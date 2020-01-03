@@ -15,7 +15,7 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 			RuleFor(u => u.LastName).NotEmpty().MinimumLength(3);
 			RuleFor(u => u.Email).NotEmpty().EmailAddress();
 			RuleFor(u => u.DateOfBirth).NotEmpty().LessThanOrEqualTo(new DateTime(2000, 1, 1));
-			RuleFor(u => u.Coordinates).Must(c => c.Length == 2).Unless(c => c == null);
+			RuleFor(u => u.Coordinates).Must(c => c.Length == 2).Unless(c => c.Coordinates == null);
 		}
 	}
 }

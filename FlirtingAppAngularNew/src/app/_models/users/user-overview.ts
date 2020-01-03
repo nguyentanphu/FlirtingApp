@@ -1,6 +1,7 @@
 export interface IUserOverview {
-  userId: string;
+  id: string;
   userName: string;
+  distance?: number;
   firstName: string;
   lastName: string;
   age: number;

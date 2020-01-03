@@ -1,7 +1,7 @@
 import { IPhotoDto } from '../photos/photo-dto';
 
 export interface IUserDetail {
-  userId: string;
+  id: string;
   userName: string;
   firstName: string;
   lastName: string;
