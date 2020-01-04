@@ -25,6 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlirtingApp.Persistent", "F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{379E5A3D-3AFD-4B53-B456-CAC556F44777}"
 	ProjectSection(SolutionItems) = preProject
+		randomuser.txt = randomuser.txt
 		readme.md = readme.md
 	EndProjectSection
 EndProject
@@ -34,9 +35,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlirtingApp.Persistent.Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlirtingApp.Infrastructure.Tests", "FlirtingApp.Infrastructure.Tests\FlirtingApp.Infrastructure.Tests.csproj", "{4B4395F8-9603-4562-8222-F94A02003602}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlirtingApp.WebApi.Tests", "FlirtingApp.WebApi.Tests\FlirtingApp.WebApi.Tests.csproj", "{FB409F0B-6717-410B-89E4-85E206D571F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlirtingApp.WebApi.Tests", "FlirtingApp.WebApi.Tests\FlirtingApp.WebApi.Tests.csproj", "{FB409F0B-6717-410B-89E4-85E206D571F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlirtingApp.Domain.Tests", "FlirtingApp.Domain.Tests\FlirtingApp.Domain.Tests.csproj", "{8E6844D7-4B91-4825-A129-98A804875491}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlirtingApp.Domain.Tests", "FlirtingApp.Domain.Tests\FlirtingApp.Domain.Tests.csproj", "{8E6844D7-4B91-4825-A129-98A804875491}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
