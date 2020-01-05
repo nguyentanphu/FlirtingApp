@@ -27,7 +27,7 @@
 - Remove usage of default ASP.NET Core validation with ModelState and move validation to Application layer as it's part of business logic.
 - Implement Presenter and IOutputPort to separate presentation logic from controllers
 
-<img src="https://imgur.com/download/xCHBqZq/"
+<img src="https://media.giphy.com/media/ejDuWiZ5JV0xaqzx7h/giphy.gif"
      alt="Mongo spatial" />
      
 - Cloudinary integration for uploading images
