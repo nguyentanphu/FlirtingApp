@@ -18,7 +18,7 @@
 - 2 DbContext: 1 for Application entities, 1 for IdentityDbContext.
 - Location searching for users and find users based on X distances using mongodb geospatial
 
-<img src="https://imgur.com/download/7Aqcj3P/"
+<img src="https://imgur.com/download/zwI5AlQ/"
      alt="Output port" />
      
 - Jwt Authentication with refresh token.
@@ -27,9 +27,9 @@
 - Remove usage of default ASP.NET Core validation with ModelState and move validation to Application layer as it's part of business logic.
 - Implement Presenter and IOutputPort to separate presentation logic from controllers
 
-<img src="https://imgur.com/download/xCHBqZq/"
-     alt="Mongo spatial" />
-     
+<img src="https://s5.gifyu.com/images/FlirtingAppAngularNew-Google-Chrome-2020-01-05-22-18-00.gif"
+     alt="Output port" />
+
 - Cloudinary integration for uploading images
 - Custom exceptions for each layers.
 - Unify exceptions errors message with ExceptionMiddleware
