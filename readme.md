@@ -17,21 +17,25 @@
 - CQRS with Mediator: Commands will write to both SQL Server and MongoDb, Queries will read from MongoDb for optimized performance.
 - 2 DbContext: 1 for Application entities, 1 for IdentityDbContext.
 - Location searching for users and find users based on X distances using mongodb geospatial
+
+<img src="https://imgur.com/download/7Aqcj3P/"
+     alt="Output port" />
+     
 - Jwt Authentication with refresh token.
 - Heavily unit tested with separates test projects.
-- Simple, focus on intention of the code.
-- Design with SOLID principals in mind.
-- Separation of concerns.
 - Validation with FluentValidation.
 - Remove usage of default ASP.NET Core validation with ModelState and move validation to Application layer as it's part of business logic.
 - Implement Presenter and IOutputPort to separate presentation logic from controllers
 
-<img src="https://imgur.com/download/zwI5AlQ/"
-     alt="Clean architecture" />
+<img src="https://imgur.com/download/xCHBqZq/"
+     alt="Mongo spatial" />
      
 - Cloudinary integration for uploading images
 - Custom exceptions for each layers.
 - Unify exceptions errors message with ExceptionMiddleware
+- Simple, focus on intention of the code.
+- Design with SOLID principals in mind.
+- Separation of concerns.
 
 ## How to run
 
