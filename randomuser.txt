@@ -1,0 +1,24 @@
+[
+  '{{repeat(5)}}',
+  {
+    Username: '{{firstName("male")}}',
+    Gender: 'male',
+    DateOfBirth: '{{date(new Date(1950,0,1), new Date(1999, 11, 31), "YYYY-MM-dd")}}',
+    Password: 'password',
+    KnownAs: function(){ return this.Username; },
+    Created: '{{date(new Date(2017,0,1), new Date(2017, 7, 31), "YYYY-MM-dd")}}',
+    LastActive: function(){return this.Created; },
+    Introduction: '{{lorem(1, "paragraphs")}}',
+    LookingFor: '{{lorem(1, "paragraphs")}}',
+    Interests: '{{lorem(1, "sentences")}}',
+    City: '{{city()}}',
+    Country: '{{country()}}'
+  }
+]
+
+next version
+[
+  {
+    'repeat(70)': ['{{floating(106.494996, 106.828004, 7)}}', '{{floating(10.725651, 10.933371, 7)}}']
+  }
+]
