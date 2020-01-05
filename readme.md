@@ -17,6 +17,10 @@
 - CQRS with Mediator: Commands will write to both SQL Server and MongoDb, Queries will read from MongoDb for optimized performance.
 - 2 DbContext: 1 for Application entities, 1 for IdentityDbContext.
 - Location searching for users and find users based on X distances using mongodb geospatial
+
+<img src="https://imgur.com/download/7Aqcj3P/"
+     alt="Output port" />
+     
 - Jwt Authentication with refresh token.
 - Heavily unit tested with separates test projects.
 - Validation with FluentValidation.
@@ -24,7 +28,7 @@
 - Implement Presenter and IOutputPort to separate presentation logic from controllers
 
 <img src="https://imgur.com/download/zwI5AlQ/"
-     alt="Clean architecture" />
+     alt="Mongo spatial" />
      
 - Cloudinary integration for uploading images
 - Custom exceptions for each layers.
