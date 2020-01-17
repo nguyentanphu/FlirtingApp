@@ -22,4 +22,7 @@
     <ProjectReference Include="..\FlirtingApp.Infrastructure\FlirtingApp.Infrastructure.csproj" />
     <ProjectReference Include="..\FlirtingApp.Persistent\FlirtingApp.Persistent.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
 </Project>

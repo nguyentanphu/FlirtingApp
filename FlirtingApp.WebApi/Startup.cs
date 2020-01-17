@@ -2,6 +2,7 @@
 using FlirtingApp.Application.Common.Interfaces;
 using FlirtingApp.Infrastructure;
 using FlirtingApp.Persistent;
+using FlirtingApp.WebApi.Controllers;
 using FlirtingApp.WebApi.HostedServices;
 using FlirtingApp.WebApi.Registrars;
 using FlirtingApp.WebApi.Services;
@@ -56,6 +57,9 @@ namespace FlirtingApp.WebApi
 
 			app.UseHttpsRedirection();
 
+			app.UseDefaultFiles();
+			app.UseStaticFiles();
+
 			app.UseSwaggerWithUI();
 
 			app.UseRouting();
@@ -72,6 +76,7 @@ namespace FlirtingApp.WebApi
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
+				endpoints.MapFallbackToController(nameof(HomeController.Index), "Home");
 			});
 		}
 	}
