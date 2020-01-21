@@ -1,0 +1,29 @@
+version: "3"
+networks: 
+  internal-network:
+
+services: 
+  flirting-app:
+    image: nguyentanphu/flirtingapp:latest
+    networks:
+      - internal-network
+    ports: 
+      - 13000:13000
+    depends_on: 
+      - mongodb
+      - sqldb
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Docker
+
+  mongodb:
+    image: mongo
+    networks: 
+      - internal-network
+
+  sqldb:
+    image: microsoft/mssql-server-linux:2017-latest
+    networks: 
+      - internal-network
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Abcd1234!

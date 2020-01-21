@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Domain.Entities;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
@@ -43,7 +44,7 @@ namespace FlirtingApp.Application.System.Commands.SeedData
 		{
 			await _identityDbContext.MigrateAsync(cancellationToken);
 			await _dbContext.MigrateAsync(cancellationToken);
-
+			
 			if (await _userRepo.AnyAsync(u => true))
 			{
 				return Unit.Value;

@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlirtingApp.WebApi", "src\FlirtingApp.WebApi\FlirtingApp.WebApi.csproj", "{CEE02B3A-BED2-41D8-8182-D870E310B6BB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4B0FB671-6706-4DED-B337-D47C49458D4C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{A15A6358-6984-4C9C-870D-A9C40FFE3E16}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{9A799E49-CF12-4349-B733-9D08AF13CEC7}"
@@ -22,22 +20,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlirtingApp.Infrastructure", "src\FlirtingApp.Infrastructure\FlirtingApp.Infrastructure.csproj", "{275ACE98-FD26-4E15-8FC6-B487E0A003AD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlirtingApp.Persistent", "src\FlirtingApp.Persistent\FlirtingApp.Persistent.csproj", "{1D1B214F-0ED0-4A2E-A799-FD8B3540A6C3}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{379E5A3D-3AFD-4B53-B456-CAC556F44777}"
-	ProjectSection(SolutionItems) = preProject
-		randomuser.txt = randomuser.txt
-		readme.md = readme.md
-	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlirtingApp.Application.Tests", "tests\FlirtingApp.Application.Tests\FlirtingApp.Application.Tests.csproj", "{834BBC3E-97EA-4900-A85D-3A48B7B4FB0F}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlirtingApp.Persistent.Tests", "tests\FlirtingApp.Persistent.Tests\FlirtingApp.Persistent.Tests.csproj", "{CA7CA597-B4F3-4912-8717-A990B716BF5C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlirtingApp.Infrastructure.Tests", "tests\FlirtingApp.Infrastructure.Tests\FlirtingApp.Infrastructure.Tests.csproj", "{4B4395F8-9603-4562-8222-F94A02003602}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlirtingApp.WebApi.Tests", "tests\FlirtingApp.WebApi.Tests\FlirtingApp.WebApi.Tests.csproj", "{FB409F0B-6717-410B-89E4-85E206D571F7}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlirtingApp.Domain.Tests", "tests\FlirtingApp.Domain.Tests\FlirtingApp.Domain.Tests.csproj", "{8E6844D7-4B91-4825-A129-98A804875491}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,26 +47,6 @@ Global
 		{1D1B214F-0ED0-4A2E-A799-FD8B3540A6C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D1B214F-0ED0-4A2E-A799-FD8B3540A6C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D1B214F-0ED0-4A2E-A799-FD8B3540A6C3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{834BBC3E-97EA-4900-A85D-3A48B7B4FB0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{834BBC3E-97EA-4900-A85D-3A48B7B4FB0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{834BBC3E-97EA-4900-A85D-3A48B7B4FB0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{834BBC3E-97EA-4900-A85D-3A48B7B4FB0F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CA7CA597-B4F3-4912-8717-A990B716BF5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CA7CA597-B4F3-4912-8717-A990B716BF5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CA7CA597-B4F3-4912-8717-A990B716BF5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CA7CA597-B4F3-4912-8717-A990B716BF5C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4B4395F8-9603-4562-8222-F94A02003602}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4B4395F8-9603-4562-8222-F94A02003602}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4B4395F8-9603-4562-8222-F94A02003602}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4B4395F8-9603-4562-8222-F94A02003602}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FB409F0B-6717-410B-89E4-85E206D571F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB409F0B-6717-410B-89E4-85E206D571F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB409F0B-6717-410B-89E4-85E206D571F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FB409F0B-6717-410B-89E4-85E206D571F7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8E6844D7-4B91-4825-A129-98A804875491}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8E6844D7-4B91-4825-A129-98A804875491}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8E6844D7-4B91-4825-A129-98A804875491}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8E6844D7-4B91-4825-A129-98A804875491}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,11 +60,6 @@ Global
 		{FA88BD6D-293A-444F-9CBB-F33F7084F014} = {9A799E49-CF12-4349-B733-9D08AF13CEC7}
 		{275ACE98-FD26-4E15-8FC6-B487E0A003AD} = {EADA736A-7CDF-404F-A229-2C2BB5545D87}
 		{1D1B214F-0ED0-4A2E-A799-FD8B3540A6C3} = {EADA736A-7CDF-404F-A229-2C2BB5545D87}
-		{834BBC3E-97EA-4900-A85D-3A48B7B4FB0F} = {4B0FB671-6706-4DED-B337-D47C49458D4C}
-		{CA7CA597-B4F3-4912-8717-A990B716BF5C} = {4B0FB671-6706-4DED-B337-D47C49458D4C}
-		{4B4395F8-9603-4562-8222-F94A02003602} = {4B0FB671-6706-4DED-B337-D47C49458D4C}
-		{FB409F0B-6717-410B-89E4-85E206D571F7} = {4B0FB671-6706-4DED-B337-D47C49458D4C}
-		{8E6844D7-4B91-4825-A129-98A804875491} = {4B0FB671-6706-4DED-B337-D47C49458D4C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4A5C32EE-6730-4F4B-9964-CE2AEE0412CD}

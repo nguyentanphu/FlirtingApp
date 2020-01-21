@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace FlirtingApp.WebApi
 {
@@ -25,6 +26,7 @@ namespace FlirtingApp.WebApi
 
 		public void ConfigureServices(IServiceCollection services)
 		{
+			
 			services.AddInfrastructure(Configuration);
 			services.AddPersistent(Configuration);
 			services.AddApplication();
