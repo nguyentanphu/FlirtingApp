@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FlirtingApp.Infrastructure.RabbitMq
 {
-	public class RabbitMQClient
+	public class RabbitMQClient : IDisposable
 	{
 		private readonly IModel _channel;
 		private readonly IConnection _connection;
@@ -16,7 +16,7 @@ namespace FlirtingApp.Infrastructure.RabbitMq
 			{
 				HostName = rabbitMQConfig.HostName,
 			};
-
+			// Rabbitmq documentation it's ok to reuse connection. Close and reopen connection doesn't actually make a difference
 			_connection = factory.CreateConnection();
 			_channel = _connection.CreateModel();
 		}
@@ -50,14 +50,18 @@ namespace FlirtingApp.Infrastructure.RabbitMq
 			var consumer = new EventingBasicConsumer(_channel);
 			consumer.Received += (ch, ea) =>
 			{
-				// received message
-				var content = System.Text.Encoding.UTF8.GetString(ea.Body);
+				var content = DecodeUTF8(ea.Body);
 				action(content);
 			};
 
 			_channel.BasicConsume(queue: queue,
 							 autoAck: true,
 							 consumer: consumer);
+		}
+
+		private string DecodeUTF8(byte[] body)
+		{
+			return System.Text.Encoding.UTF8.GetString(body);
 		}
 
 		public void Dispose()
