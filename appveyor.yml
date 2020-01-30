@@ -1,0 +1,14 @@
+version: "{build}"
+image: Visual Studio 2019
+branches:
+  only:
+    - master
+environment:
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  COVERALLS_TOKEN:
+    secure: upaL6TRUzRipqIdhkjdVEObznNUblTSdXFuD2Tziu8MfgHI0VV6TU4H0DzEAAhIP
+build_script:
+- ps: .\build.ps1 --coverallsToken=$env:COVERALLS_TOKEN
+test: off #tests handled by cake script
+deploy: off #deploy handled by cake script
