@@ -6,7 +6,6 @@ matrix:
       sudo: required
     - os: osx
       osx_image: xcode11.3
-      sudo: required
 branches:
   only:
   - master
