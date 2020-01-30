@@ -1,5 +1,6 @@
 # Initial release of clean architecture sample app
 
+## Test Coverage
 [![Coverage Status](https://coveralls.io/repos/github/nguyentanphu/FlirtingApp/badge.svg?branch=master)](https://coveralls.io/github/nguyentanphu/FlirtingApp?branch=master)
 
 ## Prerequisite software requirements
