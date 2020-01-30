@@ -45,22 +45,43 @@ Task("Build")
   });
 
 var coverageFileName = "coverage.xml";
+var testProjectsRelativePaths = new string[] {
+  "./tests/FlirtingApp.Application.Tests/FlirtingApp.Application.Tests.csproj",
+  "./tests/FlirtingApp.Domain.Tests/FlirtingApp.Domain.Tests.csproj",
+  "./tests/FlirtingApp.Infrastructure.Tests/FlirtingApp.Infrastructure.Tests.csproj",
+  "./tests/FlirtingApp.Persistent.Tests/FlirtingApp.Persistent.Tests.csproj",
+  "./tests/FlirtingApp.WebApi.Tests/FlirtingApp.WebApi.Tests.csproj"
+};
 Task("Test")
   .IsDependentOn("Build")
   .Does(() => {
-    var settings = new DotNetCoreTestSettings {
+    var testSettings = new DotNetCoreTestSettings {
       Configuration = releaseConfig,
       NoBuild = true
     };
 
+    var tempJson = artifactsDir + "temp.json";
     var coverletSettings = new CoverletSettings {
         CollectCoverage = true,
-        CoverletOutputFormat = CoverletOutputFormat.opencover,
+        CoverletOutputFormat = CoverletOutputFormat.json,
         CoverletOutputDirectory = artifactsDir,
-        CoverletOutputName = coverageFileName
+        CoverletOutputName = tempJson
     };
 
-      DotNetCoreTest(solutionPath, settings, coverletSettings);
+    DotNetCoreTest(testProjectsRelativePaths[0], testSettings, coverletSettings);
+
+    coverletSettings.MergeWithFile = tempJson;
+    for (int i = 1; i < testProjectsRelativePaths.Length; i++)
+    {
+        if (i == testProjectsRelativePaths.Length - 1)
+        {
+            coverletSettings.CoverletOutputFormat  = CoverletOutputFormat.opencover;
+            coverletSettings.CoverletOutputName = coverageFileName;
+        }
+
+        DotNetCoreTest(testProjectsRelativePaths[i], testSettings, coverletSettings);
+    }
+
       // MoveFile(@".\coverage-test\" + coverageResultsFileName, artifactsDir + coverageResultsFileName);
   });
 
@@ -68,6 +89,7 @@ Task("UploadToCoverall")
   .IsDependentOn("Test")
   .Does(() => {
     var coverallsToken = Argument<string>("coverallsToken", null);
+    
     CoverallsIo(artifactsDir + coverageFileName, new CoverallsIoSettings()
     {
         RepoToken = coverallsToken

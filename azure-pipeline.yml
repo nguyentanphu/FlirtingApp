@@ -9,9 +9,9 @@ pool:
 
 steps:
   - task: DotNetCoreInstaller@0
-  displayName: 'Use .NET Core SDK $(DOTNET_SDK_VERSION)'
-  inputs:
+    displayName: 'Use .NET Core SDK $(DOTNET_SDK_VERSION)'
+    inputs:
       version: '$(DOTNET_SDK_VERSION)'
 
   - powershell: ./build.ps1 --target=BuildAndTest
-  displayName: 'Execute Cake PowerShell Bootstrapper'
+    displayName: 'Execute Cake PowerShell Bootstrapper'
