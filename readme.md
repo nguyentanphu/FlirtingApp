@@ -1,5 +1,12 @@
 # Initial release of clean architecture sample app
 
+## CI builds
+| CI server | Platform | Status |
+|---|---|---|
+| App veyor  | Windows (VS 2019) | [![Build status](https://ci.appveyor.com/api/projects/status/uymal0r9typqrb24?svg=true)](https://ci.appveyor.com/project/nguyentanphu/flirtingapp) |
+| Travis | Linux, MacOS  | [![Build Status](https://travis-ci.org/nguyentanphu/FlirtingApp.svg?branch=master)](https://travis-ci.org/nguyentanphu/FlirtingApp) |
+|   |   |   |
+
 ## Test Coverage
 [![Coverage Status](https://coveralls.io/repos/github/nguyentanphu/FlirtingApp/badge.svg?branch=master)](https://coveralls.io/github/nguyentanphu/FlirtingApp?branch=master)
 
