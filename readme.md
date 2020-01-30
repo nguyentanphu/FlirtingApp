@@ -1,5 +1,7 @@
 # Initial release of clean architecture sample app
 
+[![Coverage Status](https://coveralls.io/repos/github/nguyentanphu/FlirtingApp/badge.svg?branch=master)](https://coveralls.io/github/nguyentanphu/FlirtingApp?branch=master)
+
 ## Prerequisite software requirements
 
 - Visual Studio 2019 or other IDE that supports dotnet core 3.1.
