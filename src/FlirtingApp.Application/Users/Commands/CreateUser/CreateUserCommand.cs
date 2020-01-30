@@ -1,18 +1,16 @@
-﻿using FlirtingApp.Application.Common;
-using FlirtingApp.Application.Common.Interfaces.Bus;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using FlirtingApp.Application.Common;
 using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Application.Common.Interfaces.System;
 using FlirtingApp.Domain.Common;
 using FlirtingApp.Domain.Entities;
 using MediatR;
-using Newtonsoft.Json;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace FlirtingApp.Application.Users.Commands.CreateUser
 {
-	public class CreateUserCommand : RequestBase<CreateUserCommandResponse>
+	public class CreateUserCommand: RequestBase<CreateUserCommandResponse>
 	{
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
@@ -34,18 +32,12 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 		private readonly ISecurityUserManager _userManager;
 		private readonly IUserRepository _userRepository;
 		private readonly IMachineDateTime _dateTime;
-		private readonly IBus _bus;
 
-		public CreateUserCommandHandler(
-			ISecurityUserManager userManager,
-			IUserRepository userRepository,
-			IMachineDateTime dateTime,
-			IBus bus)
+		public CreateUserCommandHandler(ISecurityUserManager userManager, IUserRepository userRepository, IMachineDateTime dateTime)
 		{
 			_userManager = userManager;
 			_userRepository = userRepository;
 			_dateTime = dateTime;
-			_bus = bus;
 		}
 
 		public async Task<Unit> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -85,10 +77,6 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 			newUser.SetLocation(request.Coordinates);
 
 			await _userRepository.AddAsync(newUser);
-
-			_bus.Publish(new MongoAddUserMessage(
-					body: JsonConvert.SerializeObject(newUser)
-			));
 
 			request.OutputPort.Handle(new CreateUserCommandResponse
 			{
