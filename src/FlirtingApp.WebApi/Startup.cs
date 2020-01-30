@@ -1,10 +1,6 @@
 ﻿using FlirtingApp.Application;
 using FlirtingApp.Application.Common.Interfaces;
-using FlirtingApp.Application.Common.Interfaces.Bus;
-using FlirtingApp.Application.Utils;
 using FlirtingApp.Infrastructure;
-using FlirtingApp.Infrastructure.MongoMessageBroker;
-using FlirtingApp.Infrastructure.RabbitMq;
 using FlirtingApp.Persistent;
 using FlirtingApp.WebApi.Controllers;
 using FlirtingApp.WebApi.HostedServices;
@@ -16,7 +12,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MongoMessageBroker;
+using Microsoft.Extensions.Logging;
 
 namespace FlirtingApp.WebApi
 {
@@ -31,16 +27,12 @@ namespace FlirtingApp.WebApi
 
 		public void ConfigureServices(IServiceCollection services)
 		{
+			
 			services.AddInfrastructure(Configuration);
 			services.AddPersistent(Configuration);
 			services.AddApplication();
 			services.AddHttpContextAccessor();
 			services.AddScoped<ICurrentUser, CurrentUserService>();
-
-			var config = Configuration.GetOptions<RabbitMQConfig>(nameof(RabbitMQConfig));
-			services.AddSingleton(sp => new RabbitMQClient(config));
-			services.AddScoped<IBus, MongoMessagePublisher>();
-			services.AddHostedService<MongoAddUserMessageConsumer>();
 
 			// For run migration on app start and seed users and photos data
 			services.AddHostedService<MigrationHostedService>();
@@ -52,6 +44,7 @@ namespace FlirtingApp.WebApi
 			services.AddSwaggerWithBearerToken();
 
 			services.AddPresenters();
+
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

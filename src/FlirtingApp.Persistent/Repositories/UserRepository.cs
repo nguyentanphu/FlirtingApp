@@ -1,20 +1,23 @@
-﻿using FlirtingApp.Application.Common.Dtos;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
+using FlirtingApp.Application.Common.Dtos;
 using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Application.Users.Queries.GetUsers;
 using FlirtingApp.Domain.Entities;
 using FlirtingApp.Persistent.Mongo;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
+using MongoDB.Driver.GeoJsonObjectModel;
 
 namespace FlirtingApp.Persistent.Repositories
 {
-	internal class UserRepository : IUserRepository
+	class UserRepository: IUserRepository
 	{
 		private readonly AppDbContext _sql;
 		private readonly IMongoRepository<User> _mongoRepository;
@@ -24,7 +27,6 @@ namespace FlirtingApp.Persistent.Repositories
 			_sql = sql;
 			_mongoRepository = mongoRepository;
 		}
-
 		public Task<User> GetAsync(Guid id)
 		{
 			return _mongoRepository.GetAsync(id);
@@ -59,7 +61,7 @@ namespace FlirtingApp.Persistent.Repositories
 			var queryCriteria = new BsonDocument();
 			if (query.Gender.HasValue)
 			{
-				queryCriteria.AddRange(new BsonDocument { { "gender", query.Gender } });
+				queryCriteria.AddRange(new BsonDocument { {"gender", query.Gender} });
 			}
 			var geoNearOptions = new BsonDocument
 			{
@@ -88,6 +90,7 @@ namespace FlirtingApp.Persistent.Repositories
 		{
 			_sql.Users.Add(user);
 			await _sql.SaveChangesAsync();
+			await _mongoRepository.AddAsync(user);
 		}
 
 		public async Task AddRangeAsync(IEnumerable<User> users)
@@ -103,5 +106,6 @@ namespace FlirtingApp.Persistent.Repositories
 			await _sql.SaveChangesAsync();
 			await _mongoRepository.UpdateAsync(user);
 		}
+
 	}
 }
