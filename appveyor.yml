@@ -9,6 +9,6 @@ environment:
   COVERALLS_TOKEN:
     secure: upaL6TRUzRipqIdhkjdVEObznNUblTSdXFuD2Tziu8MfgHI0VV6TU4H0DzEAAhIP
 build_script:
-- ps: .\build.ps1 --coverallsToken=$env:COVERALLS_TOKEN
+- ps: .\build.ps1 --currentBranch=$env:APPVEYOR_REPO_BRANCH --coverallsToken=$env:COVERALLS_TOKEN
 test: off #tests handled by cake script
 deploy: off #deploy handled by cake script
