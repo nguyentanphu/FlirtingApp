@@ -46,11 +46,11 @@ Task("Build")
 
 var coverageFileName = "coverage.xml";
 var testProjectsRelativePaths = new string[] {
-  "./tests/FlirtingApp.Application.Tests/FlirtingApp.Application.Tests.csproj",
   "./tests/FlirtingApp.Domain.Tests/FlirtingApp.Domain.Tests.csproj",
+  "./tests/FlirtingApp.WebApi.Tests/FlirtingApp.WebApi.Tests.csproj",
   "./tests/FlirtingApp.Infrastructure.Tests/FlirtingApp.Infrastructure.Tests.csproj",
   "./tests/FlirtingApp.Persistent.Tests/FlirtingApp.Persistent.Tests.csproj",
-  "./tests/FlirtingApp.WebApi.Tests/FlirtingApp.WebApi.Tests.csproj"
+  "./tests/FlirtingApp.Application.Tests/FlirtingApp.Application.Tests.csproj"
 };
 Task("Test")
   .IsDependentOn("Build")
@@ -65,7 +65,7 @@ Task("Test")
         CollectCoverage = true,
         CoverletOutputFormat = CoverletOutputFormat.json,
         CoverletOutputDirectory = artifactsDir,
-        CoverletOutputName = tempJson
+        CoverletOutputName = "temp"
     };
 
     DotNetCoreTest(testProjectsRelativePaths[0], testSettings, coverletSettings);
