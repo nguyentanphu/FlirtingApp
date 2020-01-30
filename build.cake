@@ -6,7 +6,7 @@
 
 using NuGet;
 
-var target = Argument("target", "Complete");
+var target = Argument("target", "Default");
 var releaseConfig = "Release";
 var artifactsDir = "./artifacts/";
 var solutionPath = "./FlirtingApp.sln";
@@ -74,9 +74,13 @@ Task("UploadToCoverall")
     });
   });
 
-Task("Complete")
+Task("Default")
   .IsDependentOn("Build")
   .IsDependentOn("Test")
   .IsDependentOn("UploadToCoverall");
+
+Task("BuildAndTest")
+  .IsDependentOn("Build")
+  .IsDependentOn("Test");
 
 RunTarget(target);
