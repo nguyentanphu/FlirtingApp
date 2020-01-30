@@ -43,6 +43,10 @@
 - Open FlirtingApp\FlirtingAppAngularNew folder, run command ng serve -o
 - Sample login: username: Page, password: password
 
+## Run development build with docker-compose
+
+- Run docker-compose up --build
+
 ## Work in progress
 
 - Integration searching and logging with Elastic search.
