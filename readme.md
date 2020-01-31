@@ -1,5 +1,5 @@
 # Initial release of clean architecture sample app
-
+- Live version: https://flirtingapp.tk/
 ## CI builds
 | CI server | Platform | Status |
 |---|---|---|
