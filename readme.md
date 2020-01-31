@@ -61,4 +61,4 @@
 
 - Integration searching and logging with Elastic search.
 - Real-time private chat and group chat with SignalR 3 and Apache Hbase
-- Dockerizing the app.
+- Change deployment from Docker Swarm to Kube
