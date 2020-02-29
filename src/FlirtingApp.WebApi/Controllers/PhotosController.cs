@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using FlirtingApp.Application.Common;
 using FlirtingApp.Application.Common.Interfaces;
 using FlirtingApp.Application.Photos.Commands.CreatePhoto;
+using FlirtingApp.WebApi.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,14 +29,18 @@ namespace FlirtingApp.WebApi.Controllers
 	    {
 		    var userId = _currentUser.UserId.Value;
 
-			var photoId = await _mediator.Send(new CreatePhotoCommand
+			var result = await _mediator.Send(new CreatePhotoCommand
 		    {
 			    UserId = userId,
 			    File = request.File,
 			    Description = request.Description
 		    });
+			if (result.Failure)
+			{
+				return result.ToBadRequestResult();
+			}
 
-		    return CreatedAtRoute("GetUserPhoto", new { userId, photoId }, null);
+		    return CreatedAtRoute("GetUserPhoto", new { userId, result.Value }, null);
 		}
 
     }

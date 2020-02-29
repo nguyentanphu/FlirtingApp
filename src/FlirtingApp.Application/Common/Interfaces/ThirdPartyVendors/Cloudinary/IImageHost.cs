@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace FlirtingApp.Application.Common.Interfaces.ThirdPartyVendors.Cloudinary
 {
-	public interface ICloudinary
+	public interface IImageHost
 	{
-		Task<CloudinaryUploadResult> Upload(CloudinaryUploadOptions options, CancellationToken cancellationToken = default);
+		Task<Result<UploadResult>> Upload(UploadOptions options, CancellationToken cancellationToken = default);
 	}
 }

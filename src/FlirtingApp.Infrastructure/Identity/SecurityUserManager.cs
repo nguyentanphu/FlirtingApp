@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FlirtingApp.Application.Common;
 using FlirtingApp.Application.Common.Interfaces;
 using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Application.Exceptions;
@@ -44,25 +45,25 @@ namespace FlirtingApp.Infrastructure.Identity
 			return newUser.Id;
 		}
 
-		public async Task<(bool Success, Guid SecurityUserId, string RefreshToken)> LoginUserAsync(string userName, string password, string remoteIpAddress)
+		public async Task<Result<(Guid SecurityUserId, string RefreshToken)>> LoginUserAsync(string userName, string password, string remoteIpAddress)
 		{
 			var matchedUser = await _userManager.FindByNameAsync(userName);
 			if (matchedUser == null)
 			{
-				return (false, default, default);
+				return Result.Fail<(Guid SecurityUserId, string RefreshToken)>("Cannot find user");
 			}
 
 			var valid = await _userManager.CheckPasswordAsync(matchedUser, password);
 			if (!valid)
 			{
-				return (false, default, default);
+				return Result.Fail<(Guid SecurityUserId, string RefreshToken)>("Password does not match");
 			}
 
 			var refreshToken = _tokenFactory.GenerateToken();
 			matchedUser.AddRefreshToken(refreshToken, remoteIpAddress);
 			await _identityDbContext.SaveChangesAsync();
 
-			return (true, matchedUser.Id, refreshToken);
+			return Result.Ok((matchedUser.Id, refreshToken));
 		}
 
 		public async Task LogoutUserAsync(Guid securityUserId, string remoteIpAddress)

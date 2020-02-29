@@ -1,34 +1,25 @@
 ﻿using System.Collections.Generic;
 using FlirtingApp.Application.Common;
 using FlirtingApp.Application.Common.Interfaces;
+using FlirtingApp.WebApi.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlirtingApp.WebApi.ApiPresenters
 {
-	public abstract class ApiPresenterBase<TResponse> : IOutputPort<TResponse> where TResponse : ResponseBase
+	public abstract class ApiPresenterBase<TResponse> : IOutputPort<TResponse> where TResponse : Result
 	{
 		public IActionResult Result { get; set; }
 
-		public virtual void Handle(TResponse model)
+		public virtual void Handle(TResponse result)
 		{
-			if (model.Success)
+			if (result.Success)
 			{
-				Result = new OkObjectResult(model);
+				Result = new OkObjectResult(result);
 			}
 			else
 			{
-				var errorObject = new
-				{
-					Errors = new
-					{
-						ErrorMessage = new List<string>
-						{
-							model.ErrorMessage
-						}
-					}
-				};
-				Result = new BadRequestObjectResult(errorObject);
+				Result = result.ToBadRequestResult();
 			}
 		}
-	}
+    }
 }

@@ -133,8 +133,8 @@ namespace FlirtingApp.Infrastructure.Tests.Identity
 			var result = await _sut.LoginUserAsync(userName, password, remoteIp);
 
 			result.Success.Should().BeTrue();
-			result.RefreshToken.Should().Be(refreshToken);
-			result.SecurityUserId.Should().Be(TestIdentityDbContextFactory.DefaultId);
+			result.Value.RefreshToken.Should().Be(refreshToken);
+			result.Value.SecurityUserId.Should().Be(TestIdentityDbContextFactory.DefaultId);
 		}
 
 		[Fact]

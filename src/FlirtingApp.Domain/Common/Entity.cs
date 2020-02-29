@@ -29,7 +29,7 @@ namespace FlirtingApp.Domain.Common
 			return Id == other.Id;
 		}
 
-		public static bool operator ==(Entity a, Entity b)
+		public static bool operator ==(Entity? a, Entity? b)
 		{
 			if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
 			{
@@ -44,7 +44,7 @@ namespace FlirtingApp.Domain.Common
 			return a.Equals(b);
 		}
 
-		public static bool operator !=(Entity a, Entity b)
+		public static bool operator !=(Entity? a, Entity? b)
 		{
 			return !(a == b);
 		}

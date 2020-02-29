@@ -10,7 +10,7 @@ using MediatR;
 
 namespace FlirtingApp.Application.Users.Commands.CreateUser
 {
-	public class CreateUserCommand: RequestBase<CreateUserCommandResponse>
+	public class CreateUserCommand: RequestBase<Result<Guid>>
 	{
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
@@ -22,10 +22,6 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 		public double[] Coordinates { get; set; }
 	}
 
-	public class CreateUserCommandResponse : ResponseBase
-	{
-		public Guid UserId { get; set; }
-	}
 
 	public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
 	{
@@ -44,20 +40,13 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 		{
 			if (await _userManager.UserNameExistAsync(request.UserName))
 			{
-				request.OutputPort.Handle(new CreateUserCommandResponse
-				{
-					Success = false,
-					ErrorMessage = "User name is not available"
-				});
+				request.OutputPort.Handle(Result.Fail<Guid>("User name is not available"));
+
 				return Unit.Value;
 			}
 			if (await _userRepository.AnyAsync(u => u.Email == request.Email))
 			{
-				request.OutputPort.Handle(new CreateUserCommandResponse
-				{
-					Success = false,
-					ErrorMessage = "Email is not available"
-				});
+				request.OutputPort.Handle(Result.Fail<Guid>("Email is not available"));
 				return Unit.Value;
 			}
 
@@ -78,11 +67,7 @@ namespace FlirtingApp.Application.Users.Commands.CreateUser
 
 			await _userRepository.AddAsync(newUser);
 
-			request.OutputPort.Handle(new CreateUserCommandResponse
-			{
-				Success = true,
-				UserId = newUser.Id
-			});
+			request.OutputPort.Handle(Result.Ok(newUser.Id));
 			return Unit.Value;
 		}
 	}

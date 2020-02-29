@@ -9,17 +9,11 @@ using MediatR;
 
 namespace FlirtingApp.Application.Auth.Commands.Login
 {
-	public class LoginCommand: RequestBase<LoginCommandResponse>
+	public class LoginCommand: RequestBase<Result<BaseTokensModel>>
 	{
 		public string UserName { get; set; }
 		public string Password { get; set; }
 		public string RemoteIpAddress { get; set; }
-	}
-
-	public class LoginCommandResponse : ResponseBase
-	{
-		public string AccessToken { get; set; }
-		public string RefreshToken { get; set; }
 	}
 
 	public class LoginCommandHandler : IRequestHandler<LoginCommand>
@@ -42,25 +36,23 @@ namespace FlirtingApp.Application.Auth.Commands.Login
 				request.Password, 
 				request.RemoteIpAddress
 			);
-			if (!loginResult.Success)
+			if (loginResult.Failure)
 			{
-				request.OutputPort.Handle(new LoginCommandResponse
-				{
-					Success = false,
-					ErrorMessage = "Login failed. Either user name or password is not correct"
-				});
+				request.OutputPort.Handle(
+					Result.Fail<BaseTokensModel>("Login failed. Either user name or password is not correct")
+				);
 				return Unit.Value;
 			}
 
-			var user = await GetUserByIdentityUser(loginResult.SecurityUserId);
-			var accessToken = _jwtFactory.GenerateEncodedTokens(user.Id, loginResult.SecurityUserId, user.UserName);
+			var user = await GetUserByIdentityUser(loginResult.Value.SecurityUserId);
+			var accessToken = _jwtFactory.GenerateEncodedTokens(user.Id, loginResult.Value.SecurityUserId, user.UserName);
 
-			request.OutputPort.Handle(new LoginCommandResponse
+			request.OutputPort.Handle(Result.Ok(new BaseTokensModel
 			{
-				Success = true,
 				AccessToken = accessToken,
-				RefreshToken = loginResult.RefreshToken
-			});
+				RefreshToken = loginResult.Value.RefreshToken
+			}));
+
 			return Unit.Value;
 		}
 

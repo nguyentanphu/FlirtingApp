@@ -11,8 +11,8 @@ namespace FlirtingApp.Application.Common.Interfaces.Databases
 {
 	public interface IUserRepository
 	{
-		Task<User> GetAsync(Guid id);
-		Task<User> GetAsync(Expression<Func<User, bool>> predicate);
+		Task<User?> GetAsync(Guid id);
+		Task<User?> GetAsync(Expression<Func<User, bool>> predicate);
 		Task<IReadOnlyList<User>> FindAsync(GetUsersQuery query);
 		Task<IReadOnlyList<UserWithDistanceDto>> FindWithGeoSpatial(GetUsersQuery query);
 		Task<bool> AnyAsync(Expression<Func<User, bool>> predicate);

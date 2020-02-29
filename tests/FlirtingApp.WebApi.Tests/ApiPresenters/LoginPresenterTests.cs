@@ -1,4 +1,5 @@
 ﻿using FlirtingApp.Application.Auth.Commands.Login;
+using FlirtingApp.Application.Common;
 using FlirtingApp.Application.Users.Commands.CreateUser;
 using FlirtingApp.WebApi.ApiPresenters;
 using FluentAssertions;
@@ -14,11 +15,7 @@ namespace FlirtingApp.WebApi.Tests.ApiPresenters
 		[Fact]
 		public void Handle_Fail_ShouldBeBadRequestObjectResult()
 		{
-			_sut.Handle(new LoginCommandResponse()
-			{
-				Success = false,
-				ErrorMessage = "Fail with unknown reason"
-			});
+			_sut.Handle(Result.Fail<BaseTokensModel>("Fail with unknown reason"));
 
 			_sut.Result.Should().BeOfType<BadRequestObjectResult>();
 		}
@@ -26,10 +23,7 @@ namespace FlirtingApp.WebApi.Tests.ApiPresenters
 		[Fact]
 		public void Handle_Success_ShouldBeBadRequestObjectResult()
 		{
-			_sut.Handle(new LoginCommandResponse
-			{
-				Success = true
-			});
+			_sut.Handle(Result.Ok(new BaseTokensModel()));
 
 			_sut.Result.Should().BeOfType<OkObjectResult>();
 		}

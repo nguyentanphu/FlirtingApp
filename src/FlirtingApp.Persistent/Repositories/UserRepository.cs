@@ -27,12 +27,12 @@ namespace FlirtingApp.Persistent.Repositories
 			_sql = sql;
 			_mongoRepository = mongoRepository;
 		}
-		public Task<User> GetAsync(Guid id)
+		public Task<User?> GetAsync(Guid id)
 		{
 			return _mongoRepository.GetAsync(id);
 		}
 
-		public Task<User> GetAsync(Expression<Func<User, bool>> predicate)
+		public Task<User?> GetAsync(Expression<Func<User, bool>> predicate)
 		{
 			return _mongoRepository.GetAsync(predicate);
 		}

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using FlirtingApp.Application.Common;
 using FlirtingApp.Application.Common.Interfaces.Databases;
 using FlirtingApp.Application.Common.Interfaces.ThirdPartyVendors.Cloudinary;
 using FlirtingApp.Application.Exceptions;
@@ -9,22 +10,22 @@ using MediatR;
 
 namespace FlirtingApp.Application.Photos.Commands.CreatePhoto
 {
-	public class CreatePhotoCommand: CreatePhotoRequest, IRequest<Guid>
+	public class CreatePhotoCommand: CreatePhotoRequest, IRequest<Result<Guid>>
 	{
 		public Guid UserId { get; set; }
 	}
 
-	public class CreatePhotoCommandHandler: IRequestHandler<CreatePhotoCommand, Guid>
+	public class CreatePhotoCommandHandler: IRequestHandler<CreatePhotoCommand, Result<Guid>>
 	{
-		private readonly ICloudinary _cloudinary;
+		private readonly IImageHost _imageHost;
 		private readonly IUserRepository _userRepository;
-		public CreatePhotoCommandHandler(ICloudinary cloudinary, IUserRepository userRepository)
+		public CreatePhotoCommandHandler(IImageHost imageHost, IUserRepository userRepository)
 		{
-			_cloudinary = cloudinary;
+			_imageHost = imageHost;
 			_userRepository = userRepository;
 		}
 
-		public async Task<Guid> Handle(CreatePhotoCommand request, CancellationToken cancellationToken)
+		public async Task<Result<Guid>> Handle(CreatePhotoCommand request, CancellationToken cancellationToken)
 		{
 			var user = await _userRepository.GetAsync(request.UserId);
 			if (user == null)
@@ -33,23 +34,28 @@ namespace FlirtingApp.Application.Photos.Commands.CreatePhoto
 			}
 
 			using var fileStream = request.File.OpenReadStream();
-			var cloudinaryUploadOptions = new CloudinaryUploadOptions
+			var uploadOptions = new UploadOptions
 			{
 				FileName = request.File.FileName,
 				FileStream = fileStream
 			};
-			var uploadResult = await _cloudinary.Upload(cloudinaryUploadOptions, cancellationToken);
+			var uploadResult = await _imageHost.Upload(uploadOptions, cancellationToken);
+
+			if (uploadResult.Failure)
+			{
+				return Result.Fail<Guid>(uploadResult.Error);
+			}
 
 			var newPhoto = new Photo(
-				uploadResult.Url,
-				uploadResult.PublicId,
+				uploadResult.Value.Url,
+				uploadResult.Value.PublicId,
 				request.Description
 			);
 			user.AddPhoto(newPhoto);
 
 			await _userRepository.UpdateAsync(user);
 
-			return newPhoto.Id;
+			return Result.Ok(newPhoto.Id);
 		}
 	}
 }
