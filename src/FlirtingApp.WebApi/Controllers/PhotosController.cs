@@ -27,7 +27,7 @@ namespace FlirtingApp.WebApi.Controllers
 	    [HttpPost]
 	    public async Task<IActionResult> AddPhotoForLoggedInUser([FromForm] CreatePhotoRequest request)
 	    {
-		    var userId = _currentUser.UserId.Value;
+		    var userId = _currentUser.UserId!.Value;
 
 			var result = await _mediator.Send(new CreatePhotoCommand
 		    {

@@ -14,7 +14,7 @@ namespace FlirtingApp.Domain.Common
 			{
 				return false;
 			}
-			return ReferenceEquals(left, null) || left.Equals(right);
+			return ReferenceEquals(left, null) || left.Equals(right!);
 		}
 
 		protected static bool NotEqualOperator(ValueObject<T> left, ValueObject<T> right)

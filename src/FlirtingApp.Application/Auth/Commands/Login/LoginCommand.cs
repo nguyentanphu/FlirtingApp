@@ -11,9 +11,9 @@ namespace FlirtingApp.Application.Auth.Commands.Login
 {
 	public class LoginCommand: RequestBase<Result<BaseTokensModel>>
 	{
-		public string UserName { get; set; }
-		public string Password { get; set; }
-		public string RemoteIpAddress { get; set; }
+		public string UserName { get; set; } = default!;
+		public string Password { get; set; } = default!;
+		public string RemoteIpAddress { get; set; } = default!;
 	}
 
 	public class LoginCommandHandler : IRequestHandler<LoginCommand>
@@ -45,7 +45,7 @@ namespace FlirtingApp.Application.Auth.Commands.Login
 			}
 
 			var user = await GetUserByIdentityUser(loginResult.Value.SecurityUserId);
-			var accessToken = _jwtFactory.GenerateEncodedTokens(user.Id, loginResult.Value.SecurityUserId, user.UserName);
+			var accessToken = _jwtFactory.GenerateEncodedTokens(user!.Id, loginResult.Value.SecurityUserId, user.UserName);
 
 			request.OutputPort.Handle(Result.Ok(new BaseTokensModel
 			{
@@ -56,7 +56,7 @@ namespace FlirtingApp.Application.Auth.Commands.Login
 			return Unit.Value;
 		}
 
-		private async Task<User> GetUserByIdentityUser(Guid securityUserId)
+		private async Task<User?> GetUserByIdentityUser(Guid securityUserId)
 		{
 			return await _userRepository.GetAsync(u => u.IdentityId == securityUserId);
 		}

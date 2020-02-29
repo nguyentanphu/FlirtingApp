@@ -14,7 +14,7 @@ namespace FlirtingApp.Application.Users.Queries.GetUsers
 	{
 		[JsonIgnore]
 		public Guid UserId { get; set; }
-		public double[] Coordinates { get; set; }
+		public double[]? Coordinates { get; set; }
 		public double Distance { get; set; }
 		public Gender? Gender { get; set; }
 	}

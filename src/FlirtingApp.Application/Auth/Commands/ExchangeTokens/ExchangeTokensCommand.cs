@@ -11,7 +11,7 @@ namespace FlirtingApp.Application.Auth.Commands.ExchangeTokens
 {
 	public class ExchangeTokensCommand: BaseTokensModel, IRequest<ExchangeTokensCommandResult>
 	{
-		public string RemoteIpAddress { get; set; }
+		public string RemoteIpAddress { get; set; } = default!;
 	}
 
 	public class ExchangeTokensCommandResult : BaseTokensModel

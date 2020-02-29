@@ -8,7 +8,7 @@ namespace FlirtingApp.WebApi.ApiPresenters
 {
 	public abstract class ApiPresenterBase<TResponse> : IOutputPort<TResponse> where TResponse : Result
 	{
-		public IActionResult Result { get; set; }
+		public IActionResult Result { get; set; } = default!;
 
 		public virtual void Handle(TResponse result)
 		{

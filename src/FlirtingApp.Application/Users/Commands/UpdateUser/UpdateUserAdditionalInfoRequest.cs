@@ -2,11 +2,11 @@
 {
 	public class UpdateUserAdditionalInfoRequest
 	{
-		public string KnownAs { get; set; }
-		public string Introduction { get; set; }
-		public string LookingFor { get; set; }
-		public string Interests { get; set; }
-		public string City { get; set; }
-		public string Country { get; set; }
+		public string KnownAs { get; set; } = default!;
+		public string Introduction { get; set; } = default!;
+		public string LookingFor { get; set; } = default!;
+		public string Interests { get; set; } = default!;
+		public string City { get; set; } = default!;
+		public string Country { get; set; } = default!;
 	}
 }

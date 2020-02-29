@@ -58,7 +58,7 @@ namespace FlirtingApp.WebApi.Controllers
 		[HttpGet]
 		public async Task<IActionResult> GetUsers([FromQuery]GetUsersQuery query)
 		{
-			query.UserId = _currentUser.UserId.Value;
+			query.UserId = _currentUser.UserId!.Value;
 			return Ok(await _mediator.Send(query));
 		}
 

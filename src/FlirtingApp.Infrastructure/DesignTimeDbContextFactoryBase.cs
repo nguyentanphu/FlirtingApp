@@ -12,7 +12,7 @@ namespace FlirtingApp.Infrastructure
 	{
 		public TContext CreateDbContext(string[] args)
 		{
-			return Create(Directory.GetCurrentDirectory(), Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+			return Create(Directory.GetCurrentDirectory(), Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")!);
 		}
 
 		protected abstract TContext CreateNewInstance(DbContextOptions<TContext> options);

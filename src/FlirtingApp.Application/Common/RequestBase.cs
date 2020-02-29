@@ -10,7 +10,6 @@ namespace FlirtingApp.Application.Common
 {
 	public abstract class RequestBase<TResponse>: IRequest where TResponse: Result
 	{
-		[JsonIgnore]
-		public IOutputPort<TResponse> OutputPort { get; set; }
+		[JsonIgnore] public IOutputPort<TResponse> OutputPort { get; set; } = default!;
 	}
 }
