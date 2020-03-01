@@ -15,12 +15,12 @@ using UploadResult = FlirtingApp.Application.Common.Interfaces.ThirdPartyVendors
 
 namespace FlirtingApp.Infrastructure.ThirdPartyVendor
 {
-	class ImageHostAdapter: IImageHost
+	class CloudinaryAdapter: IImageHost
 	{
 		private readonly CloudinaryCredential _cloudinaryCredential;
 		private readonly Cloudinary _cloudinary;
-		private readonly Logger<ImageHostAdapter> _logger;
-		public ImageHostAdapter(CloudinaryCredential cloudinaryCredential, Logger<ImageHostAdapter> logger)
+		private readonly Logger<CloudinaryAdapter> _logger;
+		public CloudinaryAdapter(CloudinaryCredential cloudinaryCredential, Logger<CloudinaryAdapter> logger)
 		{
 			_cloudinaryCredential = cloudinaryCredential;
 			_logger = logger;

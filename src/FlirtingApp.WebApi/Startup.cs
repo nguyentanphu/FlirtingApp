@@ -9,6 +9,7 @@ using FlirtingApp.WebApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -37,6 +38,10 @@ namespace FlirtingApp.WebApi
 			// For run migration on app start and seed users and photos data
 			services.AddHostedService<MigrationHostedService>();
 
+			services.Configure<ApiBehaviorOptions>(options =>
+			{
+				options.SuppressModelStateInvalidFilter = true;
+			});
 			services.AddControllers();
 
 			services.AddCors();
