@@ -7,5 +7,5 @@ export function maxDate(date: Date): ValidatorFn {
     }
 
     return null;
-  }
+  };
 }

@@ -29,7 +29,7 @@ namespace FlirtingApp.Infrastructure
 			services.AddScoped<IJwtFactory, JwtFactory>();
 
 			services.AddScoped<IMachineDateTime, MachineDateTime>();
-			services.AddScoped<IImageHost, ImageHostAdapter>();
+			services.AddScoped<IImageHost, CloudinaryAdapter>();
 
 			services.AddAppJwtAuthentication(configuration);
 
